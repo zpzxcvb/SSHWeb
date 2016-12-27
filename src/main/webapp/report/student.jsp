@@ -11,13 +11,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/jsLib/bootstrap/css/bootstrap.css">
-    
-	<script type="text/javascript" src="/jsLib/jquery.js"></script>
-	<script type="text/javascript" src="/jsLib/bootstrap/js/bootstrap.js"></script>
+<%@ include file="/common/common.jsp"%>
 </head>
 <body>
-
+<input id="beginDate" class="layui-input" placeholder="开始日期" onclick="layui.laydate({elem:this})">
 <table class="table table-striped table-bordered table-hover">
 	<thead>
 		<tr>

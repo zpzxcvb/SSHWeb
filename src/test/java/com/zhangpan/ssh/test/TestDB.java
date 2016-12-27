@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -14,11 +15,17 @@ public class TestDB {
 	private static Logger log=Logger.getLogger(TestDB.class);
 	
 	public static void excuteQuery(Connection con) throws SQLException{
-		String sql="SELECT * FROM student where sid not in(select student_id from score where score<80 group by student_id)";
+		String sql="SELECT * FROM student ";
 		PreparedStatement pst=con.prepareStatement(sql);
 		ResultSet rs=pst.executeQuery();
+		ResultSetMetaData data = rs.getMetaData();
+		int count=data.getColumnCount();
 		while(rs.next()){
-			System.out.println(rs.getString("sname")+"|"+rs.getString("age"));
+			for (int i = 1; i <= count; i++) {
+				System.out.print(data.getColumnName(i)+" ");
+				System.out.print(rs.getString(i)+" ");
+			}
+			System.out.println();
 		}
 	}
 			

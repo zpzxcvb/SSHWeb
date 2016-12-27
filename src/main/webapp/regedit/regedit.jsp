@@ -9,13 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     <title>selected </title>
-    
-	<script type="text/javascript" src="/jsLib/jquery.js"></script>
-	<script type="text/javascript" src="/jsLib/require.js" defer async="true" ></script>
-	<script type="text/javascript" src="/jsLib/jquery.validate.js"></script>
-	<script type="text/javascript" src="/jsLib/messages_zh.js"></script>
-<!-- 	<script type="text/javascript" src="/js/a.js"></script> -->
-<script type="text/javascript" src="/jsLib/province/province.js"></script>
+	<%@ include file="/common/common.jsp"%>
   </head>
   
   <body>
