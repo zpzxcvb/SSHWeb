@@ -1,0 +1,112 @@
+﻿<Location name="归属地">
+  <CountryRegion Name="中国" Code="1">
+    <State Name="北京" Code="11">
+      <City Name="东城" Code="1" />
+      <City Name="西城" Code="2" />
+      <City Name="朝阳" Code="5" />
+      <City Name="丰台" Code="6" />
+      <City Name="石景山" Code="7" />
+      <City Name="海淀" Code="8" />
+      <City Name="门头沟" Code="9" />
+      <City Name="房山" Code="11" />
+      <City Name="通州" Code="12" />
+      <City Name="顺义" Code="13" />
+      <City Name="昌平" Code="21" />
+      <City Name="大兴" Code="24" />
+      <City Name="平谷" Code="26" />
+      <City Name="怀柔" Code="27" />
+      <City Name="密云" Code="28" />
+      <City Name="延庆" Code="29" />
+    </State>
+    <State Name="陕西" Code="61">
+      <City Name="西安" Code="1">
+        <Region Name="新城区" Code="2" />
+        <Region Name="碑林区" Code="3" />
+        <Region Name="莲湖区" Code="4" />
+        <Region Name="灞桥区" Code="11" />
+        <Region Name="未央区" Code="12" />
+        <Region Name="雁塔区" Code="13" />
+        <Region Name="阎良区" Code="14" />
+        <Region Name="临潼区" Code="15" />
+        <Region Name="长安区" Code="16" />
+        <Region Name="蓝田县" Code="22" />
+        <Region Name="周至县" Code="24" />
+        <Region Name="户　县" Code="25" />
+        <Region Name="高陵县" Code="26" />
+      </City>
+      <City Name="铜川" Code="2">
+        <Region Name="王益区" Code="2" />
+        <Region Name="印台区" Code="3" />
+        <Region Name="耀州区" Code="4" />
+        <Region Name="宜君县" Code="22" />
+      </City>
+      <City Name="渭南" Code="5">
+        <Region Name="临渭区" Code="2" />
+        <Region Name="华　县" Code="21" />
+        <Region Name="潼关县" Code="22" />
+        <Region Name="大荔县" Code="23" />
+        <Region Name="合阳县" Code="24" />
+        <Region Name="澄城县" Code="25" />
+        <Region Name="蒲城县" Code="26" />
+        <Region Name="白水县" Code="27" />
+        <Region Name="富平县" Code="28" />
+        <Region Name="韩城市" Code="81" />
+        <Region Name="华阴市" Code="82" />
+      </City>
+    </State>
+  </CountryRegion>
+  <CountryRegion Name="泽西岛" Code="JEY" />
+  <CountryRegion Name="乍得" Code="TCD" />
+  <CountryRegion Name="直布罗陀" Code="GIB" />
+  <CountryRegion Name="日本" Code="JPN">
+    <State>
+      <City Name="爱媛" Code="38" />
+      <City Name="爱知" Code="23" />
+      <City Name="北海道" Code="1" />
+      <City Name="兵库" Code="28" />
+      <City Name="冲绳" Code="47" />
+      <City Name="茨城" Code="8" />
+      <City Name="大阪" Code="27" />
+      <City Name="大分" Code="44" />
+      <City Name="岛根" Code="32" />
+      <City Name="徳岛" Code="36" />
+      <City Name="东京" Code="13" />
+      <City Name="福岛" Code="7" />
+      <City Name="福冈" Code="40" />
+      <City Name="福井" Code="18" />
+      <City Name="富山" Code="16" />
+      <City Name="冈山" Code="33" />
+      <City Name="高知" Code="39" />
+      <City Name="宮城" Code="4" />
+      <City Name="宫崎" Code="45" />
+      <City Name="广岛" Code="34" />
+      <City Name="和歌山" Code="30" />
+      <City Name="京都" Code="26" />
+      <City Name="静冈" Code="22" />
+      <City Name="枥木" Code="9" />
+      <City Name="鹿儿岛" Code="46" />
+      <City Name="奈良" Code="29" />
+      <City Name="鸟取" Code="31" />
+      <City Name="岐阜" Code="21" />
+      <City Name="埼玉" Code="11" />
+      <City Name="千叶" Code="12" />
+      <City Name="青森" Code="2" />
+      <City Name="秋田" Code="5" />
+      <City Name="群马" Code="10" />
+      <City Name="三重" Code="24" />
+      <City Name="山口" Code="35" />
+      <City Name="山梨" Code="19" />
+      <City Name="山形" Code="6" />
+      <City Name="神奈川" Code="14" />
+      <City Name="石川" Code="17" />
+      <City Name="香川" Code="37" />
+      <City Name="新潟" Code="15" />
+      <City Name="熊本" Code="43" />
+      <City Name="岩手" Code="3" />
+      <City Name="长崎" Code="42" />
+      <City Name="长野" Code="20" />
+      <City Name="滋贺" Code="25" />
+      <City Name="佐贺" Code="41" />
+    </State>
+  </CountryRegion>
+</Location>
