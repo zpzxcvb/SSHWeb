@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 
+示列："0 0/30 8-10 5,20 * ?" 表示“每个月的5日和20日的8:00,8:30,9:00,9:30,10:00,10:30”
+字符解释：
+,：与，表式","两边的值都是需要执行的时间，如上例"5,20"，每个月的5日与20日。
+-：表示值的范围，如上例"8-10"，从8点开始到10结束，包括8点与10点。
+*：表式任意可合法的值，如上例"*"是处于月份的字段，所以代表1-12中的任意值，所以上例是指“每个月”。
+/：增量，如上例是指从0分开始，每过30分钟取一次值。如果换成"5/8"就是从第5钟开始每过8分钟取一次值：8:05,8:13,8:21,8:29等等
+?：不指定值，就是“我也不知道”的意思，只能出现在“月的某天，星期的某天”项中。在什么情况下用呢？如上例如果指定值为星期一，那么可能会出现如4月5日不是星期一，这里就是不对应，有冲突，所以指定为"?"，也就是说我也不知道是星期几，只要是5日与20日就行了，至于是星期几我才不管呢！
+L：最后的，last的意思，只能出现在“月的某天，星期的某天”项中。表示当前月或当前星期的最后一天，注意的是星期的最后一天为星期六。
+W：月中最接近指定日期的普通日（星期一到星期五），只能出现在“月的某天”，如"15W"就是说当前月最接近15日的普通日，如果当月的15是星期三就是星期三，如果当月的15是星期六那么就是昨天也就是星期五，如果当月的15是星期天则为第二天也就是星期一。
+#：当前月的第N个星期X日，只能出现在“星期的某天”项中。如"6#3"就是说当前月的第三个星期五，注意"1-7"，1=星期天，2=星期一 
+-->
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="helloTrigger"/>
+			</list>
+		</property>
+	</bean>
+    
+    <bean id="helloJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="helloTask" />
+		<property name="targetMethod" value="sayHello" />
+		<property name="concurrent" value="false" /> 
+	</bean>
+
+    <bean id="helloTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    	<property name="jobDetail" ref="helloJob"/>
+    	<property name="cronExpression">
+    		<value>0 */1 1 * * ?</value>
+    	</property>
+    </bean>
+    
+    <bean id="helloTask" class="com.zhangpan.task.HelloTask"></bean>
+    
+</beans>
+
+
+
