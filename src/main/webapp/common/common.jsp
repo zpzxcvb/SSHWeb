@@ -2,21 +2,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<script type="text/javascript" src="/jsLib/jquery.js"></script>
-<script type="text/javascript" src="/jsLib/require.js" defer async="true" ></script>
-<script type="text/javascript" src="/jsLib/jquery.validate.js"></script>
-<script type="text/javascript" src="/jsLib/messages_zh.js"></script>
-<script type="text/javascript" src="/jsLib/province/province.js"></script>
-<!-- <script type="text/javascript" src="/jsLib/layui/layui.js"></script> -->
-<script type="text/javascript" src="/jsLib/layui/lay/dest/layui.all.js"></script>
+<link rel="stylesheet" href="/resources/css/style.css" />
 
-<link href="/jsLib/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="/resources/jsLib/jquery-1.9.1.min.js"></script>
 
-<style>
-	body{padding: 10px;}
-	/* 去除a标签的下划线 */
-	a:link {text-decoration: none;}
-	a:visited {text-decoration: none;}
-	a:hover {text-decoration: none;}
-	a:active {text-decoration: none;}
-</style>
+<script type="text/javascript" src="/resources/js/my.js"></script>
+
+<!-- iconfont -->
+<link rel="stylesheet" href="/resources/jsLib/iconfonts/iconfont.css" />
+
+<!-- 省市区联动 -->
+<script type="text/javascript" src="/resources/jsLib/province/province.js"></script>
+
+<!-- bootstrap3 -->
+<link rel="stylesheet" href="/resources/jsLib/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/resources/jsLib/bootstrap/js/bootstrap.min.js"></script>
+<!-- <script type="text/javascript" src="/resources/jsLib/bootstrap/js/bootstrap-paginator.min.js"></script> -->
+
+<!-- dataTables -->
+<link rel="stylesheet" href="/resources/jsLib/dataTables/css/dataTables.bootstrap.css" />
+<script type="text/javascript" src="/resources/jsLib/dataTables/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/resources/jsLib/dataTables/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/resources/js/pagination.js"></script>
+
+<!-- zTree -->
+<link rel="stylesheet" href="/resources/jsLib/zTree/css/zTreeStyle/zTreeStyle.css" />
+<script type="text/javascript" src="/resources/jsLib/zTree/jquery.ztree.core.js"></script>
