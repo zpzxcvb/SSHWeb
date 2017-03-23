@@ -24,7 +24,7 @@ public class FileScanUtil {
 		if(file.exists()){
 			files=file.listFiles();
 			for(File f : files){
-				if(f.getName().matches("^[.].*|target")){
+				if(f.getName().startsWith(".")){
 					continue;
 				}
 				if(f.isDirectory()){
@@ -68,13 +68,13 @@ public class FileScanUtil {
 	
 	public static void main(String[] args) throws Exception {
 		String filePath=System.getProperty("user.dir");
-		filePath="F:\\Workspaces\\SSHWeb\\pom.xml";
-		/*List<TreeNode> list=scanFiles(filePath);
+		filePath="F:\\Workspaces";
+		List<TreeNode> list=scanFiles(filePath);
 		for(TreeNode node : list){
 			System.out.println(JSON.toJSONString(node));
-		}*/
-		List list=readFile(filePath);
-		System.out.println(list);
+		}
+//		List list=readFile(filePath);
+//		System.out.println(list);
 	}
 
 }

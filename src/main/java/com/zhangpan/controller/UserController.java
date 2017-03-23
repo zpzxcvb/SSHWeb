@@ -75,8 +75,7 @@ public class UserController extends BaseController {
 	public @ResponseBody List file(String path){
 		String filePath="";
 		if(StringUtil.isEmpty(path)){
-			filePath=request.getSession().getServletContext().getRealPath("/");
-			filePath=filePath.substring(0,filePath.indexOf("src"));//System.getProperty("user.dir")
+			filePath="F:\\Workspaces";
 		}else{
 			filePath=path;
 		}

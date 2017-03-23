@@ -1,6 +1,16 @@
 package com.zhangpan.model;
 
-public class SysUser {
+import java.io.Serializable;
+
+/**
+ * 系统用户表 "sys_user"
+ * @author 张攀
+ * @ClassName : SysUser
+ * @ModifiedBy : 张攀
+ * @date : 2017-3-22 下午5:34:48
+ */
+public class SysUser implements Serializable{
+	
     private Integer userId;
 
     private String userName;
