@@ -10,7 +10,7 @@ public class TreeNode {
 	private boolean isParent;
 	private String url;
 	private String imgPath;
-	private String filePath;
+	private String path;
 	private String click;
 	private List<TreeNode> children;
 	
@@ -58,12 +58,15 @@ public class TreeNode {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
-	public String getFilePath() {
-		return filePath;
+	
+	public String getPath() {
+		return path;
 	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+
+	public void setPath(String path) {
+		this.path = path;
 	}
+
 	public String getClick() {
 		return click;
 	}

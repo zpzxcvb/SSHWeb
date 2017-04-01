@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhangpan.model.SysUser;
+import com.zhangpan.service.SysDictService;
 import com.zhangpan.service.SysUserService;
 import com.zhangpan.task.HelloTask;
 import com.zhangpan.util.FileScanUtil;
@@ -69,24 +70,6 @@ public class UserController extends BaseController {
 			map.put("pId", "0");
 			list.add(map);
 		}
-		return list;
-	}
-	@RequestMapping("/file")
-	public @ResponseBody List file(String path){
-		String filePath="";
-		if(StringUtil.isEmpty(path)){
-			filePath="F:\\Workspaces";
-		}else{
-			filePath=path;
-		}
-		System.err.println(filePath);
-		List list=FileScanUtil.scanFiles(filePath);
-		return list;
-	}
-	@RequestMapping("/readFile")
-	public @ResponseBody List readFile(String path) throws Exception{
-		System.err.println(path);
-		List list=FileScanUtil.readFile(path);
 		return list;
 	}
 }

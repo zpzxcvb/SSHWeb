@@ -1,18 +1,19 @@
 package com.zhangpan.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface BaseDao<T> {
+public interface BaseDao<T,PK extends Serializable> {
 	
 	public int save(T model);
 	
-	public int delete(int id);
+	public int deleteById(PK id);
 	
-	public int deleteArray(int[] ids);
+	public int deleteByIds(PK[] ids);
 	
 	public int update(T model);
 
-    public T findById(int id);
+    public T findById(PK id);
     
     public List<T> findAll();
 }

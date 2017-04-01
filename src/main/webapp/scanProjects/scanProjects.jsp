@@ -13,63 +13,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <title>Insert title here</title>
 <%@ include file="/common/common.jsp"%>
 <style type="text/css">
-	pre{
-		padding: 5px;
-	    position: relative;
-	    white-space: nowrap;
-	    height:500px;
-	    padding-left: 60px;
+	ol li{
+		list-style:decimal-leading-zero;
+		padding: 0 3px 0 10px;
+		border-left: 3px solid #6CE26C;
+		white-space:nowrap;
+		width: 100%;
 	}
-	.pre-code{
-		
+	.key{
+		color: rgb(129,149,149);
 	}
-	.pre-rownum{
-		position: absolute;
-		width: 50px;
-		background-color: #eee;
-		top:0px;
-		left:0px;
-		border-right: 1px solid #ddd;
-		list-style: none;
-		padding:6px 0 40px 0;
-		text-align: right;
-	}
-	div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
-div#rMenu ul li{
-	margin: 1px 0;
-	padding: 0 5px;
-	cursor: pointer;
-	list-style: none outside none;
-	background-color: #DFDFDF;
-}
 </style>
 </head>
 <body>
-	<div style="display: inline-block;height: 500px;width: 100%;">
-		<div style="float: left;width: 20%;height: 500px;margin-right: 20px;overflow:auto">
-			<ul id="orgTree" class="ztree"></ul>
-		</div>
-		<div style="float: left;width: 70%;">
-			<span>code:</span>
-			<pre>
-				<code class="pre-code">
-				</code>
-				<ul id="rowNum">
-				</ul>
-			</pre>
-		</div>
-	</div>
-	<div id="rMenu">
-		<ul>
-			<li id="m_add" onclick="addTreeNode();">增加节点</li>
-			<li id="m_del" onclick="removeTreeNode();">删除节点</li>
-			<li id="m_check" onclick="checkTreeNode(true);">Check节点</li>
-			<li id="m_unCheck" onclick="checkTreeNode(false);">unCheck节点</li>
-			<li id="m_reset" onclick="resetTree();">恢复zTree</li>
-		</ul>
-	</div>
-	<button onclick="add()">添加</button>
 	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		        <h3 class="panel-title">
+		           	 项目工作区
+		        </h3>
+		    </div>
+			<div class="panel-body">
+				<div class="panel panel-default col-md-3" style="float: left;height: 700px;margin-right: 10px;overflow:auto;">
+					<div class="panel-body">
+						<ul id="orgTree" class="ztree"></ul>
+					</div>
+				</div>
+				<div class="panel panel-default col-md-8" style="float: left;height: 700px;overflow:auto;">
+					<div class="panel-body">
+						<div style="background-color: #eee;width: 100%;">
+							<div style="margin-left: 40px;border-left: 3px solid #6CE26C;color: silver;padding: 3px 8px 3px 10px;">
+								<b>[java code]</b>
+							</div>
+							<ol style="background-color: #eee;">
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	<table id="stuList" class="table table-bordered table-striped table-hover">
 		<thead>
 			<tr>
@@ -82,73 +64,29 @@ div#rMenu ul li{
 	</div>
 </body>
 <script type="text/javascript">
-var table;
-function add(){
-// 	alert(table.clear());
-}
-function OnRightClick(event, treeId, treeNode) {
-	if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
-		zTree.cancelSelectedNode();
-		showRMenu("root", event.clientX, event.clientY);
-	} else if (treeNode && !treeNode.noR) {
-		zTree.selectNode(treeNode);
-		showRMenu("node", event.clientX, event.clientY);
-	}
-}
-function showRMenu(type, x, y) {
-	$("#rMenu ul").show();
-	if (type=="root") {
-		$("#m_del").hide();
-		$("#m_check").hide();
-		$("#m_unCheck").hide();
-	} else {
-		$("#m_del").show();
-		$("#m_check").show();
-		$("#m_unCheck").show();
-	}
-	$("#rMenu").css({"top":y+"px", "left":x+"px", "visibility":"visible"});
-
-}
 var zTree;
 $(function(){
-	 var setting = {
-			 data: {  
-                 simpleData: {  
-                     enable: false  
-                 }  
-             },
-             async: {
-                 enable: true,
-                 url:"/user/file",
-                 autoParam:["id", "name", "filePath=path"],
-                 otherParam:{}
-             },
-             callback:{
-            	 onRightClick: OnRightClick,
-            	 onClick:function(event, treeId, treeNode){
-            		 if(!treeNode.isParent){
-            			 $("#rowNum").attr("class","pre-rownum");
-// 	            	 	alert(treeNode.filePath);
-						$.ajax({
-							url:'/user/readFile',
-							data:{path:treeNode.filePath},
-							success:function(result){
-// 								alert(result);
-								var str="";
-								$(".pre-rownum").empty();
-								$.each(result,function(index,value){
-									$(".pre-rownum").append("<li>"+(index+1)+"</li>");
-									str+=value+"\n";
-									$(".pre-code").html(str);
-								})
-							}
-						})
-            		 }
-            	 }
-             }
+	var test="a<html>123456</html>c";
+	alert(new RegExp("/a.*c/").test(test));
+	zTree=showTree($("#orgTree"),"/file/scanProjects",{});
+	 zTree.setting.callback.onClick=function(event, treeId, treeNode){
+		 if(!treeNode.isParent){
+			$.ajax({
+				url:"/file/readFile",
+				data:{path:treeNode.path},
+				success:function(result){
+					var str="";
+					$("ol").empty();
+					$.each(result,function(index,value){
+						$("ol").append("<li><span>"+value.replace(/ /g,'&nbsp;&nbsp;').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')+"</span></li>");
+					})
+					$("ol").find("li:even").css("background-color","#fff");
+					$("ol").find("li:odd").css("background-color","#f8f8f8");
+				}
+			})
+		 }
 	 };
-	 zTree=$.fn.zTree.init($("#orgTree"), setting);  
-	 table=$("#stuList").DataTable({
+	 var table=$("#stuList").DataTable({
 		/* ajax: function (data, callback, settings) {
             //封装请求参数
             var param = {};

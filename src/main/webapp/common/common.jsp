@@ -28,3 +28,4 @@
 <!-- zTree -->
 <link rel="stylesheet" href="/resources/jsLib/zTree/css/zTreeStyle/zTreeStyle.css" />
 <script type="text/javascript" src="/resources/jsLib/zTree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/resources/js/tree.js"></script>

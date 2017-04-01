@@ -45,7 +45,7 @@ public class FileScanUtil {
 	private static TreeNode buildTreeNode(File file,boolean isParent){
 		TreeNode treeNode=new TreeNode();
 		treeNode.setName(file.getName());
-		treeNode.setFilePath(file.getAbsolutePath());
+		treeNode.setPath(file.getAbsolutePath());
 		treeNode.setParent(isParent);
 		return treeNode;
 	}
