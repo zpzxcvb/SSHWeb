@@ -54,7 +54,7 @@ public class XMLParseUtil {
 			list.add(childNodeAttrMap);
 			maplist.put(key,list);
 		}
-		System.out.println("当前节点："+nodeName+"的子节点："+maplist);
+//		System.out.println("当前节点："+nodeName+"的子节点："+maplist);
 		return maplist;
 	}
 	
