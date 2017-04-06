@@ -132,16 +132,6 @@
 		<version>1.2.14</version>
 	</dependency>
 	<dependency>
-	    <groupId>org.slf4j</groupId>
-	    <artifactId>slf4j-api</artifactId>
-	    <version>1.7.21</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.slf4j</groupId>
-	    <artifactId>slf4j-log4j12</artifactId>
-	    <version>1.7.5</version>
-	</dependency>
-	<dependency>
 		<groupId>dom4j</groupId>
 		<artifactId>dom4j</artifactId>
 		<version>1.6.1</version>
@@ -200,6 +190,21 @@
 	    <artifactId>quartz</artifactId>
 	    <version>2.2.1</version>
 	</dependency>
+	<!-- <dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>1.7.21</version>
+	</dependency> -->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-log4j12</artifactId>
+	    <version>1.7.5</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.jsoup</groupId>
+	    <artifactId>jsoup</artifactId>
+	    <version>1.7.2</version>
+	</dependency>
   </dependencies>
   
   <build>
@@ -217,7 +222,7 @@
                     <connector implementation="org.eclipse.jetty.server.bio.SocketConnector">  
                         <port>80</port>  
                     </connector>  
-                </connectors>  
+                </connectors>
   			</configuration>
   		</plugin>
   	</plugins>

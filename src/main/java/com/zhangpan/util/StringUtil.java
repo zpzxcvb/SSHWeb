@@ -1,5 +1,10 @@
 package com.zhangpan.util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author 张攀
  * @ClassName : StringUtil
@@ -26,6 +31,23 @@ public class StringUtil {
 	public static boolean isNumber(String str){
 		String regex="^-?[0-9]+$";
 		return str.matches(regex);
+	}
+	
+	/**
+	 * 返回目标字串中匹配的第一组子串
+	 * @param regex 正则表达式
+	 * @param targetStr 目标字串
+	 * @return
+	 */
+	public static List<String> regexStr(String regex, String targetStr){
+		List<String> list=new ArrayList<String>();
+		Pattern p=Pattern.compile(regex);
+		Matcher m=p.matcher(targetStr);
+		while(m.find()){
+			String str=m.group();
+			list.add(str);
+		}
+		return list;
 	}
 	
 	public static void main(String[] args) {
