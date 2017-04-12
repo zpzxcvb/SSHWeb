@@ -31,7 +31,7 @@ public class TestSpring {
 		/*SysDictType dicType=new SysDictType();
 		dicType.setId(4);
 		dicType.setDictName("省市");
-		dicType.setDictValue("area");
+		dicType.setDictValue("area"); 
 		sysDictService.save(dicType);*/
 		List list1=sysDictService.findAll();
 		System.out.println(JSON.toJSONString(list1));
