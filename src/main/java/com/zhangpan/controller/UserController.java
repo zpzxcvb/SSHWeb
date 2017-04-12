@@ -35,9 +35,16 @@ public class UserController extends BaseController {
 	private SysUserService userService;
 	
 	@RequestMapping("/login/{id}")
-	public String login2(@PathVariable("id")String id){
+	@ResponseBody
+	public String login(@PathVariable("id")String id){
 		System.out.println("id---->"+id);
-		return id;
+		SysUser user = new SysUser();
+		user.setUserId(1);
+		user.setUserName("张三");
+		user.setEmail("1000000@.qqcom");
+		Map<String,Object> map=new HashMap<String, Object>(); 
+		map.put("user", user);
+		return map.toString();
 	}
 	
 	@RequestMapping("/jsonTest")

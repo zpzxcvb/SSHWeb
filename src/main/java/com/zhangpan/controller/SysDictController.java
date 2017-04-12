@@ -26,6 +26,7 @@ import com.zhangpan.service.SysUserService;
 import com.zhangpan.task.HelloTask;
 import com.zhangpan.util.FileScanUtil;
 import com.zhangpan.util.StringUtil;
+import com.zhangpan.util.TreeNode;
 
 @Controller
 @RequestMapping("/dict")
@@ -35,8 +36,9 @@ public class SysDictController extends BaseController {
 	private SysDictService sysDictService;
 	
 	@RequestMapping("/showSysDictType")
-	public @ResponseBody List showSysDictType(String dictType){
-		List list=sysDictService.findAll();
-		return list;
+	@ResponseBody
+	public TreeNode showSysDictType(String dictType){
+		TreeNode node=sysDictService.showSysDictType();
+		return node;
 	}
 }

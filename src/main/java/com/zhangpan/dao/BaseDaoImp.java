@@ -5,7 +5,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 public class BaseDaoImp<T,PK extends Serializable> extends SqlSessionDaoSupport implements BaseDao<T,PK> {
 
@@ -26,6 +31,7 @@ public class BaseDaoImp<T,PK extends Serializable> extends SqlSessionDaoSupport 
 	private static final String SORT_NAME = "SORT"; 
 
 	private static final String DIR_NAME = "DIR"; 
+	
 	/** 
 	* 获取默认SqlMapping命名空间。 
 	* 使用泛型参数中业务实体类型的全限定名作为默认的命名空间。 
@@ -35,6 +41,7 @@ public class BaseDaoImp<T,PK extends Serializable> extends SqlSessionDaoSupport 
 	protected String getDefaultSqlNamespace() { 
 		clazz = getClassGenricType(getClass());  
 		String nameSpace = clazz.getName(); 
+		System.out.println("------------------------"+clazz.getName());
 		return nameSpace; 
 	}
 	

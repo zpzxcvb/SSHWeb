@@ -36,7 +36,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="panel-body">
 				<div class="panel panel-default col-md-3" style="float: left;height: 700px;margin-right: 10px;overflow:auto;">
 					<div class="panel-body">
-						<ul id="orgTree" class="ztree"></ul>
+						<ul id="orgTree" class="ztree">
+						</ul>
 					</div>
 				</div>
 				<div class="panel panel-default col-md-8" style="float: left;height: 700px;overflow:auto;">
@@ -66,8 +67,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 var zTree;
 $(function(){
-	var test="a<html>123456</html>c";
-	alert(new RegExp("/a.*c/").test(test));
+// 	var test="a<html>123456</html>c";
+// 	alert(new RegExp("/a.*c/").test(test));
 	zTree=showTree($("#orgTree"),"/file/scanProjects",{});
 	 zTree.setting.callback.onClick=function(event, treeId, treeNode){
 		 if(!treeNode.isParent){

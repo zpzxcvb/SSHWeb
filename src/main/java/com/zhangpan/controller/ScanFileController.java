@@ -26,15 +26,16 @@ import com.zhangpan.service.SysUserService;
 import com.zhangpan.task.HelloTask;
 import com.zhangpan.util.FileScanUtil;
 import com.zhangpan.util.StringUtil;
+import com.zhangpan.util.TreeNode;
 
 @Controller
 @RequestMapping("/file")
 public class ScanFileController extends BaseController {
 	
 	@RequestMapping("/scanProjects")
-	public @ResponseBody List scanProjects(String path){
+	public @ResponseBody List scanProjects(String path){             
 		if(StringUtil.isEmpty(path)){
-			path="F:\\Workspaces";
+			path="E:\\Workspaces";
 		}
 		System.err.println(path);
 		List list=FileScanUtil.scanFiles(path);

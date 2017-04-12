@@ -50,10 +50,119 @@ public class StringUtil {
 		return list;
 	}
 	
+	/**
+	 * 大整数字串相乘
+	 * @param a
+	 * @param b
+	 * @return a*b 
+	 */
+	public static String bigNumberMultiply(String a, String b){
+		//计算最终长度
+		int maxLength=a.length()+b.length();
+		int[] multi=new int[maxLength];
+		
+		char[] c1=a.toCharArray();
+		char[] c2=b.toCharArray();
+		
+		for (int i = c1.length-1; i>=0 ; i--) {
+			int vi=c1[i]-'0';
+			for (int j = c2.length-1; j>=0 ; j--) {
+				int vj=c2[j]-'0';
+				multi[i+j+1]+=(vi*vj);
+			}
+		}
+		String s=is10add1(multi);
+		return s;
+	}
+	
+	/**
+	 * 大整数字串相加
+	 * @param a
+	 * @param b
+	 * @return a+b
+	 */
+	public static String bigNumberPlus(String a, String b){
+		//计算最终长度
+		int maxLength=a.length()>b.length()?a.length():b.length();
+		int[] sum=new int[maxLength+1];
+		
+		char[] c1=new StringBuffer(a).reverse().toString().toCharArray();
+		char[] c2=new StringBuffer(b).reverse().toString().toCharArray();
+		for (int i = 0; i < maxLength; i++) {
+			int i1=i<a.length()?(c1[i]-'0'):0;
+			int i2=i<b.length()?(c2[i]-'0'):0;
+			sum[maxLength-i]=i1+i2;
+		}
+		String s=is10add1(sum);
+		return s;
+	}
+	
+	/**
+	 * 大整数字串相减
+	 * @param a
+	 * @param b
+	 * @return a-b  123-24=99
+	 * 321
+		42
+		-1 0 1
+		9 -1 1
+		9 9 0
+		
+		123
+		 24
+		1 0 -1
+		0 9 9
+	 */
+	public static String bigNumberSub(String a, String b){
+		//计算最终长度
+		int maxLength=a.length()>b.length()?a.length():b.length();
+		int[] sub=new int[maxLength];
+		
+		char[] c1=new StringBuffer(a).reverse().toString().toCharArray();
+		char[] c2=new StringBuffer(b).reverse().toString().toCharArray();
+		for (int i = 0; i < maxLength; i++) {
+			int i1=i<a.length()?(c1[i]-'0'):0;
+			int i2=i<b.length()?(c2[i]-'0'):0;
+			sub[maxLength-i]=i1-i2;
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		return sb.toString();
+	}
+	
+	/**
+	 * 逢十进一
+	 * @param int a[]
+	 * @return
+	 */
+	public static String is10add1(int[] a){
+		StringBuffer sb = new StringBuffer();
+		for (int i = a.length-1; i >0 ; i--) {
+			if(a[i]>=10){
+				a[i-1]+=a[i]/10;
+				a[i]=a[i]%10;
+			}
+		}
+		// 该字段用于标识是否有前置0，如果是0就不需要打印或者存储下来
+		boolean flag=true;
+		for(int i : a){
+			if(i==0&&flag){
+				continue;
+			}else{
+				flag=false;
+			}
+			sb.append(i);
+		}
+		return sb.toString();//.replaceAll("^0+", "")替换前置0
+	}
+	
 	public static void main(String[] args) {
 		StringUtil s=new StringUtil();
-		String str="0a12";
-//		System.out.println(isEmpty(str));
-		System.out.println(isNumber(str));
+		String a="123";
+		String b="24";
+//		System.out.println(is10add1(i));
+//		System.out.println(bigNumberPlus(a, b));
+		System.out.println(bigNumberSub(a, b));
+//		System.out.println(bigNumberMultiply(a, b));
 	}
 }

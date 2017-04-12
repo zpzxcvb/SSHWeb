@@ -53,7 +53,7 @@ public class FileScanUtil {
 	public static List<String> readFile(String filePath) throws Exception{
 		List<String> list=new ArrayList<String>();
 		FileInputStream in=new FileInputStream(filePath);
-		BufferedReader br=new BufferedReader(new InputStreamReader(in));
+		BufferedReader br=new BufferedReader(new InputStreamReader(in,"UTF-8"));
 		String str="";
 		int rownum=0;
 		while((str=br.readLine())!=null){

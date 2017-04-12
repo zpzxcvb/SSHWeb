@@ -2,7 +2,7 @@ function showTree(document,url,param){
 	var setting = {
 			 data: {  
                 simpleData: {  
-                    enable: false  
+                    enable: true  
                 }  
             },
             async: {

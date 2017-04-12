@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.zhangpan.dao.BaseDao;
 import com.zhangpan.service.BaseService;
 
-@Service
 public class BaseServiceImp<T,PK extends Serializable> implements BaseService<T,PK> {
 
 	@Autowired

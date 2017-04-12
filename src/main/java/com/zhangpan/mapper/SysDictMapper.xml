@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="SysDictDao" >
+<mapper namespace="com.zhangpan.dao.SysDictDao" >
   <resultMap id="sysDictResultMap" type="SysDictType" >
     <id column="id" property="id" />
     <result column="dict_Value" property="dictValue" />
     <result column="dict_Name" property="dictName" />
-    <collection property="sysDictItems" javaType="list" ofType="SysDictItem">
+    <!-- <collection property="sysDictItems" javaType="list" ofType="SysDictItem">
     	<id column="id" property="id" />
 	    <result column="dict_Value" property="dictValue" />
 	    <result column="dict_Name" property="dictName" />
 	    <result column="dict_type" property="dictType" />
 	    <result column="order_No" property="orderNo" />
-    </collection>
+    </collection> -->
   </resultMap>
   
-  <insert id="insert" parameterType="SysDictType" >  
+  <insert id="save" parameterType="SysDictType" >  
     insert into sys_dict_type ( dict_Value,dict_Name )  
     	values (
     		#{dictValue}, #{dictName}  
