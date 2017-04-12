@@ -28,8 +28,8 @@ public class TestSpring {
 	@Test
 	public void test(){
 //		List list=sysUserService.findAll();
-		/*SysDictType dicType=new SysDictType(); 2
-		dicType.setId(4);   1
+		/*SysDictType dicType=new SysDictType();
+		dicType.setId(4);
 		dicType.setDictName("省市");
 		dicType.setDictValue("area"); 
 		sysDictService.save(dicType);*/
