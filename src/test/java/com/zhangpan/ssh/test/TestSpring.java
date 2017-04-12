@@ -28,7 +28,7 @@ public class TestSpring {
 	@Test
 	public void test(){
 //		List list=sysUserService.findAll();
-		/*SysDictType dicType=new SysDictType();
+		/*SysDictType dicType=new SysDictType(); 
 		dicType.setId(4);
 		dicType.setDictName("省市");
 		dicType.setDictValue("area"); 
