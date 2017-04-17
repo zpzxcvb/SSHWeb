@@ -11,6 +11,6 @@ public interface SysDictService extends BaseService<SysDictType,Integer>{
 	 * 显示字典类型
 	 * @return
 	 */
-	public TreeNode showSysDictType();
+	public List<TreeNode> showSysDictType();
 	
 }

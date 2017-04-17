@@ -1,16 +1,11 @@
 package com.zhangpan.util;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 
@@ -47,6 +42,8 @@ public class FileScanUtil {
 		treeNode.setName(file.getName());
 		treeNode.setPath(file.getAbsolutePath());
 		treeNode.setParent(isParent);
+		treeNode.setId(file.getAbsolutePath());
+		treeNode.setPid(file.getParent());
 		return treeNode;
 	}
 	
@@ -68,7 +65,7 @@ public class FileScanUtil {
 	
 	public static void main(String[] args) throws Exception {
 		String filePath=System.getProperty("user.dir");
-		filePath="F:\\Workspaces";
+		filePath="E:\\Workspaces";
 		List<TreeNode> list=scanFiles(filePath);
 		for(TreeNode node : list){
 			System.out.println(JSON.toJSONString(node));

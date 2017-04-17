@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhangpan.model.SysUser;
+import com.zhangpan.service.FileScanService;
 import com.zhangpan.service.SysDictService;
 import com.zhangpan.service.SysUserService;
 import com.zhangpan.task.HelloTask;
@@ -32,14 +33,15 @@ import com.zhangpan.util.TreeNode;
 @RequestMapping("/file")
 public class ScanFileController extends BaseController {
 	
+	@Autowired
+	private FileScanService fileScanService;
+	
 	@RequestMapping("/scanProjects")
-	public @ResponseBody List scanProjects(String path){             
-		if(StringUtil.isEmpty(path)){
-			path="E:\\Workspaces";
-		}
-		System.err.println(path);
-		List list=FileScanUtil.scanFiles(path);
-		return list;
+	@ResponseBody
+	public List<TreeNode> scanProjects(String path){
+		System.out.println(this.request.getParameterMap());
+		List<TreeNode> treeNodes=fileScanService.scanProjects(path);
+		return treeNodes;
 	}
 	@RequestMapping("/readFile")
 	public @ResponseBody List readFile(String path) throws Exception{

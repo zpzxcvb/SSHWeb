@@ -67,26 +67,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 var zTree;
 $(function(){
-// 	var test="a<html>123456</html>c";
-// 	alert(new RegExp("/a.*c/").test(test));
-	zTree=showTree($("#orgTree"),"/file/scanProjects",{});
-	 zTree.setting.callback.onClick=function(event, treeId, treeNode){
-		 if(!treeNode.isParent){
-			$.ajax({
-				url:"/file/readFile",
-				data:{path:treeNode.path},
-				success:function(result){
-					var str="";
-					$("ol").empty();
-					$.each(result,function(index,value){
-						$("ol").append("<li><span>"+value.replace(/ /g,'&nbsp;&nbsp;').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')+"</span></li>");
-					})
-					$("ol").find("li:even").css("background-color","#fff");
-					$("ol").find("li:odd").css("background-color","#f8f8f8");
-				}
-			})
-		 }
-	 };
+	zTree=initTree({
+		id:"orgTree",
+		async:true,
+		url:"/file/scanProjects"
+	});
+	
 	 var table=$("#stuList").DataTable({
 		/* ajax: function (data, callback, settings) {
             //封装请求参数
@@ -156,6 +142,22 @@ $(function(){
                  });
              }).draw();
 })
-
+function zTreeClick(event, treeId, treeNode){
+		 if(!treeNode.isParent){
+			$.ajax({
+				url:"/file/readFile",
+				data:{path:treeNode.path},
+				success:function(result){
+					var str="";
+					$("ol").empty();
+					$.each(result,function(index,value){
+						$("ol").append("<li><span>"+value.replace(/ /g,'&nbsp;&nbsp;').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')+"</span></li>");
+					})
+					$("ol").find("li:even").css("background-color","#fff");
+					$("ol").find("li:odd").css("background-color","#f8f8f8");
+				}
+			})
+		 }
+	 };
 </script>
 </html>
