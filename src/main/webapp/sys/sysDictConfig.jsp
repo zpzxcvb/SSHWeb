@@ -28,8 +28,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	var zTree;
 	$(function(){
-		zTree=showTree($("#sysDictTree"),"/dict/showSysDictType",{});
-	})
+		zTree=initTree({
+			id:"sysDictTree",
+			search:true,
+			async:true,
+			url:"/dict/showSysDictType"
+		});
+	});
+	function zTreeClick(event, treeId, treeNode){
+		alert(treeNode.name+""+treeNode.id);
+	}
 	function showDictItems(event, treeId, treeNode){
 		if(!treeNode.isParent){
 			/* $.ajax({
