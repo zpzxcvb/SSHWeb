@@ -33,51 +33,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<!-- 内容 -->
 	<div class="content">
-		<pre>
-		1
 		
-		我
-		1
-		1
-		
-		1
-		1
-		
-		1
-		1
-		1
-		
-		1
-		1
-		
-		1
-		1
-		1
-		1
-		1
-		
-		1
-		1
-		1
-		
-		
-		
-		
-		
-		
-		
-		
-		11
-		
-		
-		
-		
-		
-		
-		</pre>
 	</div>
 	
 
+    <!-- 左下角按钮 -->
+    <div class="fixed-btn">
+		<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部"><i class="iconfont icon-top"></i></a>
+		<a class="qrcode" href="javascript:;" title="关注我"><i class="iconfont icon-erweima"></i></a>
+		<div class="zf-icon">
+			<div class="panel-body">
+				<img alt="微信支付" src="/resources/img/wxzf.jpg">
+				<img alt="支付宝支付" src="/resources/img/zfbzf.jpg">
+			</div>
+		</div>
+	</div>
 	<!-- 底部 -->
 	<div class="footer">
 	    <div class="footer-bar">
@@ -91,14 +61,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<input id="color" type="color" name="color" > <input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0"/>
 		</span>
     </div>
-    <!-- 左下角按钮 -->
-    <div class="fixed-btn">
-		<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部"><i class="iconfont icon-top"></i></a>
-		<a class="qrcode" href="javascript:;" title="关注我"><i class="iconfont icon-erweima"></i></a>
-		<div class="zf-icon">
-			<img alt="微信支付" src="/resources/img/wxzf.jpg">
-			<img alt="支付宝支付" src="/resources/img/zfbzf.jpg">
-		</div>
-	</div>
 </body>
 </html>

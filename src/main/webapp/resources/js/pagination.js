@@ -2,12 +2,12 @@
 $.extend(true, $.fn.dataTable.defaults, {
 	language:{
 	    "processing": "正在处理中...",
-	    "lengthMenu": "每页 _MENU_ 条",
+	    "lengthMenu": "每页 _MENU_ 条记录",
 	    "zeroRecords": "没有匹配结果",
 	    "info": "当前显示第 _START_ 至 _END_ 条，共 _TOTAL_ 条记录",//第_PAGE_页，共_PAGES_页，
 	    "infoEmpty": "当前显示第 0 至 0 条，共 0 条",
 	    "infoFiltered": "(由 _MAX_ 项结果过滤)",
-	    "infoPostFix": "<a class=''><i class='iconfont icon-refresh'></i></a>",
+//	    "infoPostFix": "<a class=''><i class='iconfont icon-refresh'></i></a>",
 	    "search": "搜索:",
 	    "searchPlaceholder": "搜索...",
 	    "url": "",

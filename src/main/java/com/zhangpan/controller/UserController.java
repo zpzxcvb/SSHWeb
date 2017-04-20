@@ -65,18 +65,17 @@ public class UserController extends BaseController {
 		map.put("data", list);
 		return map;
 	}
-	@RequestMapping("/org")
-	public @ResponseBody List org(){
+	@RequestMapping("/queryUsers")
+	@ResponseBody
+	public Map queryUsers(){
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		List<SysUser> users=userService.findAll();
 		System.out.println(JSON.toJSONString(users));
-		for(SysUser user : users){
-			Map<String, String> map=new HashMap<String, String>();
-			map.put("id", user.getUserId().toString());
-			map.put("name", user.getRealname());
-			map.put("pId", "0");
-			list.add(map);
-		}
-		return list;
+		Map map=new HashMap();
+		map.put("draw", 1);
+		map.put("data", users);
+		map.put("recordsTotal", users.size());
+		map.put("recordsFiltered", 10);
+		return map;
 	}
 }
