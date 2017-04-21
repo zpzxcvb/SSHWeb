@@ -83,10 +83,9 @@ public class UserController extends BaseController {
 		System.out.println(JSON.toJSONString(users));
 		Map map=new HashMap();
 		map.put("draw", Integer.parseInt(draw));
-		map.put("pages", 2);
 		map.put("data", page.getList());
-		map.put("recordsTotal", users.size());
-		map.put("recordsFiltered", users.size());
+		map.put("recordsTotal", page.getTotal());
+		map.put("recordsFiltered", page.getTotal());
 		return map;
 	}
 }
