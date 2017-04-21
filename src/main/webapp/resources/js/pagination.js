@@ -4,16 +4,16 @@ $.extend(true, $.fn.dataTable.defaults, {
 	    "processing": "正在处理中...",
 	    "lengthMenu": "每页 _MENU_ 条记录",
 	    "zeroRecords": "没有匹配结果",
-	    "info": "当前显示第 _START_ 至 _END_ 条，共 _TOTAL_ 条记录",//第_PAGE_页，共_PAGES_页，
+	    "info": "当前第_PAGE_页，共_PAGES_页，共 _TOTAL_ 条记录",//START END，
 	    "infoEmpty": "当前显示第 0 至 0 条，共 0 条",
 	    "infoFiltered": "(由 _MAX_ 项结果过滤)",
 //	    "infoPostFix": "<a class=''><i class='iconfont icon-refresh'></i></a>",
 	    "search": "搜索:",
 	    "searchPlaceholder": "搜索...",
-	    "url": "",
 	    "emptyTable": "表中数据为空",
 	    "loadingRecords": "正在加载中...",
 	    "thousands": ",",
+	    "decimal":".",//小数
 	    "paginate": {
 	        "first": "首页",
 	        "previous": "上一页",
@@ -36,7 +36,6 @@ $.extend(true, $.fn.dataTable.defaults, {
 	ordering:false,//禁止排序
 //	scrollY:100,//右侧滚动条
 	scrollCollapse:true,
-	decimal:".",//小数
-	stateSave:true,//缓存
+//	stateSave:true,//缓存
 	serverSide:true//服务器模式分页
 });

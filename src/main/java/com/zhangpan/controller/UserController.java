@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysDictService;
 import com.zhangpan.service.SysUserService;
@@ -68,14 +70,23 @@ public class UserController extends BaseController {
 	@RequestMapping("/queryUsers")
 	@ResponseBody
 	public Map queryUsers(){
+		String draw=this.request.getParameter("draw");
+		String start=this.request.getParameter("start");
+		String length=this.request.getParameter("length");
+		int pageNum=(Integer.parseInt(start)/Integer.parseInt(length))+1;
+		
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		PageHelper.startPage(pageNum , Integer.parseInt(length));
 		List<SysUser> users=userService.findAll();
+		PageInfo<SysUser> page=new PageInfo<SysUser>(users);
+		
 		System.out.println(JSON.toJSONString(users));
 		Map map=new HashMap();
-		map.put("draw", 1);
-		map.put("data", users);
+		map.put("draw", Integer.parseInt(draw));
+		map.put("pages", 2);
+		map.put("data", page.getList());
 		map.put("recordsTotal", users.size());
-		map.put("recordsFiltered", 10);
+		map.put("recordsFiltered", users.size());
 		return map;
 	}
 }
