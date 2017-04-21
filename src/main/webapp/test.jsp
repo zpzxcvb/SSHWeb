@@ -49,7 +49,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script type="text/javascript">
   	$(function(){
-  		
   		 var table=$("#users").DataTable({
   			/* ajax: function (data, callback, settings) {
   	            //封装请求参数
@@ -66,16 +65,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	                data: param,  //传入组装的参数
   	                dataType: "json",
   	                success: function (result) {
-  	                    console.log(result);
-  	                    //setTimeout仅为测试延迟效果
   	                    setTimeout(function () {
   	                        //封装返回数据
   	                        var returnData = {};
   	                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-  	                        returnData.recordsTotal = result.total;//返回数据全部记录
-  	                        returnData.recordsFiltered = result.total;//后台不实现过滤功能，每次查询均视作全部结果
+  	                        returnData.recordsTotal = result.recordsTotal;//返回数据全部记录
+  	                        returnData.recordsFiltered = result.recordsFiltered;//后台不实现过滤功能，每次查询均视作全部结果
   	                        returnData.data = result.data;//返回的数据列表
-  	                        //console.log(returnData);
   	                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
   	                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
   	                        callback(returnData);
@@ -84,13 +80,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	            });
   	        }, */
   	        ajax: {
-  	        	url:"/user/queryUsers",
-  	        	type:"POST"
+  	        	deferRender:true,
+
+  	        	url:"/resources/test.txt"//"/user/queryUsers",
   	        },
   	        columns:[
   		           {data:null},
-  		           {data:"userName"},
-  		           {data:"email"}
+  		           {data:"name"},
+  		           {data:"office"}
   	        ],
   	        columnDefs:[
   		             {

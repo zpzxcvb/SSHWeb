@@ -30,6 +30,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 	dom:"frt<'row'<'dtl'l><'dti'i><'dtp'p><'clear'>>",
 	lengthMenu:[10,20,50,100,500,1000],//每页显示多少条
 	pagingType:"full_numbers",//包含所有分页按钮
+	processing: true,
 //	paging:false//禁止分页
 	searching:false,
 	ordering:false,//禁止排序
