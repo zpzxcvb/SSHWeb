@@ -22,7 +22,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.FileScanService;
-import com.zhangpan.service.SysDictService;
 import com.zhangpan.service.SysUserService;
 import com.zhangpan.task.HelloTask;
 import com.zhangpan.util.FileScanUtil;

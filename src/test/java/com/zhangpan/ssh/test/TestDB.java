@@ -15,7 +15,7 @@ public class TestDB {
 	private static Logger log=Logger.getLogger(TestDB.class);
 	
 	public static void excuteQuery(Connection con) throws SQLException{
-		String sql="SELECT * FROM sys_dict_type ";
+		String sql="SELECT * FROM user_ ";
 		PreparedStatement pst=con.prepareStatement(sql);
 		ResultSet rs=pst.executeQuery();
 		ResultSetMetaData data = rs.getMetaData();

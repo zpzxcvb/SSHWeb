@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 import com.zhangpan.model.SysDictType;
-import com.zhangpan.service.SysDictService;
 import com.zhangpan.service.SysUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,8 +21,6 @@ public class TestSpring {
 	@Autowired
 	private SysUserService sysUserService;
 	
-	@Autowired
-	private SysDictService sysDictService;
 	
 	@Test
 	public void test(){
@@ -33,8 +30,6 @@ public class TestSpring {
 		dicType.setDictName("省市");
 		dicType.setDictValue("area");
 		sysDictService.save(dicType);*/
-		List list1=sysDictService.findAll();
-		System.out.println(JSON.toJSONString(list1));
 	}
 	
 }
