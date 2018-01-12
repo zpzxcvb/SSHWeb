@@ -1,0 +1,17 @@
+# Server settings 
+server:
+  port: 8080
+  context-path: /
+
+# DATASOURCE 
+spring:
+  datasource:
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite:db/test.db
+  freemarker:
+    suffix: .html
+
+# MyBatis
+#mybatis:
+#  mapperLocations: classpath*:config/mapper/*Mapper.xml
+#  config-location: classpath:config/mybatis-configuration.xml
