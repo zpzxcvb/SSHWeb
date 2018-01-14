@@ -18,7 +18,7 @@ public class FileScanServiceImpl implements FileScanService {
 	public List<TreeNode> scanProjects(String path) {
 		List<TreeNode> treeNodes=new ArrayList<TreeNode>();
 		if(StringUtil.isEmpty(path)){
-			path="E:\\Workspaces";
+			path=System.getProperty("user.dir");
 			treeNodes=FileScanUtil.scanFiles(path);
 			TreeNode treeNode=TreeUtil.buildRootNode("项目列表", path);
 			treeNodes.add(treeNode);

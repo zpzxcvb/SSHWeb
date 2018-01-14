@@ -23,6 +23,9 @@ public class FileScanUtil {
 					continue;
 				}
 				if(f.isDirectory()){
+					if(f.getName().matches("bin|target")) {
+						continue;
+					}
 					TreeNode node=buildTreeNode(f,true);//目录文件夹
 					treeNodes.add(node);
 				}else{
@@ -65,7 +68,6 @@ public class FileScanUtil {
 	
 	public static void main(String[] args) throws Exception {
 		String filePath=System.getProperty("user.dir");
-		filePath="E:\\Workspaces";
 		List<TreeNode> list=scanFiles(filePath);
 		for(TreeNode node : list){
 			System.out.println(JSON.toJSONString(node));

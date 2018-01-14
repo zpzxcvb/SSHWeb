@@ -1,6 +1,8 @@
 package com.zhangpan.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zhangpan.config.PageInfo;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
 
@@ -37,12 +40,25 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping("/findAll")
-	public String findAllUsers(ModelMap map){
+	@ResponseBody
+	public List<SysUser> findAllUsers(ModelMap map){
 		List<SysUser> userList = userService.findAll();
 		
 		map.put("userList", userList);
 		
-		return "test";
+		return userList;
+	}
+	
+	@RequestMapping("/findPage")
+	@ResponseBody
+	public List findPage(ModelMap map){
+		Map m =new HashMap();
+		
+		List userList = userService.findPage(m);
+		
+		map.put("userList", userList);
+		
+		return userList;
 	}
 	
 	@RequestMapping("/find/{userId}")

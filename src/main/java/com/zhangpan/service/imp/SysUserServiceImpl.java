@@ -52,8 +52,8 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<PageInfo<SysUser>> findByPage(Map<String, String> map) {
-		return sysUserDao.findByPage(map);
+	public List findPage(Map<String, String> map) {
+		return sysUserDao.findPage(map);
 	}
 
 }

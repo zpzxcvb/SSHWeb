@@ -17,14 +17,10 @@ public class SysDictItem implements Serializable{
 
     private String dictValue;
 
-    private String dictName;
-    
-    private String dictType;
-    
-    private Integer parentId;
+    private String dictCode;
     
     private Integer orderNo;
-    
+
 	public Integer getId() {
 		return id;
 	}
@@ -41,28 +37,12 @@ public class SysDictItem implements Serializable{
 		this.dictValue = dictValue;
 	}
 
-	public String getDictName() {
-		return dictName;
+	public String getDictCode() {
+		return dictCode;
 	}
 
-	public void setDictName(String dictName) {
-		this.dictName = dictName;
-	}
-
-	public String getDictType() {
-		return dictType;
-	}
-
-	public void setDictType(String dictType) {
-		this.dictType = dictType;
-	}
-
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setDictCode(String dictCode) {
+		this.dictCode = dictCode;
 	}
 
 	public Integer getOrderNo() {
@@ -72,5 +52,5 @@ public class SysDictItem implements Serializable{
 	public void setOrderNo(Integer orderNo) {
 		this.orderNo = orderNo;
 	}
-
+    
 }

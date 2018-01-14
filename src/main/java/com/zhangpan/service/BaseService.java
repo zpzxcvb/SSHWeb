@@ -20,6 +20,6 @@ public interface BaseService<T,PK extends Serializable> {
     
     public List<T> findAll();
     
-    public List<PageInfo<T>> findByPage(Map<String, String> map);
+    public List<PageInfo> findPage(Map<String, String> map);
 	
 }

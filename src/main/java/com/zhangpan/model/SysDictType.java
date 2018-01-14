@@ -18,7 +18,7 @@ public class SysDictType implements Serializable{
 
     private String dictValue;
 
-    private String dictName;
+    private String dictCode;
     
     private List<SysDictItem> sysDictItems;
     
@@ -38,12 +38,12 @@ public class SysDictType implements Serializable{
 		this.dictValue = dictValue;
 	}
 
-	public String getDictName() {
-		return dictName;
+	public String getDictCode() {
+		return dictCode;
 	}
 
-	public void setDictName(String dictName) {
-		this.dictName = dictName;
+	public void setDictCode(String dictCode) {
+		this.dictCode = dictCode;
 	}
 
 	public List<SysDictItem> getSysDictItems() {
