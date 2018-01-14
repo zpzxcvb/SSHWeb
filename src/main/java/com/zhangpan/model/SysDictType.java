@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class SysDictType implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
     private Integer id;
 
     private String dictValue;

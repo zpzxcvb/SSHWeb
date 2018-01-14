@@ -31,6 +31,9 @@ a:link:hover {color: #ffcc00;}
 .bordersolid{
 	border: solid 1px #eee;
 }
+.error {
+	color: red;
+}
 /* 分割线 */
 .border_separator{
 	float:left;

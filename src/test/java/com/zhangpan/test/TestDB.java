@@ -1,4 +1,4 @@
-package com.zhangpan.ssh.test;
+package com.zhangpan.test;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class TestDB {
 	}
 			
 	public static void main(String[] args) throws Exception {
-		InputStream in=ClassLoader.getSystemResourceAsStream("db.properties");
+		InputStream in=ClassLoader.getSystemResourceAsStream("config/db.properties");
 		Properties p=new Properties();
 		p.load(in);
 		String driver=p.getProperty("jdbc.driverClass");
@@ -40,6 +40,6 @@ public class TestDB {
 		Class.forName(driver);
 		Connection con=DriverManager.getConnection(url,user,password);
 		log.info(con);
-		excuteQuery(con);
+//		excuteQuery(con);
 	}
 }

@@ -5,6 +5,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<button onclick="show()">你大爷</button>
+<#if (userList??)>
+	<#list userList as user>
+			${user.userName}
+		</#list>
+		</#if>
+		-------------------------- 
+	<#if (user??)>
+		${user.userName}
+	</#if>
 </body>
 </html>

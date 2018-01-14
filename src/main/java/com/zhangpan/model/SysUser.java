@@ -1,6 +1,7 @@
 package com.zhangpan.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * 系统用户表 "sys_user"
@@ -11,83 +12,76 @@ import java.io.Serializable;
  */
 public class SysUser implements Serializable{
 	
-    private Integer userId;
+	private static final long serialVersionUID = 1L;
+
+	private Integer userId;
 
     private String userName;
 
-    private String realname;
-
     private String password;
 
-    private String mobile;
-
-    private String email;
-
-    private String createTime;
+    private Timestamp createTime;
+    
+    private Timestamp loginTime;
+    
+    private Timestamp lastloginTime;
 
     private Integer status;
 
 	public Integer getUserId() {
-        return userId;
-    }
+		return userId;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getRealname() {
-        return realname;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setRealname(String realname) {
-        this.realname = realname == null ? null : realname.trim();
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public Timestamp getLoginTime() {
+		return loginTime;
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
-    }
+	public void setLoginTime(Timestamp loginTime) {
+		this.loginTime = loginTime;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public Timestamp getLastloginTime() {
+		return lastloginTime;
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	public void setLastloginTime(Timestamp lastloginTime) {
+		this.lastloginTime = lastloginTime;
+	}
 
-    public String getCreateTime() {
-        return createTime;
-    }
+	public Integer getStatus() {
+		return status;
+	}
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

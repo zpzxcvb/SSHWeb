@@ -2,20 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhangpan.dao.SysUserDao" >
   <resultMap id="userResultMap" type="SysUser" >
-    <id column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="realname" property="realname" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <id column="user_id" property="userId"/>
+    <result column="user_name" property="userName"/>
+    <result column="password" property="password"/>
+    <result column="create_time" property="createTime"/>
+    <result column="login_time" property="loginTime"/>
+    <result column="last_login_time" property="lastloginTime"/>
+    <result column="status" property="status"/>
   </resultMap>
   
   <sql id="userColumns"> * </sql>
   
-  <insert id="save" parameterType="SysUser">
-  	insert into sys_user(user_name,realname,password,mobile,email,create_time,status) values(#{user_name},#{realname},#{password},#{mobile},#{email},#{create_time},#{status})
+  <insert id="save" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
+  	insert into sys_user
+  		(user_name,password,create_time,status)
+  	values
+  		(#{userName},#{password},#{createTime},0)
   </insert>
   
   <delete id="delete" parameterType="int">
@@ -30,7 +32,13 @@
   </delete>
   
   <update id="update" parameterType="SysUser">
-  	update sys_user set user_name=#{sname} , password=#{password} , mobile=#{mobile} where user_id = #{userId}
+  	update sys_user
+  	<set>
+  		<if test="password != null">
+  			password=#{password},
+  		</if>
+  	</set>
+	where user_id = #{userId}
   </update>
   
   <select id="findById" parameterType="int" resultType="SysUser">

@@ -1,4 +1,4 @@
-package com.zhangpan.ssh.test;
+package com.zhangpan.test;
 
 public class QuitSortTest {
 	

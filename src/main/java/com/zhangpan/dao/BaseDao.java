@@ -2,6 +2,9 @@ package com.zhangpan.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+import com.zhangpan.config.PageInfo;
 
 public interface BaseDao<T,PK extends Serializable> {
 	
@@ -16,4 +19,6 @@ public interface BaseDao<T,PK extends Serializable> {
     public T findById(PK id);
     
     public List<T> findAll();
+    
+    public List<PageInfo<T>> findByPage(Map<String, String> map);
 }

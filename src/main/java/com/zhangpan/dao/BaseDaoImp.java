@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,6 +12,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.zhangpan.config.PageInfo;
 
 public class BaseDaoImp<T,PK extends Serializable> extends SqlSessionDaoSupport implements BaseDao<T,PK> {
 
@@ -87,6 +90,12 @@ public class BaseDaoImp<T,PK extends Serializable> extends SqlSessionDaoSupport 
 	@Override
 	public List<T> findAll() {
 		return (List<T>)this.getSqlSession().selectList(getSqlName(SQL_FINDALL));
+	}
+
+	@Override
+	public List<PageInfo<T>> findByPage(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
