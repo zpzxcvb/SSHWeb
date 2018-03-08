@@ -1,3 +1,11 @@
+var zTree;
+$(function(){
+	zTree=initTree({
+		id:"orgTree",
+		async:true,
+		url:"/file/scanProjects"
+	});
+});
 /**
  * 加载树节点
  * @param document
@@ -67,3 +75,22 @@ function treeSearch(id,search,event){
 		});
 	}
 }
+
+function zTreeClick(event, treeId, treeNode){
+	 if(!treeNode.isParent){
+		$.ajax({
+			url:"/file/readFile",
+			data:{path:treeNode.path},
+			success:function(result){
+				var str="";
+				$("ol").empty();
+				$.each(result,function(index,value){
+					$("ol").append("<li><span>"+value.replace(/ /g,'&nbsp;&nbsp;').replace(/\t/g,'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')+"</span></li>");
+				});
+				$("ol").find("li:even").addClass("alt");
+//				$("ol").find("li:even").css("background-color","#fff");
+//				$("ol").find("li:odd").css("background-color","#f8f8f8");
+			}
+		})
+	 }
+};

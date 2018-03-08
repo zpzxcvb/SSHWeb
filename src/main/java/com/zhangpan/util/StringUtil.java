@@ -1,7 +1,11 @@
 package com.zhangpan.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,25 +16,13 @@ import java.util.regex.Pattern;
  * @date : 2017-1-18 上午10:56:10
  */
 public class StringUtil {
-	private static StringUtil instance=new StringUtil();
-	private StringUtil(){}
 	/**
 	 * 判断字符串是否为空白,包括null和""，"  "
 	 * @param str
 	 * @return
 	 */
 	public static boolean isEmpty(String str){
-		return str==null||"".equals(str.trim());
-	}
-	
-	/**
-	 * 判断字符串是否为数字
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNumber(String str){
-		String regex="^-?[0-9]+$";
-		return str.matches(regex);
+		return str==null || "".equals(str.trim());
 	}
 	
 	/**
@@ -135,7 +127,7 @@ public class StringUtil {
 	 * @param int a[]
 	 * @return
 	 */
-	public static String is10add1(int[] a){
+	private static String is10add1(int[] a){
 		StringBuffer sb = new StringBuffer();
 		for (int i = a.length-1; i >0 ; i--) {
 			if(a[i]>=10){
@@ -156,13 +148,22 @@ public class StringUtil {
 		return sb.toString();//.replaceAll("^0+", "")替换前置0
 	}
 	
+	public static void mm(Object o) {
+		if(o instanceof List) {
+			System.out.println("list");
+		}else if(o instanceof Map) {
+			System.out.println("map");
+		}else if(o instanceof Object[]) {
+			System.out.println("[]");
+		}
+	}
+	
 	public static void main(String[] args) {
-		StringUtil s=new StringUtil();
 		String a="123";
 		String b="24";
-//		System.out.println(is10add1(i));
 //		System.out.println(bigNumberPlus(a, b));
-		System.out.println(bigNumberSub(a, b));
+//		System.out.println(bigNumberSub(a, b));
 //		System.out.println(bigNumberMultiply(a, b));
+		System.out.println();
 	}
 }

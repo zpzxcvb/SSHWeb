@@ -3,51 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <title>login</title>
-<!-- bootstrap3 -->
-<link rel="stylesheet" href="/jsLib/bootstrap/css/bootstrap.min.css" />
-<script type="text/javascript" src="/jsLib/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/jsLib/bootstrap/js/bootstrap.min.js"></script>
-<style type="text/css">
-	.formCenter{
-		text-align: center;
-		margin-top: 20%;
-	}
-</style>
+<#include "/common/common.html"/>
 </head>
 <body>
-	<div class="container formCenter">
-	<form class="form-horizontal" role="form">
-		<div class="form-group">
-			<label for="name" class="col-sm-offset-3 col-sm-1 control-label">用户名</label>
-			<div class="col-sm-2">
-				<input type="text" class="form-control" id="userName" name="userName" placeholder="请输入用户名/手机/邮箱">
-			</div>
+	<div class="container">
+		<div class="login_box">
+			<form id="form-login" class="">
+				<div class="">
+<!-- 					<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span> -->
+					<input type="text" class="" id="userName" name="userName" placeholder="请输入用户名/手机/邮箱">
+				</div>
+				<div class="">
+<!-- 					<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span> -->
+					<input type="password" class="" id="password" name="password" placeholder="请输入密码">
+				</div>
+				<div class="">
+					<label> <input type="checkbox"> 记住我
+					</label> <a href="#">忘记密码 </a>
+				</div>
+				<div class="">
+					<button id="btn-login" type="submit" class="btn btn-success btn-login">登录</button>
+				</div>
+				<div class="">
+					<!-- <a href="/user/register">立即注册 </a> -->
+				</div>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="password" class="col-sm-offset-3 col-sm-1 control-label">密码</label>
-			<div class="col-sm-2">
-				<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="checkbox col-sm-offset-4 col-sm-1">
-				<label>
-					<input type="checkbox"> 记住我
-				</label>
-			</div>
-			<div class="col-sm-1">
-				<a href="#">忘记密码 </a>
-			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-1">
-				<button type="submit" class="btn btn-default">登录</button>
-			</div>
-			<div class="col-sm-1">
-				<a href="/user/register">立即注册 </a>
-			</div>
-		</div>
-	</form>
 	</div>
+	<script type="text/javascript" src="/js/login.js"></script>
 </body>
 </html>

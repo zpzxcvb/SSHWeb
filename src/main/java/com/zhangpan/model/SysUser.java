@@ -2,6 +2,7 @@ package com.zhangpan.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 系统用户表 "sys_user"
@@ -20,11 +21,11 @@ public class SysUser implements Serializable{
 
     private String password;
 
-    private Timestamp createTime;
+    private Date createTime;
     
-    private Timestamp loginTime;
+    private Date loginTime;
     
-    private Timestamp lastloginTime;
+    private Date lastloginTime;
 
     private Integer status;
 
@@ -52,27 +53,27 @@ public class SysUser implements Serializable{
 		this.password = password;
 	}
 
-	public Timestamp getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getLoginTime() {
+	public Date getLoginTime() {
 		return loginTime;
 	}
 
-	public void setLoginTime(Timestamp loginTime) {
+	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
 	}
 
-	public Timestamp getLastloginTime() {
+	public Date getLastloginTime() {
 		return lastloginTime;
 	}
 
-	public void setLastloginTime(Timestamp lastloginTime) {
+	public void setLastloginTime(Date lastloginTime) {
 		this.lastloginTime = lastloginTime;
 	}
 

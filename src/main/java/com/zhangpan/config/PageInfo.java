@@ -1,10 +1,12 @@
 package com.zhangpan.config;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PageInfo<T> {
-	
-	private Integer currentPage = 1;//当前页
+public class PageInfo implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private Integer pageNum = 1;//当前页
 	
 	private Integer pageSize = 10;//每页记录数
 	
@@ -14,24 +16,24 @@ public class PageInfo<T> {
 	
 	private Integer startIndex;//开始索引
 	
-	private List<T> items;//分页结果
+	private List data;//分页结果
 
 	public PageInfo() {}
 
-	public PageInfo(Integer currentPage, Integer pageSize, Integer totalNum) {
-		this.currentPage = currentPage;
+	public PageInfo(Integer pageNum, Integer pageSize, Integer totalNum) {
+		this.pageNum = pageNum;
 		this.pageSize = pageSize;
 		this.totalNum = totalNum;
 		this.totalPage = (this.totalNum + this.pageSize-1)/this.pageSize;
-		this.startIndex = (currentPage - 1)*pageSize;
+		this.startIndex = (pageNum - 1)*pageSize;
 	}
 
-	public Integer getCurrentPage() {
-		return currentPage;
+	public Integer getPageNum() {
+		return pageNum;
 	}
 
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
 	}
 
 	public Integer getPageSize() {
@@ -66,12 +68,12 @@ public class PageInfo<T> {
 		this.startIndex = startIndex;
 	}
 
-	public List<T> getItems() {
-		return items;
+	public List getData() {
+		return data;
 	}
 
-	public void setItems(List<T> items) {
-		this.items = items;
+	public void setData(List data) {
+		this.data = data;
 	}
 	
 }

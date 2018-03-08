@@ -1,160 +1,94 @@
-.header{
-	background: #eee;
-	position:absolute;
-	width:100%;
-	height: 40px;
-	line-height: 40px;
-	top: 0;
-	text-align: center;
-	font-size: 15px;
-}
-.top_mulu:hover+mulu_menu{
-	display:block;
-}
-.content{
-	padding: 10px 0;
-}
-.footer{
-	background: #eee;
-	position:fixed;
-	width:100%;
-	height: 40px;
-	bottom: 0;
-	text-align: center;
-}
-.footer-bar{
-	
-}
 /* 去除a标签的下划线 */
-a:link,a:visited,a:hover,a:active {text-decoration: none;}
-a:link:hover {color: #ffcc00;}
-.bordersolid{
-	border: solid 1px #eee;
+body {
 }
-.error {
-	color: red;
-}
-/* 分割线 */
-.border_separator{
-	float:left;
-    height: 24px;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #fff;
-    margin: 3px 5px;
-}
-/* 动画旋转 */
-.iconfont-rotate
-{
-	display:inline-block;
-	animation:rotate 5s linear infinite;
-	-webkit-animation:rotate 5s linear infinite;
-}
-.iconfont-rotate:hover
-{
-	animation-play-state: paused;
-}
-@keyframes rotate
-{
-    0%   {transform:rotate(0deg);-webkit-transform:rotate(0deg);}
-	25%  {transform:rotate(90deg);-webkit-transform:rotate(90deg);}
-    50%  {transform:rotate(180deg);-webkit-transform:rotate(180deg);}
-	75%  {transform:rotate(270deg);-webkit-transform:rotate(270deg);}
-    100% {transform:rotate(360deg);-webkit-transform:rotate(360deg);}
-}
-@-webkit-keyframes rotate
-{
-    0%   {transform:rotate(0deg);-webkit-transform:rotate(0deg);}
-	25%  {transform:rotate(90deg);-webkit-transform:rotate(90deg);}
-    50%  {transform:rotate(180deg);-webkit-transform:rotate(180deg);}
-	75%  {transform:rotate(270deg);-webkit-transform:rotate(270deg);}
-    100% {transform:rotate(360deg);-webkit-transform:rotate(360deg);}
-}
-/* 靠左 */
-.fl{ float: left; }
-/* 靠右 */
-.fr{float: right; }
-/* mgrgin */
-.mg10{ margin: 10px; }
-.mgt{margin-top: 10px;}
-.mgb{margin-bottom: 10px;}
-.mgl{margin-left: 10px;}
-.dtl{
-	float: left;
-	height: 55px;
-	line-height: 55px;
-	text-align: center;
-	margin-left: 10px;
-}
-.dti{
-	float: left;
-	position: relative;
-	left:10px;
-	height: 55px;
-	line-height: 55px;
-}
-.dtp{
-	float: right;
-	width: 500px;
-	height: 43px;
-	line-height: 43px;
-}
-/* padding */
-.pd10{padding: 0px 10px; }
-.top_left{
-	float: left;
-	width: 300px;
+a {
+	text-decoration: none;
 }
 .top_right{
 	float: right;
-	width: 500px;
 }
-
 .mulu_menu{
-	position:relative;
-	display: none;
+/* 	display: none; */
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	list-style: none;
 }
-.mulu_menu a{
-	display:block;
-	width:70px;
-	text-align: left;
+.icon-mulu{
+	font-size: 20px;
 }
-
+.top_mulu:hover + .mulu_menu{
+	display: block;
+	
+}
 .fixed-btn{
 	position: fixed;
-	right: 1%;
-	bottom: 8%;
-	width:60px;
-	height:80px;
-	z-index: 100;
-	background: #eee;
-}
-.fixed-btn a{
-	display:inline-block;
-	width:60px;
-	height:40px;
-	line-height:40px;
-	text-align: center;
-	border-bottom: solid 1px #ddd;
-}
-
-/* .zf-icon{
-	display: none;
-	padding: 10px;
-	text-align: center;
-	width:280px;
-	float: right;
-	margin-right: 65px;
-	margin-bottom: 400px;
-} */
-.qrcode:hover + div{
-	display: block;
+	right: 10px;
+	bottom: 50px;
 }
 .zf-icon{
-	width:300px;
-	text-align: center;
-	border: solid 1px #ddd;
+	display: none;
 }
-.zf-icon img{
-	width:130px;
-	height:130px;
+.go-top, .qrcode{
+	
+}
+.footer{
+	text-align: center;
+}
+.login_box {
+	position: absolute;
+	border: 1px solid #d5dce5;
+	width: 400px;
+	height: 200px;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+/* 	margin-left: -200px; */
+/* 	margin-top: -100px; */
+	padding: 10px;
+}
+.btn-login {
+	width: 100%;
+}
+.file-tree,.file-content{
+	border: 1px solid #d5dce5;
+	height: 550px;
+	overflow: auto;
+}
+.file-tree{
+	width: 20%;
+	float: left;
+}
+.file-content{
+	width: 70%;
+	margin-left: 10px;
+	float: left;
+}
+.file-code{
+	background-color: #eee;
+}
+.file-code b{
+	color: #d4a9a9;
+	padding: 3px 8px 10px 10px;
+}
+.file-code ol{
+}
+.file-code ol li{
+	padding: 0 3px 0 10px;
+	border-left: 3px solid #6CE26C;
+	white-space:nowrap;
+	width: 100%;
+}
+.file-code .alt{
+	background-color: #fff;
+}
+.dataTables_info, .dataTables_length{
+	float: left;
+}
+.dataTables_length{
+	float: left;
+	margin-left: 15px;
+	padding-top: 5px;
 }

@@ -1,0 +1,32 @@
+# Server settings 
+server:
+  port: 80
+  context-path: /
+
+# DATASOURCE 
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+  freemarker:
+    suffix: .html
+  profiles:
+    active: dev
+
+# MyBatis
+mybatis:
+  mapperLocations: classpath:mapper/*Mapper.xml
+  config-location: classpath:config/mybatis-configuration.xml
+
+pagehelper:
+  auto-dialect: true
+  reasonable: true
+  support-methods-arguments: true
+  params: count
+  
+logging:
+  level: 
+    com.zhangpan.dao: debug
+    org.mybatis: debug

@@ -140,7 +140,6 @@ public class DateUtil {
 		calendar.setTime(begin);
 		Date startDate=calendar.getTime();
 		while(startDate.before(end)||startDate.compareTo(end)==0){
-			System.out.println(formatDateToString(startDate));
 			list.add(formatDateToString(startDate));
 			calendar.add(Calendar.DAY_OF_MONTH, 1);
 			startDate=calendar.getTime();
@@ -149,10 +148,20 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 时间戳转日期
+	 * @return
+	 */
+	public static String longToTime(long time){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateTimePattern);
+		return sdf.format(time);
+	}
+	
+	/**
 	 * @param args
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws ParseException {
+		System.out.println(longToTime(System.currentTimeMillis()));
 		Calendar calendar=new GregorianCalendar();
 		/*System.out.println(currentDate());
 		System.out.println(currentDateTime());

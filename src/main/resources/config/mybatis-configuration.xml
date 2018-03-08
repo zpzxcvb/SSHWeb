@@ -15,11 +15,11 @@
 		
 		<!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		
 	</settings>
 	
 	<!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
 	<typeAliases>
 		<package name="com.zhangpan.model"/>
 	</typeAliases>
-	
 </configuration>

@@ -1,6 +1,5 @@
 package com.zhangpan.service.imp;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.zhangpan.config.PageInfo;
 import com.zhangpan.dao.SysUserDao;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
@@ -21,8 +19,6 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public int save(SysUser model) {
-		Timestamp createTime = new Timestamp(System.currentTimeMillis());
-		model.setCreateTime(createTime);
 		return sysUserDao.save(model);
 	}
 
@@ -52,7 +48,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List findPage(Map<String, String> map) {
+	public List<Map> findPage(Map<String, String> map) {
 		return sysUserDao.findPage(map);
 	}
 

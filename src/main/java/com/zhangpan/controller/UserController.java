@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageHelper;
 import com.zhangpan.config.PageInfo;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
@@ -22,13 +23,8 @@ public class UserController extends BaseController {
 	@Autowired
 	private SysUserService userService;
 	
-	@RequestMapping("/register")
-	public String register(){
-		return "user/register";
-	}
-	
-	@RequestMapping("/save")
 	@ResponseBody
+	@RequestMapping("/save")
 	public String save(SysUser user){
 		int count = userService.save(user);
 		
@@ -50,26 +46,20 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping("/findPage")
-	@ResponseBody
-	public List findPage(ModelMap map){
-		Map m =new HashMap();
-		
-		List userList = userService.findPage(m);
-		
+	public String findPage(ModelMap map){
+		PageHelper.startPage(2, 2);
+		List userList = userService.findPage(null);
 		map.put("userList", userList);
-		
-		return userList;
+		return "user/userInfo";
 	}
 	
 	@RequestMapping("/find/{userId}")
 	public String findAllUsers(@PathVariable("userId")Integer userId,ModelMap map){
 		System.out.println("userId---->"+userId);
-		
 		SysUser user = userService.findById(userId);
-		
 		map.put("user", user);
-		
-		return "test";
+		map.put("sex", 1);
+		return "user/userInfo";
 	}
 	
 }
