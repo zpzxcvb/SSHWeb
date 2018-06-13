@@ -17,6 +17,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
+import com.zhangpan.util.DateUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,7 +33,7 @@ public class DemoApplicationTests {
 		SysUser user=new SysUser();
 		user.setUserName("zp");
 		user.setPassword("123");
-		user.setCreateTime(new Date());;
+		user.setCreateTime(DateUtil.currentDate());
 		int i = userService.save(user);
 		System.out.println("----------"+i);
 	}
@@ -46,10 +47,16 @@ public class DemoApplicationTests {
 	}
 
 	@Test
-	public void testSelect() {
+	public void testfindById() {
 		SysUser user = userService.findById(1);
 		System.err.println(JSON.toJSONString(user));
 	}
+	
+	@Test
+    public void testfindAll() {
+        List<?> list = userService.findAll();
+        System.err.println(JSON.toJSONString(list));
+    }
 	
 	@After
 	public void findAll() {
@@ -60,6 +67,6 @@ public class DemoApplicationTests {
 		List<Map> pageList = userService.findPage(null);
 		System.err.println("包含分页信息："+JSON.toJSONString(pageList));
 		PageInfo page = new PageInfo(list);
-//		System.err.println("包含分页信息："+JSON.toJSONString(page));
+		System.err.println("包含分页信息："+JSON.toJSONString(page));
 	}
 }

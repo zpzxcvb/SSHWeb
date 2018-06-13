@@ -58,7 +58,7 @@ public class SortUtil {
 		user=new SysUser();user.setUserName("b");
 		user.setUserId(1);list.add(user);
 		System.out.println(JSON.toJSONString(list));
-		sort(list, "userName");
+		sort(list, "userId");
 		System.out.println(JSON.toJSONString(list));
 	}
 

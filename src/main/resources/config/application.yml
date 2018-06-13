@@ -6,10 +6,12 @@ server:
 # DATASOURCE 
 spring:
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: 123456
+    driverClassName: org.sqlite.JDBC
+    url: jdbc:sqlite:db/test.db
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: 123456
   freemarker:
     suffix: .html
   profiles:

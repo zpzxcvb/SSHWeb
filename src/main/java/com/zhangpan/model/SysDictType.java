@@ -1,7 +1,6 @@
 package com.zhangpan.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 字典类型表 "sys_dict_type"
@@ -16,42 +15,42 @@ public class SysDictType implements Serializable{
 	
     private Integer id;
 
-    private String dictValue;
+    private String dictName;
 
     private String dictCode;
     
-    private List<SysDictItem> sysDictItems;
+    private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDictName() {
+        return dictName;
+    }
+
+    public void setDictName(String dictName) {
+        this.dictName = dictName;
+    }
+
+    public String getDictCode() {
+        return dictCode;
+    }
+
+    public void setDictCode(String dictCode) {
+        this.dictCode = dictCode;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
     
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getDictValue() {
-		return dictValue;
-	}
-
-	public void setDictValue(String dictValue) {
-		this.dictValue = dictValue;
-	}
-
-	public String getDictCode() {
-		return dictCode;
-	}
-
-	public void setDictCode(String dictCode) {
-		this.dictCode = dictCode;
-	}
-
-	public List<SysDictItem> getSysDictItems() {
-		return sysDictItems;
-	}
-
-	public void setSysDictItems(List<SysDictItem> sysDictItems) {
-		this.sysDictItems = sysDictItems;
-	}
-
 }

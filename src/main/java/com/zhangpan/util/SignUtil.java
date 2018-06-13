@@ -106,6 +106,10 @@ public class SignUtil {
 			param.put("sign", sign);
 			Map<String,Object> m = verify(param);
 			System.out.println(m);
+			
+			
+			
+			System.out.println(DigestUtils.md5Hex("zp"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

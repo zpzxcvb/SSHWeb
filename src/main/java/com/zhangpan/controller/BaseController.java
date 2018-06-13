@@ -68,7 +68,7 @@ public class BaseController {
 		if (count > 0) {
 			code = Constant.SUCCESS;
 		} else {
-			code = Constant.FAILURE;
+			code = Constant.ERROR;
 		}
 		
 		return code;

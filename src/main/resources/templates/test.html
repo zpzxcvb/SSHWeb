@@ -2,62 +2,48 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>菜鸟教程(runoob.com)</title>
-<style type="text/css">
-.content {
-	border: 1px solid red;
-	width: 500px;
-	height: 200px;
-	overflow:atuo;
-	position: relative;
-}
-
-.box1, .box2, .box3 {
-	width: 100px;
-	height: 100px;
-}
-
-.box1 {
-	background-color: yellow;
-	float: left;
-}
-
-.box2 {
-	background-color: green;
-	float: left;
-	
-}
-
-.box3 {
-	background-color: blue;
-	width: 250px;
-	float: right;
-}
-.box4 {
-
-	background-color: red;
-	width: 10px;
-	height: 10px;
-	position: absolute;
-	right: 1px;
-	bottom: 20px;
-}
-.clearfix{
-        clear: both;
-    }
-</style>
+<title>test</title>
+<script src="../static/lib/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../static/lib/vue.js"></script>
+<script src="test.js"></script>
 </head>
 <body>
-<#macro common>
-<#include "/common/common.html"/>
-</#macro>
-<@common/>
-	<div class="content">
-		<div class="box1">box1</div>
-		<div class="box2">box2</div>
-<!-- 		<div class="clearfix"></div> -->
-		<div class="box3">box3</div>
-		<div class="box4">4</div>
+	
+	<div id="app">
+	  <table border="" cellspacing="" cellpadding="">
+	  	<tr>
+	  		<th>site</th>
+	  		<th>url</th>
+	  		<th>message</th>
+	  	</tr>
+	  	<tr v-for="item in items">
+			<td>{{item.site}}</td>
+			<td>{{item.url}}</td>
+			<td v-html="item.message">{{item.message}}</td>	  		
+	  	</tr>
+	  </table>
+	  <input type="text" name="" id="" v-model="username"/>
+	  <span id="">
+	  	{{username}}
+	  </span>
+	  <input type="button" name="" id="" value="确定" @click="test"/>
 	</div>
+	<script type="text/javascript">
+		var data = {username:"张三",
+			items:[
+				{message:"<h1>菜鸟教程-语文</h1>", site: "语文", url: "www.runoob.com"},
+				{message:"<h1>菜鸟教程-数学</h1>", site: "数学", url: "www.runoob.com"}
+			]
+		}
+		new Vue({
+		  el: '#app',
+		  data: data,
+		  methods: {
+		  	test:function(){
+		  		alert(this.username);
+		  	}
+		  }
+		})
+	</script>
 </body>
 </html>

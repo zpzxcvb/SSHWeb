@@ -96,9 +96,8 @@ public class StringUtil {
 	 * @return a-b  123-24=99
 	 * 321
 		42
-		-1 0 1
-		9 -1 1
-		9 9 0
+		3 -2 -1
+		2 7 9
 		
 		123
 		 24
@@ -148,22 +147,39 @@ public class StringUtil {
 		return sb.toString();//.replaceAll("^0+", "")替换前置0
 	}
 	
-	public static void mm(Object o) {
+	/**
+     * 将array转换成逗号分隔的String
+     * @param int a[]
+     * @return
+     */
+	public static String arrayToString(Object o) {
+	    String str="";
+	    boolean flag = false;
 		if(o instanceof List) {
 			System.out.println("list");
 		}else if(o instanceof Map) {
 			System.out.println("map");
 		}else if(o instanceof Object[]) {
 			System.out.println("[]");
+			Object[] objs = (Object[]) o;
+			for(Object obj : objs) {
+			    if(flag) {
+			        str += ",";
+			    }
+			    str += obj;
+			    flag = true;
+			}
 		}
+		return str;
 	}
 	
 	public static void main(String[] args) {
 		String a="123";
 		String b="24";
+		int[] i=new int[]{1,2,3,4,5};
 //		System.out.println(bigNumberPlus(a, b));
 //		System.out.println(bigNumberSub(a, b));
 //		System.out.println(bigNumberMultiply(a, b));
-		System.out.println();
+		System.out.println(arrayToString(i));
 	}
 }

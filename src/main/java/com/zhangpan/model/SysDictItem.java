@@ -15,42 +15,52 @@ public class SysDictItem implements Serializable{
 	
 	private Integer id;
 
-    private String dictValue;
+    private String dictName;
 
     private String dictCode;
     
-    private Integer orderNo;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getDictValue() {
-		return dictValue;
-	}
-
-	public void setDictValue(String dictValue) {
-		this.dictValue = dictValue;
-	}
-
-	public String getDictCode() {
-		return dictCode;
-	}
-
-	public void setDictCode(String dictCode) {
-		this.dictCode = dictCode;
-	}
-
-	public Integer getOrderNo() {
-		return orderNo;
-	}
-
-	public void setOrderNo(Integer orderNo) {
-		this.orderNo = orderNo;
-	}
+    private String dictType;
     
+    private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDictName() {
+        return dictName;
+    }
+
+    public void setDictName(String dictName) {
+        this.dictName = dictName;
+    }
+
+    public String getDictCode() {
+        return dictCode;
+    }
+
+    public void setDictCode(String dictCode) {
+        this.dictCode = dictCode;
+    }
+
+    public String getDictType() {
+        return dictType;
+    }
+
+    public void setDictType(String dictType) {
+        this.dictType = dictType;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
 }

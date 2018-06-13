@@ -1,7 +1,6 @@
 package com.zhangpan.config;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class PageInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -16,8 +15,6 @@ public class PageInfo implements Serializable {
 	
 	private Integer startIndex;//开始索引
 	
-	private List data;//分页结果
-
 	public PageInfo() {}
 
 	public PageInfo(Integer pageNum, Integer pageSize, Integer totalNum) {
@@ -68,12 +65,4 @@ public class PageInfo implements Serializable {
 		this.startIndex = startIndex;
 	}
 
-	public List getData() {
-		return data;
-	}
-
-	public void setData(List data) {
-		this.data = data;
-	}
-	
 }

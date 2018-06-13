@@ -6,9 +6,9 @@
   
   <insert id="save" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
   	insert into sys_user
-  		(user_name,password,create_time,status)
+  		(user_name,password,create_time)
   	values
-  		(#{userName},#{password},#{createTime},0)
+  		(#{userName},#{password},#{createTime})
   </insert>
   
   <delete id="deleteById" parameterType="int">

@@ -1,8 +1,6 @@
 package com.zhangpan.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
-import com.zhangpan.config.PageInfo;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
 
@@ -50,7 +47,7 @@ public class UserController extends BaseController {
 		PageHelper.startPage(2, 2);
 		List userList = userService.findPage(null);
 		map.put("userList", userList);
-		return "user/userInfo";
+		return "sys/sysUser";
 	}
 	
 	@RequestMapping("/find/{userId}")
@@ -59,7 +56,7 @@ public class UserController extends BaseController {
 		SysUser user = userService.findById(userId);
 		map.put("user", user);
 		map.put("sex", 1);
-		return "user/userInfo";
+		return "sys/sysUser";
 	}
 	
 }
