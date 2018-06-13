@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>audio</title>
+</head>
+<body>
+<#include "/common/common.html"/>
+
+<div style="vertical-align: middle;">
+	<table>
+	<tr>
+		<td>
+			<select id="voice_name">
+				<option value="xiaoyan">小燕</option>
+				<option value="xiaoping">小平</option>
+				<option value="xiaojing">小京</option>
+				<option value="xujiu">许久</option>
+				<option value="xiaofeng">小风</option>
+			</select>
+		</td>
+		<td>
+			<textarea id="content" rows="10" cols="10"></textarea>
+		</td>
+		<td>
+			<audio controls autoplay/>
+		</td>
+		<td>
+			<button id="tts_btn" class="btn">合成播放</button>
+		</td>
+	</tr>
+</table>
+</div>
+
+
+
+<script type="text/javascript">
+	$(function(){
+		tts();
+	})
+	
+	function tts(){
+		$("#tts_btn").click(function(){
+			var content = $("#content").val();
+			var voice_name = $("#voice_name").val();
+			var url = "/audio/audiomp3?content="+content+"&voice_name="+voice_name;
+			url=encodeURI(url);
+			$("audio").attr("src",url);
+		})
+	}
+</script>
+</body>
+</html>
