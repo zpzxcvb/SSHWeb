@@ -1,7 +1,6 @@
 package com.zhangpan.util;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class RC4Utils {
 

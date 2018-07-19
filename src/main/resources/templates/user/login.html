@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layout 后台大布局 - Layui</title>
+  <link rel="stylesheet" href="../../static/js/lib/layui/css/layui.css">
+  <style type="text/css">
+  	.home{
+  		background: url('../../static/img/home.jpg') no-repeat fixed;
+  		background-size:cover;
+  		color: white;
+  	}
+
+  	.login_box{
+  		width: 350px;
+  		height: 200px;
+  		margin: auto;
+  		opacity:0.8;
+  		position: absolute;
+  		left: 0;
+  		top: 0;
+  		right: 0;
+  		bottom: 0;
+  	}
+  </style>
 </head>
-<body>
-	<div class="container">
-		<div class="login_box">
-			<form id="form-login" class="">
-				<div class="">
-					<input type="text" class="" id="userName" name="userName" placeholder="请输入用户名/手机/邮箱">
-				</div>
-				<div class="">
-					<input type="password" class="" id="password" name="password" placeholder="请输入密码">
-				</div>
-				<div class="">
-					<label> <input type="checkbox"> 记住我
-					</label> <a href="#">忘记密码 </a>
-				</div>
-				<div class="">
-					<button id="btn-login" type="submit" class="btn btn-success btn-login">登录</button>
-				</div>
-				<div class="">
-					<!-- <a href="/user/register">立即注册 </a> -->
-				</div>
-			</form>
+<body class="layui-layout-body home">
+	<div class="login_box">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">用户名</label>
+			<div class="layui-input-block">
+				<input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+			</div>
 		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">密码</label>
+			<div class="layui-input-block">
+				<input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登录</button>
+		</div>
+	
+	</form>
 	</div>
-	<script type="text/javascript" src="/js/login.js"></script>
+<script src="../../static/js/lib/layui/layui.js"></script>
+<script>
+
+layui.use(['form'], function(){
+	
+});
+
+</script>
+
 </body>
 </html>

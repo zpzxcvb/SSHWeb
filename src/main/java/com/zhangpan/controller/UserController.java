@@ -16,6 +16,11 @@ import com.zhangpan.service.SysUserService;
 @Controller
 @RequestMapping("/user")
 public class UserController extends BaseController {
+    
+    @RequestMapping("/main")
+    public String main(){
+        return "main";
+    }
 	
 	@Autowired
 	private SysUserService userService;
@@ -35,7 +40,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public List<SysUser> findAllUsers(ModelMap map){
-		List<SysUser> userList = userService.findAll();
+		List<SysUser> userList = userService.findAll(null);
 		
 		map.put("userList", userList);
 		

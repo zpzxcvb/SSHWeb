@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title> scanProjects </title>
-<#include "/common/common.html"/>
+<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
+
+<script src="/js/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="/js/tree.js"></script>
 </head>
 <body>
@@ -17,21 +23,29 @@
 			<div class="panel-body">
 				<div class="panel panel-default file-tree">
 					<div class="panel-body">
-						<ul id="orgTree" class="ztree">
+						<ul id="tree" class="ztree">
 						</ul>
 					</div>
 				</div>
 				<div class="panel panel-default file-content">
-					<div class="panel-body">
-						<div class="file-code">
-							<b>[java code]</b>
-							<ol>
-							</ol>
-						</div>
+					<div class="file-code">
+						<pre class="layui-code" lay-title="" lay-height="" lay-about="" lay-encode="true" lay-skin="">
+						</pre>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+		layui.use(['code'], function() { //加载code模块
+			initTree({
+				id:"tree",
+				async:true,
+				url:"/file/scanProjects"
+			});
+			layui.code({about: false}); //引用code方法
+		});
+		
+	</script>
 </body>
 </html>

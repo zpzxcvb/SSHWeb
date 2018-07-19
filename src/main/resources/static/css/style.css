@@ -92,8 +92,6 @@ a {
 	top: 0;
 	bottom: 0;
 	margin: auto;
-/* 	margin-left: -200px; */
-/* 	margin-top: -100px; */
 	padding: 10px;
 }
 .btn-login {
@@ -116,20 +114,16 @@ a {
 .file-code{
 	background-color: #eee;
 }
-.file-code b{
-	color: #d4a9a9;
-	padding: 3px 8px 10px 10px;
-}
 .file-code ol{
 }
-.file-code ol li{
+.file-code> li{
 	padding: 0 3px 0 10px;
 	border-left: 3px solid #6CE26C;
 	white-space:nowrap;
 	width: 100%;
 }
-.file-code .alt{
-	background-color: #fff;
+.file-code > .alt{
+	background-color: #f8f8f8;
 }
 .paginate_row{
 	display: inline-block;

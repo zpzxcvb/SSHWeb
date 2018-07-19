@@ -2,15 +2,9 @@
 <html>
 <head>
 <title>web-demo</title>
-<!-- <link rel="stylesheet" href="css/style.css" /> -->
-
 <script type="text/javascript" src="js/lib/require.js"></script>
 <script src="js/require-config.js"></script>
-<script type="text/javascript">
-	require(["jquery","bootstrap","myjs"],function($){
-   		console.log("加载成功");
-    });
-</script>
+<script src="js/login.js"></script>
 </head>
 
 <body>
@@ -19,7 +13,7 @@
 	
 	<!-- 内容 -->
 	<div class="main-content">
-		
+		<#include "${mainPage }"/>
 	</div>
 
 	<!-- 底部 -->

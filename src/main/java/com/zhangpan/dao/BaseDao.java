@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import com.zhangpan.config.PageInfo;
-
 public interface BaseDao<T,PK extends Serializable> {
 	
 	public int save(T model);
@@ -18,7 +16,7 @@ public interface BaseDao<T,PK extends Serializable> {
 
     public T findById(PK id);
     
-    public List<T> findAll();
+    public List<T> findAll(Map<String, String> params);
     
-    public List<Map> findPage(Map<String, String> map);
+    public List<Map<String, String>> findPage(Map<String, String> params);
 }

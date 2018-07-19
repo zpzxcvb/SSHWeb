@@ -160,7 +160,7 @@ public class DbUtil {
 //            params.add(3);
             update(updatesql, params);*/
             
-            String sql="select * from sys_dict_item";
+            String sql="select * from sys_user";
             List<Map<String, Object>> result = findList(sql, null);
             for (Map<String, Object> m : result) {  
                 System.out.println(m);  

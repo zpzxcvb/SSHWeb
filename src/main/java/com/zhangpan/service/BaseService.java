@@ -18,8 +18,8 @@ public interface BaseService<T,PK extends Serializable> {
 
     public T findById(PK id);
     
-    public List<T> findAll();
+    public List<T> findAll(Map<String, String> params);
     
-    public List<Map> findPage(Map<String, String> map);
+    public List<Map<String, String>> findPage(Map<String, String> params);
 	
 }

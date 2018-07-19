@@ -1,51 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>login</title>
-<link rel="stylesheet" href="/css/style.css" />
-<!-- bootstrap3 -->
-<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
-<script type="text/javascript" src="/lib/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/lib/validate/jquery.validate.js"></script>
-<script type="text/javascript" src="/lib/validate/messages_zh.js"></script>
-<script type="text/javascript" src="/js/validate.js"></script>
-<style type="text/css">
-.formCenter {
-	text-align: center;
-	margin-top: 20%;
-}
-
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layout 后台大布局 - Layui</title>
+  <link rel="stylesheet" href="../../static/js/lib/layui/css/layui.css">
+  <style type="text/css">
+  	.login_box{
+  		width: 350px;
+  		margin: auto;
+  	}
+  </style>
 </head>
-<body>
-	<div class="container formCenter">
-	<form id="register_form" class="form-horizontal" role="form" action="/user/save">
-		<div class="form-group">
-			<label for="name" class="col-sm-offset-3 col-sm-1 control-label">用户名</label>
-			<div class="col-sm-2">
-				<input type="text" class="form-control" id="userName" name="userName" placeholder="请输入用户名/手机/邮箱">
+<body class="layui-layout-body">
+	<form class="layui-form login_box" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">用户名</label>
+			<div class="layui-input-block">
+				<input type="text" name="phoneNo" required lay-verify="phone" placeholder="请输入用户名" autocomplete="off" class="layui-input">
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="password" class="col-sm-offset-3 col-sm-1 control-label">密码</label>
-			<div class="col-sm-2">
-				<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+		<div class="layui-form-item">
+			<label class="layui-form-label">验证码</label>
+			<div class="layui-input-block">
+				<div class="layui-row">
+					<div class="layui-col-md7">
+						<input type="text" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-col-md5">
+						<button class="layui-btn layui-btn-fluid" lay-filter="getCode">获取验证码</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="password" class="col-sm-offset-3 col-sm-1 control-label">确认密码</label>
-			<div class="col-sm-2">
-				<input type="password" class="form-control" id="pwd_repeat" name="pwd_repeat" placeholder="请再次输入密码">
+		<div class="layui-form-item">
+			<label class="layui-form-label">密码</label>
+			<div class="layui-input-block">
+				<input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
 			</div>
 		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-1">
-				<button type="submit" class="btn btn-default">立即注册</button>
+		<div class="layui-form-item">
+			<label class="layui-form-label">确认密码</label>
+			<div class="layui-input-block">
+				<input type="password" name="repeat_password" required lay-verify="required" placeholder="确认密码" autocomplete="off" class="layui-input">
 			</div>
 		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="user_register">注册</button>
+			</div>
+		</div>
+	
 	</form>
-	</div>
+
+<script src="../../static/js/lib/layui/layui.js"></script>
+<script>
+
+layui.use(['form'], function(){
+	
+});
+
+</script>
+
 </body>
 </html>

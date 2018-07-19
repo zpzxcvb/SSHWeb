@@ -46,6 +46,11 @@ import com.zhangpan.util.SignUtil;
 @Controller
 @RequestMapping(value = "/audio")
 public class AudioController extends BaseController {
+    
+    @RequestMapping(value = "/video")
+    public String video() throws Exception {
+        return "video";
+    }
 	
     @RequestMapping(value = "/audioForm")
     public String audioForm(String content) throws Exception {

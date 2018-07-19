@@ -1,6 +1,7 @@
-package com.zhangpan.test;
+package com.zhangpan.model.test;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +22,8 @@ import com.zhangpan.util.DateUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@ComponentScan(basePackages="com.zhangpan.dao")
 @MapperScan(basePackages="com.zhangpan.dao")
-public class DemoApplicationTests {
+public class UserTest {
 
 	@Autowired
 	private SysUserService userService;
@@ -31,8 +31,8 @@ public class DemoApplicationTests {
 	@Test
 	public void testAdd() {
 		SysUser user=new SysUser();
-		user.setUserName("zp");
-		user.setPassword("123");
+		user.setUserName("admin");
+		user.setPassword("1");
 		user.setCreateTime(DateUtil.currentDate());
 		int i = userService.save(user);
 		System.out.println("----------"+i);
@@ -54,19 +54,31 @@ public class DemoApplicationTests {
 	
 	@Test
     public void testfindAll() {
-        List<?> list = userService.findAll();
+	    Map<String, String> map=new HashMap<String, String>();
+	    map.put("userName", "admin");
+	    map.put("password", "1");
+        List<?> list = userService.findAll(map);
         System.err.println(JSON.toJSONString(list));
+    }
+	
+	@Test
+    public void testUserAuth() {
+        Map<String, String> map=new HashMap<String, String>();
+        map.put("userName", "admin");
+        map.put("password", "1");
+        SysUser user = userService.userAuth(map);
+        System.err.println(JSON.toJSONString(user));
     }
 	
 	@After
 	public void findAll() {
-		List<SysUser> list = userService.findAll();
+		List<SysUser> list = userService.findAll(null);
 		System.err.println("不带分页信息："+JSON.toJSONString(list));
 		
-		PageHelper.startPage(1, 2);
-		List<Map> pageList = userService.findPage(null);
-		System.err.println("包含分页信息："+JSON.toJSONString(pageList));
-		PageInfo page = new PageInfo(list);
-		System.err.println("包含分页信息："+JSON.toJSONString(page));
+//		PageHelper.startPage(1, 2);
+//		List<Map<String, String>> pageList = userService.findPage(null);
+//		System.err.println("包含分页信息："+JSON.toJSONString(pageList));
+//		PageInfo page = new PageInfo(list);
+//		System.err.println("包含分页信息："+JSON.toJSONString(page));
 	}
 }

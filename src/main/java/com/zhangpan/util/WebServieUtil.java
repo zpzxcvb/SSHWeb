@@ -36,9 +36,9 @@ public class WebServieUtil {
 	}
 	
 	public static void main(String[] args) {
-	    String url="http://172.17.17.36:7777/webservice/flightService?wsdl";
-	    String methodName="getFlightInfoJSON";
-	    String xmlParam="<CER_ID>61010411197904156128</CER_ID><CER_TYPE>identity</CER_TYPE>";
+	    String url="https://localhost/gatms_interface/service/demo?wsdl";
+	    String methodName="getUsers";
+	    String xmlParam="";
 	    String result = getUrlResponse(url, methodName, xmlParam);
 	    System.out.println(result);
     }

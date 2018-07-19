@@ -159,8 +159,8 @@ public class HttpUtil {
     private static RequestConfig getRequestConfig() {
         RequestConfig requestConfig = RequestConfig.custom()
                 .setConnectTimeout(timeOut)   //设置连接超时时间
-                .setConnectionRequestTimeout(timeOut) // 设置请求超时时间
-                .setSocketTimeout(timeOut)
+                .setConnectionRequestTimeout(timeOut) //从连接池中获取连接的超时时间
+                .setSocketTimeout(timeOut) //设置获取响应数据超时时间
                 .setRedirectsEnabled(true)//默认允许自动重定向
                 .build();
         return requestConfig;
