@@ -1,6 +1,7 @@
 package com.zhangpan.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.zhangpan.constant.Constant;
 import com.zhangpan.constant.ResponseData;
 
@@ -32,24 +35,26 @@ public class BaseController {
 		this.response = response;
 		this.session = request.getSession();
 		this.paramMap = getParamMap();
+		
+        if(paramMap.get("pageNum") != null && paramMap.get("pageSize") != null) {
+            int pageNum = Integer.parseInt(paramMap.get("pageNum"));
+            int pageSize = Integer.parseInt(paramMap.get("pageSize"));
+            
+            PageHelper.startPage(pageNum, pageSize);
+        }
 	}
 
 	private Map<String, String> getParamMap(){
-		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap = new HashMap<String, String>();
 		
 		Map<String, String[]> params = request.getParameterMap();
 		
-		String value = "";
 		for(Map.Entry<String, String[]> param : params.entrySet()) {
 		    String key = param.getKey();
 		    String[] values = param.getValue();
-		    for (int i = 0; i < values.length; i++) {
-                value += values[i] + ",";
-            }
-            value = value.substring(0, value.lastIndexOf(","));
-            paramMap.put(key, value);
+            paramMap.put(key, values[0]);
 		}
-		System.out.println(this.paramMap);
+		System.out.println("requestParams=====>【"+this.paramMap+"】");
 		return paramMap;
 	}
 	
@@ -69,4 +74,12 @@ public class BaseController {
 		
 		return code;
 	}
+	
+	protected Map<String, Object> pageData(Page<?> page) {
+        result.put("status", 0);
+        result.put("msg", "");
+        result.put("total", page.getTotal());
+	    result.put("data", page.getResult());
+        return result;
+    }
 }

@@ -5,9 +5,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class Test {
 	
 	public static void main(String[] args) throws Exception {
-	    String str="0";
-	    String md5pwd = DigestUtils.md5Hex(str.toString().getBytes("utf-8")).toUpperCase();
-	    System.out.println(md5pwd);
+	    int a=5;
+	    int b=5;
+	    if(a>b) {
+	        System.out.println("11111");
+	    }else if(a<b) {
+	        System.out.println("2222");
+	    }
 	}
 	
 }

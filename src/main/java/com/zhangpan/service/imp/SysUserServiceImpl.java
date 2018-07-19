@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.zhangpan.dao.SysUserDao;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.SysUserService;
@@ -48,7 +49,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<Map<String, String>> findPage(Map<String, String> params) {
+	public Page<SysUser> findPage(Map<String, String> params) {
 		return sysUserDao.findPage(params);
 	}
 

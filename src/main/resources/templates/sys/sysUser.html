@@ -1,36 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>userInfo</title>
-<#include "/common/common.html"/>
-<script type="text/javascript">
-	$(function(){
-		$("#userInfo").DataTable({
-			ajax: {
-				url:'/air.json',
-				data:{}
-			},
-			columns: [
-	            { "data": "userName" },
-	            { "data": "password" },
-	            { "data": "createTime" }
-	        ]
-		});		
-	})
-</script>
+<title>用户信息</title>
+<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+
+<script src="/js/lib/layui/layui.js"></script>
 </head>
 <body>
-	<header> </header>
-	<table id="userInfo" class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>序号</th>
-				<th>用户名</th>
-				<th>创建时间</th>
-<!-- 				<th>状态</th> -->
-<!-- 				<th>操作</th> -->
-			</tr>
-		</thead>
-	</table>
+	<table id="table" lay-filter="test"> </table>
+	<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  
+  <!-- 这里同样支持 laytpl 语法，如： -->
+  {{#  if(d.auth > 2){ }}
+    <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+  {{#  } }}
+</script>
+	<script>
+		layui.use('table', function(){
+		  var table = layui.table;
+		  table.render({
+			elem: "#table",
+			url: "/user/findAll",
+			method: 'post',
+			where: {name:"张三"},
+			cellMinWidth: 80,
+		    page: true,
+		    limit:2,
+		    cols: [[
+		    	{type: 'checkbox', fixed: 'left'},
+		      	{type: 'numbers', title: '序号', width:80, fixed: 'left'},
+		      	{field: 'userName', title: '用户名'},
+		      	{field: 'createTime', title: '创建时间', sort: true},
+		      	{field: 'loginTime', title: '登录时间'},
+		      	{field: 'status', title: '状态', sort: true, templet: function(d){
+		    	  	var status="";
+		    	  	if(d.status==1){
+		    		  	status="可用";
+		    	  	}else{
+		    		  status="<span style='color: red;'>不可用</span>";
+		    	  	}
+		        	return status;
+		      	}},
+		      	{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'} //这里的toolbar值是模板元素的选择器
+		    ]],
+		    request: {
+		    	pageName: 'pageNum', //页码的参数名称，默认：page
+		    	limitName: 'pageSize' //每页数据量的参数名，默认：limit
+		    },
+			response: {
+	    		statusName: 'status', //数据状态的字段名称，默认：code
+	    		statusCode: 0, //成功的状态码，默认：0
+	    		msgName: 'msg', //状态信息的字段名称，默认：msg
+	    		countName: 'total', //数据总数的字段名称，默认：count
+	    		dataName: 'data' //数据列表的字段名称，默认：data
+	    	}
+		  });
+		  //监听工具条
+		  table.on('tool(test)', function(obj){
+		    var data = obj.data; //获得当前行数据
+		    console.log(obj);
+		    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+		    var tr = obj.tr; //获得当前行 tr 的DOM对象
+		   
+		    if(layEvent === 'detail'){ //查看
+		      layer.alert("查看");
+		    } else if(layEvent === 'del'){ //删除
+		      layer.confirm('真的删除行么', function(index){
+		        obj.del();
+		        layer.close(index);
+		      });
+		    } else if(layEvent === 'edit'){ //编辑
+		    	layer.alert("查看");
+		    }
+		  });
+		  table.on('checkbox(test)', function(obj){
+			  console.log(obj); //当前是否选中状态
+		  });
+		});
+	</script>
 </body>
 </html>

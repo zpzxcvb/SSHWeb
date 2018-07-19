@@ -1,68 +1,108 @@
 package com.zhangpan.config;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
-public class PageInfo implements Serializable {
+import com.github.pagehelper.Page;
+
+public class PageInfo<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer pageNum = 1;//当前页
+	private int pageNum;//当前页
 	
-	private Integer pageSize = 10;//每页记录数
+	private int pageSize;//每页记录数
 	
-	private Integer totalNum;//总记录数
+	private long total;//总记录数
 	
-	private Integer totalPage;//总页数
+	private int pages;//总页数
 	
-	private Integer startIndex;//开始索引
+    private List<T> list;//结果集
+    
+    private boolean isFirstPage = false;//是否为第一页
+    
+    private boolean isLastPage = false;//是否为最后一页
 	
-	public PageInfo() {}
-
-	public PageInfo(Integer pageNum, Integer pageSize, Integer totalNum) {
-		this.pageNum = pageNum;
-		this.pageSize = pageSize;
-		this.totalNum = totalNum;
-		this.totalPage = (this.totalNum + this.pageSize-1)/this.pageSize;
-		this.startIndex = (pageNum - 1)*pageSize;
+	public PageInfo(List<T> list) {
+	    if (list instanceof Page) {
+            Page<T> page = (Page<T>) list;
+            this.pageNum = page.getPageNum();
+            this.pageSize = page.getPageSize();
+            this.pages = page.getPages();
+            this.list = page;
+            this.total = page.getTotal();
+        } else if (list instanceof Collection) {
+            this.pageNum = 1;
+            this.pageSize = list.size();
+            this.pages = 1;
+            this.list = list;
+            this.total = list.size();
+            judgePageBoudary();
+        }
 	}
+	
+	/**
+     * 判定页面边界
+     */
+    private void judgePageBoudary() {
+        isFirstPage = pageNum == 1;
+        isLastPage = pageNum == pages;
+    }
 
-	public Integer getPageNum() {
+	public int getPageNum() {
 		return pageNum;
 	}
 
-	public void setPageNum(Integer pageNum) {
+	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}
 
-	public Integer getPageSize() {
+	public int getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(Integer pageSize) {
+	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
 
-	public Integer getTotalNum() {
-		return totalNum;
-	}
+	public long getTotal() {
+        return total;
+    }
 
-	public void setTotalNum(Integer totalNum) {
-		this.totalNum = totalNum;
-	}
+    public void setTotal(long total) {
+        this.total = total;
+    }
 
-	public Integer getTotalPage() {
-		return totalPage;
-	}
+    public Integer getPages() {
+        return pages;
+    }
 
-	public void setTotalPage(Integer totalPage) {
-		this.totalPage = totalPage;
-	}
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
 
-	public Integer getStartIndex() {
-		return startIndex;
-	}
+    public List<T> getList() {
+        return list;
+    }
 
-	public void setStartIndex(Integer startIndex) {
-		this.startIndex = startIndex;
-	}
+    public void setList(List<T> list) {
+        this.list = list;
+    }
+
+    public boolean isFirstPage() {
+        return isFirstPage;
+    }
+
+    public void setFirstPage(boolean isFirstPage) {
+        this.isFirstPage = isFirstPage;
+    }
+
+    public boolean isLastPage() {
+        return isLastPage;
+    }
+
+    public void setLastPage(boolean isLastPage) {
+        this.isLastPage = isLastPage;
+    }
 
 }
