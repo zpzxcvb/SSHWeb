@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layout 后台大布局 - Layui</title>
+  <link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+  <style type="text/css">
+  	.layui-tab-title li:first-child .layui-tab-close{
+  		display: none;
+  	}
+  </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">layui 后台布局</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="">控制台</a></li>
+      <li class="layui-nav-item"><a href="">商品管理</a></li>
+      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">其它系统</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">邮件管理</a></dd>
+          <dd><a href="">消息管理</a></dd>
+          <dd><a href="">授权管理</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          贤心
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">退了</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">所有商品</a>
+          <dl class="layui-nav-child">
+            <dd><a id="1" href="javascript:;" url="http://www.baidu.com">列表一</a></dd>
+            <dd><a id="2" href="javascript:;">列表二</a></dd>
+            <dd><a id="3" href="javascript:;">列表三</a></dd>
+            <dd><a id="4" href="">超链接</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">解决方案</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">列表一</a></dd>
+            <dd><a href="javascript:;">列表二</a></dd>
+            <dd><a href="javascript:;">超链接</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">云市场</a></li>
+        <li class="layui-nav-item"><a href="">发布商品</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div class="layui-tab" lay-filter="tabs" lay-allowClose="true">
+        <ul class="layui-tab-title">
+            <li class="layui-this">首页</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">选择</label>
+						<div class="layui-input-block">
+							<select multiple="multiple">
+								<option>北京</option>
+								<option>上海</option>
+								<option>西安</option>
+								<option>广州</option>
+								<option>深圳</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">开关</label>
+						<div class="layui-input-block">
+							<input type="checkbox" name="switch" lay-skin="switch">
+						</div>
+					</div>
+				</form>
+				<a class="layui-btn" href="javascript:;" onclick="test()">弹弹弹</a>
+            	<input id="createDate" class="layui-input" type="text">
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © layui.com - 底部固定区域
+  </div>
+</div>
+<script src="/js/lib/layui/layui.js"></script>
+<script>
+
+layui.use(['layer','element','laydate','tree','form'], function(){
+	var $ = layui.jquery;
+	var laydate = layui.laydate;
+	var layer = layui.layer;
+	var element = layui.element;
+	laydate.render({
+	    elem: '#createDate',
+	    type: 'datetime',
+	    format:'yyyy-MM-dd HH:mm:ss',
+	    value:new Date(),
+	    max: 7,
+	    calendar: true,
+	    done: function(value, date, endDate){
+	    	console.log(value); //得到日期生成的值，如：2017-08-18
+	        console.log(date);
+	    }
+	  });
+	var tabId="tabs";
+	//触发事件
+    var active = {
+        //在这里给active绑定几项事件，后面可通过active调用这些事件
+        tabAdd: function(url,id,title) {
+        	var height = ($(window).height() -41- 10 - 60 -10-44 -10)+"px";//嵌入页面的高度
+            //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+            element.tabAdd(tabId, {
+                title: title,
+                content: '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:'+height+';"></iframe>',
+                id: id //规定好的id
+            })
+        },
+        tabChange: function(id) {
+            element.tabChange(tabId, id); ////切换到指定id的Tab项
+        }, 
+        tabDelete: function (id) {
+        	element.tabDelete(tabId, id);//删除
+        }, 
+        tabDeleteAll: function (ids) {//删除所有
+            $.each(ids, function (i,item) {
+                element.tabDelete(tabId, item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+            })
+        }
+    };
+	  element.on('nav(nav-tree)',function(data){
+		  var $ = layui.jquery;
+	      /*使用DOM操作获取超链接的自定义data属性值*/
+	      var id = data[0].id;
+	      var url = data[0].getAttribute("url");
+	      var title = data[0].text;
+	      var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
+          $.each($(".layui-tab-title li[lay-id]"), function () {
+              //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+              if ($(this).attr("lay-id") == id) {
+                  isData = true;
+                  return false;
+              }
+          })
+          if (!isData) {
+        	  active.tabAdd(url, id, title);
+          }
+          //切换到指定id选项卡
+          active.tabChange(id);
+	  });
+});
+function test(){
+	layer.open({
+	  content: "弹出鱼尾纹"
+    });
+}
+</script>
+
+</body>
+</html>

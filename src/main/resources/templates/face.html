@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>face</title>
+<script src="../static/js/lib/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.facedetection.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<img id="demo-img" src="temp.jpg">
+
+<script>
+    $('#demo-img').faceDetection({
+        complete: function (faces) {
+            console.log(faces);
+            /*for (var i = 0; i < faces.length; i++) {
+                            $('<div>', {
+                                'class':'face',
+                                'css': {
+                                    'position': 'absolute',
+                                    'left':     faces[i].x * faces[i].scaleX + 'px',
+                                    'top':      faces[i].y * faces[i].scaleY + 'px',
+                                    'width':    faces[i].width  * faces[i].scaleX + 'px',
+                                    'height':   faces[i].height * faces[i].scaleY + 'px'
+                                }
+                            })
+                            .insertAfter(this);*/
+        },
+		error: function() {
+			console.warn("无法分析图片");
+		}
+    });
+    
+    function completed(faces) {
+            var marg = 20;
+
+            for (var i = 0; i < faces.length; i++) {
+                var left   = (faces[i].x - marg),
+                    top    = (faces[i].y - marg),
+                    width  = (faces[i].width  + (marg * 2)),
+                    height = (faces[i].height + (marg * 2));
+
+                $('<div />', {
+                    'class': 'face-img',
+                    'css': {
+                        'left':   left   * faces[i].scaleX + 'px',
+                        'top':    top    * faces[i].scaleY + 'px',
+                        'width':  width  * faces[i].scaleX + 'px',
+                        'height': height * faces[i].scaleY + 'px'
+                    }
+                })
+                .appendTo($img.closest('div'));
+
+                var $div = $('<div />', {
+                    'class': 'portrait',
+                    'css': {
+                        'background-image': 'url(' + $img.attr('src') + ')',
+                        'background-position': -left + 'px ' + -top + 'px'
+                    }
+                }).on('click', function(e) {
+                    e.preventDefault();
+
+                    $('.portrait').fadeOut('fast', function() {
+                        $(this).remove();
+
+                        initFaces();
+                    });
+                }).appendTo('#portraits');
+
+                (function($div, i) {
+                    setTimeout(function() {
+                        $div.addClass('animated swing');
+                    }, 100 * i);
+                })($div, i);
+            }
+        }
+</script>
+
+</body>
+</html>

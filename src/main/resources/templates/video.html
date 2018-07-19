@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>video</title>
+<style>
+    .booth {
+      width:400px;
+     
+      background:#ccc;
+      border: 10px solid #ddd;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div class="booth">
+    <video id="video" width="400" height="300"></video>
+    <button id='tack'> snap shot</button>
+    <canvas id='canvas' width='400' height='300'></canvas>
+    <img id='img' src=''>
+  </div>
+
+
+
+<script>
+    var video = document.getElementById('video'),
+        canvas = document.getElementById('canvas'),
+        snap = document.getElementById('tack'),
+        img = document.getElementById('img')
+        
+    //媒体对象
+    var getUserMedia = navigator.getUserMedia ||
+                         navagator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia;
+	if (getUserMedia) {
+		navigator.mediaDevices.getUserMedia({
+			video : { width: 720, height: 480 }
+		}).then(function(stream) {
+			console.log(stream);
+			video.srcObject = stream;
+			video.onloadedmetadata = function(e) {
+				video.play();
+			};
+		}).catch(function(err) {
+			  console.log(err.name + ": " + err.message);
+		});
+	} else {
+		alert("getUserMedia not supported");
+	}
+	snap.addEventListener('click', function() {
+
+		//绘制canvas图形
+		canvas.getContext('2d').drawImage(video, 0, 0, 400, 300);
+
+		//把canvas图像转为img图片，data:[<mediatype>][;base64],<data>
+		img.src = canvas.toDataURL("image/png");
+
+	})
+</script>
+</body>
+</html>
