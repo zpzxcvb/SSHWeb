@@ -1,4 +1,6 @@
-package com.zhangpan.controller;
+package com.zhangpan.controller.sys;
+
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
+import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysUser;
-import com.zhangpan.service.SysUserService;
+import com.zhangpan.service.sys.user.SysUserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController {
+public class SysUserController extends BaseController {
     
     @RequestMapping("/main")
     public String main(){
@@ -25,14 +28,10 @@ public class UserController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping("/save")
-	public String save(SysUser user){
+	public Object save(SysUser user){
 		int count = userService.save(user);
 		
-		String code = this.getResponseCode(count);
-		
-		result.put("code", code);
-		
-		return "test";
+		return this.getResponseState(count);
 	}
 	
 	@RequestMapping("/findPage")
@@ -50,7 +49,7 @@ public class UserController extends BaseController {
 	@RequestMapping("/find/{userId}")
 	public String findAllUsers(@PathVariable("userId")Integer userId,ModelMap map){
 		System.out.println("userId---->"+userId);
-		SysUser user = userService.findById(userId);
+		Object user = userService.findById(userId);
 		map.put("user", user);
 		map.put("sex", 1);
 		return "sys/sysUser";

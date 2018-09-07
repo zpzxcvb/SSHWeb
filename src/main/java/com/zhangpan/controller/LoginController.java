@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.zhangpan.model.SysUser;
-import com.zhangpan.service.SysUserService;
+import com.zhangpan.service.sys.user.SysUserService;
 
 @Controller
 public class LoginController extends BaseController {

@@ -17,13 +17,13 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhangpan.model.SysUser;
-import com.zhangpan.service.SysUserService;
+import com.zhangpan.service.sys.user.SysUserService;
 import com.zhangpan.util.DateUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@MapperScan(basePackages="com.zhangpan.dao")
-public class UserTest {
+@MapperScan(basePackages="com.zhangpan.dao.*")
+public class TestUser {
 
 	@Autowired
 	private SysUserService userService;
@@ -57,7 +57,7 @@ public class UserTest {
 	    Map<String, String> map=new HashMap<String, String>();
 	    map.put("userName", "admin");
 	    map.put("password", "1");
-        List<?> list = userService.findAll(map);
+        List<?> list = userService.findList(map);
         System.err.println(JSON.toJSONString(list));
     }
 	
@@ -72,7 +72,7 @@ public class UserTest {
 	
 	@After
 	public void findAll() {
-		List<SysUser> list = userService.findAll(null);
+		List<SysUser> list = userService.findList(null);
 		System.err.println("不带分页信息："+JSON.toJSONString(list));
 		
 //		PageHelper.startPage(1, 2);

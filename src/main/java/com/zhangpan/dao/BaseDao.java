@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.pagehelper.Page;
-import com.zhangpan.model.SysUser;
 
 public interface BaseDao<T,PK extends Serializable> {
 	
@@ -19,7 +18,7 @@ public interface BaseDao<T,PK extends Serializable> {
 
     public T findById(PK id);
     
-    public List<T> findAll(Map<String, String> params);
+    public List<T> findList(Map<String, String> params);
     
     public Page<T> findPage(Map<String, String> params);
 }

@@ -6,12 +6,10 @@ server:
 # DATASOURCE 
 spring:
   datasource:
-    driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite:db/test.db
-#    driverClassName: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
-#    username: root
-#    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
   freemarker:
     suffix: .html
   profiles:
@@ -20,7 +18,12 @@ spring:
 # MyBatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml
-  config-location: classpath:config/mybatis-configuration.xml
+  type-aliases-package: com.zhangpan.model
+  configuration:
+    call-setters-on-nulls: true
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
+        
 
 pagehelper:
   auto-dialect: true

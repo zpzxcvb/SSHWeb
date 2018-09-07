@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zhangpan.service.FileScanService;
-import com.zhangpan.util.FileScanUtil;
+import com.zhangpan.util.FileUtil;
 import com.zhangpan.util.TreeNode;
 
 @Controller
@@ -36,7 +36,7 @@ public class ScanFileController extends BaseController {
 	@ResponseBody
 	public  List readFile(String path) throws Exception{
 		System.err.println(path);
-		List list=FileScanUtil.readFile(path);
+		List list=FileUtil.readFile(path);
 		return list;
 	}
 	

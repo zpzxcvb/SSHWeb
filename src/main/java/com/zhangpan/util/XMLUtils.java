@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.zhangpan.util;
 
 import java.util.ArrayList;
@@ -13,6 +10,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  * @author zhangpan
@@ -87,6 +86,54 @@ public class XMLUtils {
         }
         xml=doc.asXML();
         return xml;
+    }
+    
+    /**
+     * 根据参数创建xml字符串
+     * @param rootName 根节点名称
+     * @param tagName 子节点名称
+     * @param list 子节点元素集合
+     * @return
+     */
+    public static String createDom(String rootName, String tagName, List<Map<String, Object>> list) {
+        Document doc = DocumentHelper.createDocument();
+        Element root = doc.addElement(rootName);
+        
+        for(Map<String, Object> elements : list) {
+            Element child = root.addElement(tagName);
+            for(Map.Entry<String, Object> ele : elements.entrySet()) {
+                String key = ele.getKey();
+                String value = ele.getValue().toString();
+                child.addElement(key).setText(value);
+            }
+        }
+        String xml=doc.asXML();
+        return xml;
+    }
+    
+    /**
+     * 对象集合转xml
+     * @param list 对象集合
+     * @param clazz 对象类
+     * @param rootName 根节点名
+     * @param name 对象名
+     * @return
+     */
+    public static String listToXML(List<?> list, Class<?> clazz, String rootName, String tagName) {
+        StringBuffer sb = new StringBuffer();
+        try {
+            
+            for(Object obj : list) {
+                XStream x = new XStream();
+                x.alias(rootName, List.class);
+                x.alias(tagName, clazz);
+                String xml = x.toXML(list);
+                sb.append(xml);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     /**

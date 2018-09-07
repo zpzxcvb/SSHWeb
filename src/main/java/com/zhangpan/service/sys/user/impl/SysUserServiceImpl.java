@@ -1,4 +1,4 @@
-package com.zhangpan.service.imp;
+package com.zhangpan.service.sys.user.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
-import com.zhangpan.dao.SysUserDao;
+import com.zhangpan.dao.sys.SysUserDao;
 import com.zhangpan.model.SysUser;
-import com.zhangpan.service.SysUserService;
+import com.zhangpan.service.sys.user.SysUserService;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -44,8 +44,8 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<SysUser> findAll(Map<String, String> params) {
-		return sysUserDao.findAll(params);
+	public List<SysUser> findList(Map<String, String> params) {
+		return sysUserDao.findList(params);
 	}
 
 	@Override

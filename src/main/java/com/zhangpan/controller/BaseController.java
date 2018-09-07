@@ -54,7 +54,7 @@ public class BaseController {
 		    String[] values = param.getValue();
             paramMap.put(key, values[0]);
 		}
-		System.out.println("requestParams=====>【"+this.paramMap+"】");
+		System.err.println("requestParams=====>【"+this.paramMap+"】");
 		return paramMap;
 	}
 	
@@ -63,22 +63,23 @@ public class BaseController {
         return result;
     }
 	
-	protected String getResponseCode(int count) {
-		String code = "";
-
+	protected Map<String, Object> getResponseState(int count) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+		String status = "";
 		if (count > 0) {
-			code = Constant.SUCCESS;
+		    status = Constant.OK;
 		} else {
-			code = Constant.ERROR;
+		    status = Constant.ERROR;
 		}
-		
-		return code;
+		map.put("status", status);
+		return map;
 	}
 	
 	protected Map<String, Object> pageData(Page<?> page) {
-        result.put("status", 0);
+	    Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
         result.put("msg", "");
-        result.put("total", page.getTotal());
+        result.put("count", page.getTotal());
 	    result.put("data", page.getResult());
         return result;
     }

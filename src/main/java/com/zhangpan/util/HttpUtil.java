@@ -210,6 +210,7 @@ public class HttpUtil {
     }
     
     public static void main(String[] args) throws Exception {
-        
+        String str = httpGet("https://github.com/followwwind/javautils/blob/master/src/main/java/com/wind/http/HttpUrlUtil.java");
+        System.out.println(str);
     }
 }

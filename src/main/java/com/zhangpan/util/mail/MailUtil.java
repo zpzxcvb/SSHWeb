@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Address;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -27,9 +29,8 @@ public class MailUtil {
 			if (mailInfo.isValidate()) {
 				authenticator = new MyAuthenticator(mailInfo.getUserName(), mailInfo.getPassword());
 			}
-			Properties pro = mailInfo.getProperties();
 			// 根据邮件会话属性和密码验证器构造一个发送邮件的session
-			Session session = Session.getDefaultInstance(pro, authenticator);
+			Session session = Session.getDefaultInstance(mailInfo.getProps(), authenticator);
 			session.setDebug(true); 
 			
 			MimeMessage mailMessage = createMimeMessage(session, mailInfo);
@@ -75,8 +76,18 @@ public class MailUtil {
 		// 创建消息部分
 		BodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(mailInfo.getContent(),"text/html;charset=UTF-8");
-        
         multipart.addBodyPart(messageBodyPart);
+        //附件
+        List<DataSource> attachments = mailInfo.getAttachments();
+        for(DataSource attach : attachments) {
+            // 添加附件
+            BodyPart msgAttach = new MimeBodyPart();
+            // 添加附件的内容
+            msgAttach.setDataHandler(new DataHandler(attach));
+            // 添加附件的标题
+            msgAttach.setFileName(attach.getName());
+            multipart.addBodyPart(msgAttach);
+        }
         
         message.setContent(multipart);
         
@@ -85,14 +96,19 @@ public class MailUtil {
 	}
 	
 	public static void main(String[] args) throws Exception {
+	    //获得邮件会话属性
+	    Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.host", "smtp.126.com");
+        props.put("mail.smtp.auth", true);
+        
 		final String username="zpzxcvb@126.com";
 		final String password="527517062";
 		String tos="527517062@qq.com";
 		String ccAddress="123456789@qq.com";
 		String bccAddress="3412003909@qq.com";
 		MailSenderInfo mailInfo = new MailSenderInfo();
-		mailInfo.setMailServerHost("smtp.126.com");
-		mailInfo.setMailServerPort("25");
+		mailInfo.setProps(props);
 		mailInfo.setValidate(true);
 		mailInfo.setUserName(username);
 		mailInfo.setPassword(password);
@@ -102,6 +118,10 @@ public class MailUtil {
 		mailInfo.setBccAddress(bccAddress);
 		mailInfo.setSubject("测试");
 		mailInfo.setContent("<h1>hello world！</h1>");
+		List<DataSource> attachments = new ArrayList<>();
+        DataSource dataSource1 = new FileDataSource("F:/create.xlsx");
+        attachments.add(dataSource1);
+        mailInfo.setAttachments(attachments);
 		boolean bool=sendEmail(mailInfo);
 		if(bool) {
 			System.out.println("Sent message successfully....");

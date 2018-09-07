@@ -1,8 +1,9 @@
-package com.zhangpan.service;
+package com.zhangpan.service.sys.user;
 
 import java.util.Map;
 
 import com.zhangpan.model.SysUser;
+import com.zhangpan.service.BaseService;
 
 /**
  * @author zhangpan

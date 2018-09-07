@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages="com.zhangpan.dao")
+@MapperScan(basePackages="com.zhangpan.dao.*")
 public class Application {
 	
     public static void main(String[] args) {

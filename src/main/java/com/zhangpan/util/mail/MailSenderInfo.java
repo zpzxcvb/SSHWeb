@@ -10,11 +10,12 @@ import java.util.List;
  */
 import java.util.Properties;
 
+import javax.activation.DataSource;
+
 public class MailSenderInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	// 发送邮件的服务器的IP和端口
-	private String mailServerHost;
-	private String mailServerPort = "25";
+	// 发送邮件的服务器的session协议等
+	private Properties props;
 	// 邮件发送者的地址
 	private String fromAddress;
 	// 邮件接收者的地址,多个用','隔开
@@ -33,38 +34,17 @@ public class MailSenderInfo implements Serializable {
 	// 邮件的文本内容
 	private String content;
 	// 邮件附件的文件名
-	private String[] attachFileNames;
+	private List<DataSource> attachments;
 
-	/**
-	 * 获得邮件会话属性
-	 */
-	public Properties getProperties() {
-		Properties props = new Properties();
-//		props.setProperty("mail.debug", "true");
-		props.setProperty("mail.transport.protocol", "smtp");
-		props.put("mail.host", this.mailServerHost);
-		props.put("mail.smtp.port", this.mailServerPort);
-		props.put("mail.smtp.auth", validate ? "true" : "false");
-		return props;
-	}
+	public Properties getProps() {
+        return props;
+    }
 
-	public String getMailServerHost() {
-		return mailServerHost;
-	}
+    public void setProps(Properties props) {
+        this.props = props;
+    }
 
-	public void setMailServerHost(String mailServerHost) {
-		this.mailServerHost = mailServerHost;
-	}
-
-	public String getMailServerPort() {
-		return mailServerPort;
-	}
-
-	public void setMailServerPort(String mailServerPort) {
-		this.mailServerPort = mailServerPort;
-	}
-
-	public String getFromAddress() {
+    public String getFromAddress() {
 		return fromAddress;
 	}
 
@@ -136,12 +116,12 @@ public class MailSenderInfo implements Serializable {
 		this.content = content;
 	}
 
-	public String[] getAttachFileNames() {
-		return attachFileNames;
-	}
+    public List<DataSource> getAttachments() {
+        return attachments;
+    }
 
-	public void setAttachFileNames(String[] attachFileNames) {
-		this.attachFileNames = attachFileNames;
-	}
-	
+    public void setAttachments(List<DataSource> attachments) {
+        this.attachments = attachments;
+    }
+
 }

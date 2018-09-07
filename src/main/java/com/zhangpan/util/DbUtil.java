@@ -1,5 +1,9 @@
 package com.zhangpan.util;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,48 +15,29 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DbUtil {
     
- // 表示定义数据库的用户名  
-    private static String USERNAME ;  
-  
-    // 定义数据库的密码  
-    private static String PASSWORD;  
-  
-    // 定义数据库的驱动信息  
-    private static String DRIVER = "org.sqlite.JDBC";  
-  
-    // 定义访问数据库的地址  
-    private static String URL = "jdbc:sqlite:db/test.db";  
-  
     // 定义数据库的链接  
-    private static Connection connection;  
+    private static Connection connection;
   
     // 定义sql语句的执行对象  
-    private static PreparedStatement pstmt;  
+    private static PreparedStatement pstmt;
   
     // 定义查询返回的结果集合  
-    private static ResultSet resultSet;  
+    private static ResultSet resultSet;
       
     static{  
-        //加载数据库配置信息，并给相关的属性赋值  
-    }
-    
-    /** 
-     * 获取数据库连接 
-     *  
-     * @return 数据库连接 
-     */  
-    public static Connection getConnection() {  
-        try {  
-            Class.forName(DRIVER); // 注册驱动  
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); // 获取连接 
+        try {
+            //获取数据库连接 
+            Class.forName(SysConfig.getProperty("jdbc.driverClass")); // 注册驱动  
+            connection = DriverManager.getConnection(SysConfig.getProperty("jdbc.jdbcUrl"),
+                    SysConfig.getProperty("jdbc.user"), SysConfig.getProperty("jdbc.password")); // 获取连接 
         } catch (Exception e) {
-            connection = null;
             e.printStackTrace();
         }
-        return connection;  
     }
     
     /** 
@@ -149,7 +134,6 @@ public class DbUtil {
     
     public static void main(String[] args) {
         try {
-                getConnection();
             System.out.println("connection : "+connection);
             
             /*String updatesql="insert into student(name,age,birthday,test) values(?,?,?,?)";
@@ -159,13 +143,13 @@ public class DbUtil {
             params.add(17);params.add(new Date());params.add(new Date());
 //            params.add(3);
             update(updatesql, params);*/
-            
-            String sql="select * from sys_user";
+            String username="";
+            String sql="select * from student ";
             List<Map<String, Object>> result = findList(sql, null);
             for (Map<String, Object> m : result) {  
                 System.out.println(m);  
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             releaseConn();
