@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>test</title>
+<script src="../../static/js/lib/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/js/lib/echarts4/echarts.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var now = new Date();
+        var res = [];
+        var len = 10;
+        while (len--) {
+            res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+            now = new Date(now - 1000);
+        }
+        console.log(res);
+		initChart1();
+		initChart2();
+	})
+	function initChart1(){
+		// 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main1'));
+         // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {
+            	trigger:'axis'
+            },
+            legend: {
+            },
+            xAxis: {
+            	type: 'category',
+            	data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+            	
+            },
+            series: [
+            	{
+            		data: [820, 932, 901, 934, 1290, 1330, 1320],
+			        type: 'line'
+            	}
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+	}
+
+	function initChart2(){
+		// 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main2'));
+         // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '动态数据 + 时间坐标轴'
+            },
+            tooltip: {
+            	trigger:'axis',
+            	axisPointer:{
+            		type:'cross',
+            		label:{
+            			show:true
+            		}
+            	}
+            },
+            legend: {
+            	
+            },
+            xAxis: {
+	            type: 'category',
+	            boundaryGap: true,
+	            data: []
+            },
+            yAxis: {
+            },
+            series: [{
+			        name:'最新成交价',
+		            type:'line',
+		            data:[]
+			    }]
+        };
+		setInterval(function (){
+			var now = new Date();
+		    time = now.toLocaleTimeString().replace(/^\D*/,'');
+			console.log(time);
+			
+		    var data = option.series[0].data;
+		    data.push(Math.round(Math.random() * 10));
+		
+		    option.xAxis.data.push(time);
+		
+		    myChart.setOption(option);
+		}, 1000);
+	}
+	
+	
+</script>
+</head>
+<body>
+
+
+<div>
+	<div id="main1" style="width: 600px;height:400px;"></div>
+	<div id="main2" style="width: 600px;height:400px;"></div>
+</div>
+
+</body>
+</html>

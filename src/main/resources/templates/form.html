@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="">
+			<table>
+                <tr>
+                    <td style="width:70px;">昵称：</td>
+                    <td style="width:205px;"><input type="text" name="name" dataType="min[3],url" /></td>
+                </tr>
+                <tr>
+                    <td>密码：</td>
+                    <td><input id="pwd" type="text" name="password" dataType="length[6-10]"/></td>
+                </tr>
+                <tr>
+                    <td>确认密码：</td>
+                    <td><input type="text" name="password2" dataType="equalTo[pwd]" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:10px 0 18px 0;">
+                        <input type="submit" value="提 交" onclick="mm()"/> 
+                        <input type="button" value="测试" onclick="tt()"/>
+                    </td>
+                </tr>
+            </table>
+
+		</form>
+		
+		
+		
+		<script src="../static/js/lib/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/validate/formValidate.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script>
+			function mm(){
+ $("form").submit(function(){
+    alert("提交");
+  });
+}
+			function tt(){
+				var reg=/[a-z]/gi;
+				var x="-";
+				console.log("a12b88ZE".replace(reg,x));
+			}
+			
+		</script>
+	</body>
+</html>
