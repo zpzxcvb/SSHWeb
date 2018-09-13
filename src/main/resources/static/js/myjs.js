@@ -1,10 +1,3 @@
-$(function(){
-	currentTime();
-	$("#color").change(function(){
-		$("#choose_color").val($("#color").val());
-	})
-})
-
 //初始化tree
 function initTree(id, url){
 	var treeObj = $("#"+id);
@@ -28,13 +21,6 @@ function initTree(id, url){
 		}
 	})
 }
-/**
- * 当前时间
- */
-function currentTime(){
-	$("#currentTime").text(new Date().toLocaleString()+" 星期"+"日一二三四五六".charAt(new Date().getDay()));
-	setTimeout("currentTime()",1000);
-}
 
 //获取下拉框数据,并根据传值进行默认选中
 function queryOptions(id,url,value){
@@ -52,8 +38,7 @@ function queryOptions(id,url,value){
 
 //layui分页表格构造
 function table_layui(table, params){
-	$(params.id).append('<input id="responseStatus" type="hidden">');
-	table.render({
+	return table.render({
 		elem: params.id,
 		url: params.url,
 		toolbar: params.toolbar,
@@ -84,41 +69,37 @@ function openDialog(table, tableId, url){
 		type: 2,
 	  	area: ['400px', '400px'], //宽高
 	  	content: url,
-	  	end: function(layero, index){
-	  		//接收弹出层关闭后的返回值
-	  		var handle_status = $("#responseStatus").val();
-	  		
-	  		if(handle_status == "ok"){
-	  			layer.msg("操作成功",{icon:1});
-	  			table.reload(tableId);
-	  		}else if(handle_status == "error"){
-	  			layer.msg("操作失败",{icon:0});
-	  		}
+	  	end: function(){
+	  		tableIns.reload(tableId);
 	  	}
 	});
 }
+//关闭子页面
 function closeDialog(){
 	var index = parent.layer.getFrameIndex(window.name);
 	parent.layer.close(index);
 }
 //layer 弹出编辑层
-function editDialog(table, tableId, url){
+function editDialog(table, tableId, url, id){
 	var checkStatus = table.checkStatus(tableId);
 	if(checkStatus.data.length == 1){
-		var id = checkStatus.data[0].id;
+		var id = checkStatus.data[0][id];
 		url = url + "?id="+id
 		openDialog(table, tableId, url);
 	}else{
 		layer.msg("请选择一行记录",{icon:0});
 	}
 }
-//layer 删除询问框
-function confirm_Delete(table, tableId, url){
+
+/**
+ * 删除询问框
+ * */
+function confirm_Delete(table, tableId, url, id){
 	var checkStatus = table.checkStatus(tableId);
 	if(checkStatus.data.length > 0){
 		var ids=[];
 		$.each(checkStatus.data, function(index, item){
-			ids.push(item.id);
+			ids.push(item[id]);
 		});
 		layer.confirm('您确定要删除操作吗?', {icon: 3}, function(index){
 			$.ajax({
@@ -129,7 +110,7 @@ function confirm_Delete(table, tableId, url){
 					if(data.status == "ok"){
 						layer.msg("删除成功",{icon:1});
 						layer.close(index);
-						table.reload(tableId);
+						tableIns.reload();
 					}else{
 						layer.msg("操作失败",{icon:0});
 					}

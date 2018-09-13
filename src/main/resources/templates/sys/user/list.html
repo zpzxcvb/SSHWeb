@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>菜单信息列表</title>
-	<link rel="stylesheet" href="/css/style.css">
+	<title>用户信息列表</title>
 	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
-	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
 	
-	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
 	<script src="/js/lib/layui/layui.js"></script>
-	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
 </head>
 <body>
 	<div class="layui-main">
-		<div style="width: 20%;float: left;">
-			<ul id="menuTree" class="ztree"></ul>
-		</div>
-		<div style="width: 80%;float: left;">
-			<div class="layui-inline table-search">
-				<div class="layui-input-inline">
-		    		<input class="layui-input" id="menuName" type="search" placeholder="请输入菜单名称">
-		    	</div>
-		    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
-		  	</div>
-		  	<table id="table" lay-filter="table_event"> </table>
-		</div>
+		<div class="layui-inline table-search">
+			<div class="layui-input-inline">
+	    		<input class="layui-input" id="menuName" type="search" placeholder="请输入菜单名称">
+	    	</div>
+	    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+	  	</div>
+	  	<table id="table" lay-filter="table_event"> </table>
 	</div>
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script type="text/html" id="toolbars">
@@ -34,30 +26,28 @@
 		</div>
 	</script>
 	<script>
+	var table,tableIns;
 	function initTable(table){
 		var params = {
 			 id: "#table",
-			 url: "/menu/pageList",
+			 url: "/user/pageList",
 			 width: 1000,
 			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
-		      	{field: 'menuName', title: '菜单名称'},
-		      	{field: 'url', title: '链接地址'},
-		      	{field: 'pid', title: '父级'},
-		      	{field: 'type', title: '状态', sort: true, templet: function(d){
-		        	return d.type == 1 ? "显示" : "<span style='color: red;'>隐藏</span>";
+		      	{field: 'userName', title: '用户名'},
+		      	{field: 'createTime', title: '创建时间'},
+		      	{field: 'updateTime', title: '更新时间'},
+		      	{field: 'status', title: '状态', sort: true, templet: function(d){
+		        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
 		      	}}
 		    ]
 		};
-		table_layui(table, params);
+		tableIns = table_layui(table, params);
 	}
-	var table;
 	layui.use('table', function(){
 		table = layui.table;
-		//初始化tree(非异步)
-		initTree("menuTree", "/menu/menuList");
 		//初始化table
 		initTable(table);
 			
@@ -80,26 +70,19 @@
 	var active = {
 		searchModel: function(table){
 			var menuName = $("#menuName").val();
-		  	table.reload('table',{
+			tableIns.reload({
 				where:{menuName: menuName}
 		  	});
 		},
 		addModel: function(table){
-			openDialog(table, 'table', '/menu/saveOrUpdate');
+			openDialog(table, 'table', '/user/saveOrUpdate');
 		},
 		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/menu/deleteByIds", "id");
+			confirm_Delete(table, 'table', "/user/deleteByIds", "userId");
 		},
 		editModel: function(table){
-			editDialog(table, 'table', '/menu/saveOrUpdate', "id");
+			editDialog(table, 'table', '/user/saveOrUpdate', "userId");
 		}
-	}
-	function zTreeClick(event, treeId, treeNode) {
-		table.reload('table',{
-			where:{
-				pid: treeNode.id,
-			}
-	  	});
 	}
 	</script>
 </body>

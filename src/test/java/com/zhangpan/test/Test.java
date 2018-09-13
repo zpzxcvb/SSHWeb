@@ -2,6 +2,7 @@ package com.zhangpan.test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,8 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +36,6 @@ public class Test {
         //灰度化
 //        BufferedImage grayImage = ImageHelper.convertImageToGrayscale(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(grayImage, "jpg", new File("H:/photo/", "test2.jpg"));
-        Map map=new HashMap();
-        map.put("name", "admin");
-        map.put("age", "18");
-        System.out.println(JSON.toJSONString(map, true));;
     }
 
 }

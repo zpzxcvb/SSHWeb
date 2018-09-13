@@ -23,7 +23,7 @@
 	<select id="findPage" parameterType="map" resultType="SysMenu">
 		select * from sys_menu
 		<where>
-			1=1
+			id != 1
 			<if test="pid != null">
 				and pid = #{pid}
 			</if>

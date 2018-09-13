@@ -3,6 +3,7 @@ package com.zhangpan.util;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * Http工具类
@@ -129,7 +132,7 @@ public class HttpUtil {
             HttpEntity entity = null;
             // 构造消息体
             if(params instanceof String) {
-                String jsonStr = (String) params;
+                String jsonStr = params.toString();
                 post.setHeader("Content-Type", "application/json");
                 entity = new StringEntity(jsonStr, charset);
             }else if(params instanceof Map) {
@@ -209,8 +212,35 @@ public class HttpUtil {
         return result;
     }
     
+    /**
+     * 用http访问webservice时传soap格式报文
+     * @param requestParam
+     * @return
+     */
+    private static String buildSOAP(String requestParam) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+        sb.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+        sb.append("<soap:Body>");
+        sb.append(requestParam);
+        sb.append("</soap:Body>");
+        sb.append("</soap:Envelope>");
+        return sb.toString();
+    }
+    
     public static void main(String[] args) throws Exception {
-        String str = httpGet("https://github.com/followwwind/javautils/blob/master/src/main/java/com/wind/http/HttpUrlUtil.java");
+        String wsurl="http://WebXml.com.cn/qqCheckOnline";
+        String url = "http://www.webxml.com.cn/webservices/qqOnlineWebService.asmx/qqCheckOnline";
+//        String str = httpGet(url+"?qqCode=34120039");
+        /*Map param=new HashMap();
+        param.put("qqCode", "527517062");
+        String str=httpPost(url,param);*/
+        StringBuffer requestParam = new StringBuffer();
+        requestParam.append("<qqCheckOnline xmlns=\"http://WebXml.com.cn/\">");
+        requestParam.append("<qqCode>34120039</qqCode>");
+        requestParam.append("</qqCheckOnline>");
+        String soap=buildSOAP(requestParam.toString());
+        String str=httpPost(wsurl,soap);
         System.out.println(str);
     }
 }

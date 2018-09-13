@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>layout 后台大布局 - Layui</title>
-  <link rel="stylesheet" href="../../static/js/lib/layui/css/layui.css">
-  <style type="text/css">
-  	.home{
-  		background: url('../../static/img/home.jpg') no-repeat fixed;
-  		background-size:cover;
-  		color: white;
-  	}
-
-  	.login_box{
-  		width: 350px;
-  		height: 200px;
-  		margin: auto;
-  		opacity:0.8;
-  		position: absolute;
-  		left: 0;
-  		top: 0;
-  		right: 0;
-  		bottom: 0;
-  	}
-  </style>
+	<title>登录</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
 </head>
 <body class="layui-layout-body home">
 	<div class="login_box">
-	<form class="layui-form" action="">
-		<div class="layui-form-item">
-			<label class="layui-form-label">用户名</label>
-			<div class="layui-input-block">
-				<input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+		<form class="layui-form layui-form-pane" method="post">
+			<div class="layui-form-item">
+				<label class="layui-form-label">用户名</label>
+				<div class="layui-input-block">
+					<input type="text" name="userName" lay-verify="required" placeholder="请输入用户名" class="layui-input">
+				</div>
 			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">密码</label>
-			<div class="layui-input-block">
-				<input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码</label>
+				<div class="layui-input-block">
+					<input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="new-password" class="layui-input">
+				</div>
 			</div>
-		</div>
-		<div class="layui-form-item">
-			<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">登录</button>
-		</div>
-	
-	</form>
+			<div class="layui-form-item">
+				<a id="postBtn" class="layui-btn layui-btn-fluid">登录</a>
+			</div>
+		</form>
 	</div>
-<script src="../../static/js/lib/layui/layui.js"></script>
-<script>
-
-layui.use(['form'], function(){
+	<script>
+		$(function(){
+			login();
+		})
+		function login(){
+			$("#postBtn").click(function(){
+				var param = $("form").serialize();
+				$.ajax({
+					url:"/login/auth",
+					type: "post",
+					data: param,
+					success:function(data){
+						console.log(data);
+						window.location.href="/login/main";
+					}
+				});
+			});
+		}
 	
-});
-
-</script>
+	</script>
 
 </body>
 </html>

@@ -4,51 +4,25 @@ body {
 a {
 	text-decoration: none!important;
 }
+.home {
+	background: url('/img/home.jpg') no-repeat fixed;
+	background-size: cover;
+}
+.login_box {
+	position: absolute;
+	width: 350px;
+	height: 200px;
+	margin: auto;
+	opacity: 0.8;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
 .header{
 	height: 50px;
 	background-color: #eee;
-}
-.logo{
-	width: 100px;
-	height: 50px;
-	background-color: #cdd2e2;
-	padding: 10px;
-}
-.top_left{
-	float: left;
-}
-.top_right{
-	float: right;
-}
-.main-content{
-	margin: 0 auto;
-}
-.footer{
-	margin: 0 auto;
-	height: 100px;
-	width: 100%;
-	background-color: #eee;
-	text-align: center;
-	position: fixed;
-	bottom: 0;
-	padding: 20px;
-}
-.mulu{
-	
-}
-.mulu_menu{
-	display: none;
-	width: 100px;
-	height: 100px;
-	background-color: red;
-	list-style: none;
-}
-.icon-mulu{
-	font-size: 30px!important;
-}
-.top_mulu:hover + .mulu_menu{
-	display: block;
-	
 }
 .fixed-btn{
 	position: fixed;
@@ -58,6 +32,7 @@ a {
 	border: 1px solid #008040;
 	font-size: 24px;
 	text-align: center;
+	z-index: 999;
 }
 .fixed-btn a{
 	display: inline-block;
@@ -65,37 +40,14 @@ a {
     height: 40px;
 	border-bottom: 1px solid #eee;
 }
-.zf-icon{
+.wechat{
 	display: none;
 	position: absolute;
 	right: 42px;
 	bottom: 0;
 }
-.wxzf, .zfbzf{
-	width: 130px;
-	height: 130px;
-	border-bottom: 1px solid #eee;
-}
-.qrcode:hover + .zf-icon{
+.qrcode:hover .wechat{
 	display: block;
-}
-.go-top, .qrcode{
-	
-}
-.login_box {
-	position: absolute;
-	border: 1px solid #d5dce5;
-	width: 400px;
-	height: 200px;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	padding: 10px;
-}
-.btn-login {
-	width: 100%;
 }
 .file-tree,.file-content{
 	border: 1px solid #d5dce5;
@@ -124,28 +76,4 @@ a {
 }
 .file-code > .alt{
 	background-color: #f8f8f8;
-}
-.paginate_row{
-	display: inline-block;
-	float: right;
-}
-.dataTables_length{
-	float: left;
-	margin-left: 15px;
-	padding-top: 5px;
-}
-.dataTables_info{
-	float: left;
-}
-.dataTables_tools{
-	float: left;
-	margin-left: 15px;
-	padding-top: 5px;
-}
-.dataTables_paginate{
-	float: left;
-}
-.jumpPage{
-	width: 40px;
-	margin-right: 5px;
 }

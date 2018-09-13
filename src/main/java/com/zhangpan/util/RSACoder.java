@@ -21,8 +21,11 @@ import java.util.Map;
 public class RSACoder {
     //非对称密钥算法
     public static final String KEY_ALGORITHM = "RSA";
-
-
+    
+    public static final int ENCRYPT_MODE = Cipher.ENCRYPT_MODE;
+    
+    public static final int DECRYPT_MODE = Cipher.DECRYPT_MODE;
+    
     /**
      * 密钥长度，算法的默认密钥长度是1024
      * 密钥长度必须是64的倍数，在512到65536位之间
@@ -58,16 +61,15 @@ public class RSACoder {
 
     }
 
-
     /**
-     * 私钥加密
+     * 私钥加密/解密
      *
      * @param data 待加密数据
-     * @param key       密钥
+     * @param key 密钥
+     * @param isEncrypt 是否加密/解密
      * @return byte[] 加密数据
      */
-    public static byte[] encryptByPrivateKey(byte[] data, byte[] key) throws Exception {
-
+    public static byte[] encryptByPrivateKey(byte[] data, byte[] key, boolean isEncrypt) throws Exception {
         //取得私钥
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(key);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -75,72 +77,58 @@ public class RSACoder {
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
         //数据加密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        if(isEncrypt) {
+            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        }else {
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        }
         return cipher.doFinal(data);
+    }
+    
+    /**
+     * 私钥解密
+     * @param data 待解密数据
+     * @param key 密钥
+     * @return byte[] 解密数据
+     */
+    public static byte[] decryptByPrivateKey(byte[] data, byte[] key) throws Exception {
+        return encryptByPrivateKey(data, key, false);
     }
 
     /**
      * 公钥加密
      *
      * @param data 待加密数据
-     * @param key       密钥
+     * @param key 密钥
+     * @param isEncrypt 是否 加密/解密
      * @return byte[] 加密数据
      */
-    public static byte[] encryptByPublicKey(byte[] data, byte[] key) throws Exception {
+    public static byte[] encryptByPublicKey(byte[] data, byte[] key, boolean isEncrypt) throws Exception {
 
         //实例化密钥工厂
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        //初始化公钥
         //密钥材料转换
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(key);
         //产生公钥
         PublicKey pubKey = keyFactory.generatePublic(x509KeySpec);
-
         //数据加密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+        if(isEncrypt) {
+            cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+        }else {
+            cipher.init(Cipher.DECRYPT_MODE, pubKey);
+        }
         return cipher.doFinal(data);
     }
-
-    /**
-     * 私钥解密
-     *
-     * @param data 待解密数据
-     * @param key  密钥
-     * @return byte[] 解密数据
-     */
-    public static byte[] decryptByPrivateKey(byte[] data, byte[] key) throws Exception {
-        //取得私钥
-        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(key);
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        //生成私钥
-        PrivateKey privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
-        //数据解密
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        return cipher.doFinal(data);
-    }
-
+    
     /**
      * 公钥解密
-     *
      * @param data 待解密数据
-     * @param key  密钥
+     * @param key 密钥
      * @return byte[] 解密数据
      */
     public static byte[] decryptByPublicKey(byte[] data, byte[] key) throws Exception {
-
-        //实例化密钥工厂
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        //初始化公钥
-        //密钥材料转换
-        X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(key);
-        //产生公钥
-        PublicKey pubKey = keyFactory.generatePublic(x509KeySpec);
-        //数据解密
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.DECRYPT_MODE, pubKey);
-        return cipher.doFinal(data);
+        return encryptByPublicKey(data, key, false);
     }
 
     /**
@@ -151,6 +139,7 @@ public class RSACoder {
      */
     public static byte[] getPrivateKey(Map<String, Object> keyMap) {
         Key key = (Key) keyMap.get(PRIVATE_KEY);
+        System.out.println(key.getFormat());
         return key.getEncoded();
     }
 
@@ -172,40 +161,25 @@ public class RSACoder {
     @SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {
         //初始化密钥
-        //生成密钥对
         Map<String, Object> keyMap = RSACoder.initKey();
         //公钥
         byte[] publicKey = RSACoder.getPublicKey(keyMap);
-
         //私钥
         byte[] privateKey = RSACoder.getPrivateKey(keyMap);
-        System.out.println(Base64.encodeBase64String(publicKey));
-        String sss = new String(publicKey);
-        System.out.println(sss);
-        System.out.println(Base64.encodeBase64String(sss.getBytes()));
+        System.out.println("公钥：\n" + Base64.encodeBase64String(publicKey));
+        System.out.println("私钥：\n" + Base64.encodeBase64String(privateKey));
         
-       // System.out.println("公钥：/n" + Base64.encodeBase64String(publicKey));
-        //System.out.println("私钥：/n" + Base64.encodeBase64String(privateKey));
-        
-//        System.out.println("公钥：/n" + Base64.encodeBase64String(RSACoder.getPublicKey(keyMap)));
-//        System.out.println("私钥：/n" + new String(RSACoder.getPrivateKey(keyMap));
-//        
-//        Thread.sleep(10000);
-//        
-//        System.out.println("公钥1：/n" + Base64.encodeBase64String(RSACoder.getPublicKey(keyMap)));
-//        System.out.println("私钥1：/n" + Base64.encodeBase64String(RSACoder.getPrivateKey(keyMap)));
-
-       /* System.out.println("================密钥对构造完毕,甲方将公钥公布给乙方，开始进行加密数据的传输=============");
+        System.out.println("================密钥对构造完毕,甲方将公钥公布给乙方，开始进行加密数据的传输=============");
         String str = "RSA密码交ewrwer换算法";
         System.out.println("===========甲方向乙方发送加密数据==============");
         System.out.println("原文:" + str);
         //甲方进行数据的加密
-        byte[] code1 = RSACoder.encryptByPrivateKey(str.getBytes(),privateKey);
+        byte[] code1 = RSACoder.encryptByPrivateKey(str.getBytes(),privateKey,true);
         System.out.println("加密后的数据：" + Base64.encodeBase64String(code1));
-        System.out.println("===========乙方使用甲方提供的公钥对数据进行解密==============");
+        System.out.println("乙方解密后的数据：" + new String(code1));
         //乙方进行数据的解密
         byte[] decode1 = RSACoder.decryptByPublicKey(code1, publicKey);
-        System.out.println("乙方解密后的数据：" + new String(decode1));*/
+        System.out.println("乙方解密后的数据：" + new String(decode1));
 
         /*System.out.println("===========反向进行操作，乙方向甲方发送数据==============/n/n");
 

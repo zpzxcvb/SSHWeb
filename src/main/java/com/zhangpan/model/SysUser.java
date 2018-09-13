@@ -21,7 +21,7 @@ public class SysUser implements Serializable{
 
     private String createTime;
     
-    private String loginTime;
+    private String updateTime;
     
     private Integer status;
 
@@ -57,15 +57,15 @@ public class SysUser implements Serializable{
 		this.createTime = createTime;
 	}
 
-	public String getLoginTime() {
-		return loginTime;
-	}
+	public String getUpdateTime() {
+        return updateTime;
+    }
 
-	public void setLoginTime(String loginTime) {
-		this.loginTime = loginTime;
-	}
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
 
-	public Integer getStatus() {
+    public Integer getStatus() {
 		return status;
 	}
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +17,6 @@ import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysMenu;
 import com.zhangpan.service.sys.menu.SysMenuService;
 import com.zhangpan.util.FileUtil;
-import com.zhangpan.util.TreeNode;
 
 @Controller
 @RequestMapping("/menu")
@@ -28,7 +26,7 @@ public class SysMenuController extends BaseController {
     private SysMenuService sysMenuService;
 	
     @RequestMapping("/list")
-    public String list(String pid){
+    public String list(){
         return "/sys/menu/list";
     }
     
@@ -64,7 +62,7 @@ public class SysMenuController extends BaseController {
 	@RequestMapping("/saveOrUpdate")
     public String model(Integer id, Model model){
 	    if(id != null) {
-	        Object menu = sysMenuService.findById(id);
+	        SysMenu menu = sysMenuService.findById(id);
 	        model.addAttribute("menu", menu);
 	    }
         return "/sys/menu/model";

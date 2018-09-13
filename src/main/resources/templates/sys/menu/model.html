@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>sysMenu</title>
+	<title>菜单信息</title>
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
 	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
@@ -12,13 +12,13 @@
 </head>
 <body>
 	<div>
-		<form class="layui-form layui-form-pane" action="#">
+		<form class="layui-form layui-form-pane">
+			<input id="id" type="hidden" name="id" value="${(menu.id)!''}"/>
 			<div class="layui-form-item">
 				<label class="layui-form-label">父级目录</label>
 				<div class="layui-input-inline">
 					<input id="pid" type="hidden" name="pid" value="${(menu.pid)!''}"/>
 					<input id="parent_name" type="text" readonly class="layui-input" placeholder="请选择父菜单"/>
-					<input id="id" type="hidden" name="id" value="${(menu.id)!''}"/>
 					<div id="menu_div" style="display: none;">
 						<ul id="menuTree" class="ztree"></ul>
 					</div>
@@ -52,8 +52,8 @@
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-inline">
-					<button id="postBtn" class="layui-btn">保存</button>
-					<button class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</button>
+					<a id="postBtn" class="layui-btn">保存</a>
+					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
 				</div>
 			</div>
 		</form>
@@ -69,10 +69,9 @@
 			var id = "${(menu.id)!''}";
 			var url="/menu/save";
 			if(id != ""){
-				var type = "${(menu.type)!''}";
-				var menuName = "${(menu.name)!''}";
-				$("input[name='type'][value='"+type+"']").attr("checked",true);
 				url = "/menu/update";
+				var type = "${(menu.type)!''}";
+				$("input[name='type'][value='"+type+"']").attr("checked",true);
 			}
 			formSubmit(url);
 			$("#parent_name").click(function(){
@@ -94,12 +93,13 @@
 					type: "post",
 					data: param,
 					success: function(data){
-						if(data.status == "ok"){
-							parent.$("#responseStatus").val("ok");
-						}else{
-							parent.$("#responseStatus").val("error");
-						}
+						//关闭页面
 						closeDialog();
+						if(data.status == "ok"){
+							parent.layer.msg("操作成功",{icon:1});
+						}else{
+							parent.layer.msg("操作失败",{icon:0});
+						}
 					}
 				})
 			})

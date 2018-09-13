@@ -1,6 +1,5 @@
 package com.zhangpan.util;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -77,8 +76,8 @@ public class SignUtil {
         System.out.println("拼接密钥后的字符："+sb.toString());
         try {
         	//进行MD5加密，然后转换大写
-			sign = DigestUtils.md5Hex(sb.toString().getBytes("utf-8")).toUpperCase();
-		} catch (UnsupportedEncodingException e) {
+			sign = DigestUtils.md5Hex(sb.toString()).toUpperCase();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
         System.out.println("加密后的签名："+sign);

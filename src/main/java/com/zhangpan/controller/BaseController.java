@@ -1,7 +1,6 @@
 package com.zhangpan.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +20,7 @@ public class BaseController {
 	protected HttpServletResponse response;
 	protected HttpSession session;
 	protected Map<String, String> paramMap;
-	protected Map<String, Object> result = new HashMap<String, Object>();
-
-	@RequestMapping("/")
-	public String index(){
-	    request.setAttribute("mainPage", "/user/login.html");
-		return "index";
-	}
+	Map<String, Object> result;
 	
 	@ModelAttribute
 	public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
@@ -35,6 +28,7 @@ public class BaseController {
 		this.response = response;
 		this.session = request.getSession();
 		this.paramMap = getParamMap();
+		result = new HashMap<String, Object>();
 		
         if(paramMap.get("pageNum") != null && paramMap.get("pageSize") != null) {
             int pageNum = Integer.parseInt(paramMap.get("pageNum"));
@@ -58,7 +52,7 @@ public class BaseController {
 		return paramMap;
 	}
 	
-	public ResponseData setData(String code, String msg, String data) {
+	public ResponseData getResults(String code, String msg, String data) {
         ResponseData result = new ResponseData(code, msg, data);
         return result;
     }

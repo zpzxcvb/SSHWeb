@@ -2,6 +2,8 @@ package com.zhangpan.util;
 
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class RC4Utils {
 
 	/*
@@ -118,6 +120,5 @@ public class RC4Utils {
     	
     	System.out.println(RC4Utils.deCode(key, RC4Utils.enCode(key, value)));
     	
-    	System.out.println(key.charAt(0%key.length()));
     }
 }

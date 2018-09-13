@@ -34,9 +34,9 @@ public class WebServiceUtil {
 	}
 	
 	public static void main(String[] args) {
-	    String url="https://localhost/gatms_interface/service/demo?wsdl";
-	    String methodName="getUsers";
-	    String xmlParam="";
+	    String url="http://www.webxml.com.cn/webservices/ChinaTVprogramWebService.asmx?wsdl";
+	    String methodName="getAreaDataSet";
+	    String xmlParam="<qqCode>3412003909</qqCode>";
 	    String result = invoke(url, methodName, xmlParam);
 	    System.out.println(result);
     }
