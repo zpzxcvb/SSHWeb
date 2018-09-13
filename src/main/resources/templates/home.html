@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>首页</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div class="layui-main">
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+				<label class="layui-form-label">选择</label>
+				<div class="layui-input-block">
+					<select>
+						<option>北京</option>
+						<option>上海</option>
+						<option>西安</option>
+						<option>广州</option>
+						<option>深圳</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">开关</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="switch" lay-skin="switch">
+				</div>
+			</div>
+			<input id="createDate" class="layui-input" type="text"/>
+			<a class="layui-btn">弹弹弹</a>
+		</form>
+		<pre>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</pre>
+	</div>
+	<script>
+		layui.use([ 'laydate', 'form' ], function() {
+			var laydate = layui.laydate;
+			laydate.render({
+				elem : '#createDate',
+				type : 'datetime',
+				format : 'yyyy-MM-dd HH:mm:ss',
+				value : new Date(),
+				max : 7,
+				calendar : true,
+				done : function(value, date, endDate) {
+					console.log(value); //得到日期生成的值，如：2017-08-18
+					console.log(date);
+				}
+			});
+		});
+		function test() {
+			layer.open({
+				content : "弹出鱼尾纹"
+			});
+		}
+	</script>
+
+</body>
+</html>
