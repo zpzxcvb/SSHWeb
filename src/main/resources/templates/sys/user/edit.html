@@ -51,7 +51,6 @@
 				var url = "/user/update";
 				var status = "${(user.status)!''}";
 				$("#userName").attr("disabled",true);
-				$("#password").attr("disabled",true);
 				$("input[name='status'][value='"+status+"']").attr("checked",true);
 				formSubmit(url);
 			}
