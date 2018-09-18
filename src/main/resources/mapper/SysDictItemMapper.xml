@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangpan.dao.sys.SysDictItemDao">
+
+  <select id="findById" parameterType="int" resultType="SysDictItem">
+  	select * from sys_dict_item where id = #{id}
+  </select>
+  
+  <select id="findPage" parameterType="map" resultType="map">
+  	SELECT
+		a.*,
+		b.dict_name AS type 
+	FROM
+		sys_dict_item a,
+		sys_dict_type b 
+	WHERE
+	a.dict_type = b.dict_code
+  	<if test="key != null">
+		<bind name="pattern" value="'%' + key + '%'" />
+		and a.dict_name like #{pattern}
+	</if>
+	<if test="dictType != null">
+		and a.dict_type = #{dictType}
+	</if>
+  </select>
+  
+  <select id="findList" parameterType="map" resultType="SysDictItem">
+  	select * from sys_dict_item
+  	where 1=1
+  	<if test="dictName != null">
+		and dict_name = #{dictName}
+	</if>
+  </select>
+  
+  <insert id="save" parameterType="SysDictItem">
+  	insert into sys_dict_item
+  		(dict_name,dict_code,dict_type,remark)
+  	values
+  		(#{dictName},#{dictCode},#{dictType},#{remark})
+  </insert>
+  
+  <delete id="deleteByIds" parameterType="int">
+  	delete from sys_dict_item 
+  	where
+  	<choose>
+		<when test="array.length == 1">
+			id = #{array[0]}
+		</when>
+		<otherwise>
+			id in
+			<foreach collection="array" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+		</otherwise>
+	</choose>
+  </delete>
+  
+  <update id="update" parameterType="SysDictItem">
+  	update sys_dict_item
+  	<set>
+  		<if test="dictName != null">
+  			dict_name=#{dictName},
+  		</if>
+  		<if test="remark != null">
+  			remark=#{remark},
+  		</if>
+  	</set>
+	where id = #{id}
+  </update>
+</mapper>

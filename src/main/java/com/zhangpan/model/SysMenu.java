@@ -1,6 +1,7 @@
 package com.zhangpan.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜单表 "sys_menu"
@@ -22,6 +23,8 @@ public class SysMenu implements Serializable{
     private Integer orderNo;
     
     private Integer type;
+    
+    private List<SysMenu> childList;
 
     public Integer getId() {
         return id;
@@ -69,6 +72,14 @@ public class SysMenu implements Serializable{
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public List<SysMenu> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<SysMenu> childList) {
+        this.childList = childList;
     }
 
 }

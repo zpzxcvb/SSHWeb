@@ -165,6 +165,8 @@ public class DateUtil {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws ParseException {
+	    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
+	    System.out.println(sdf.format(new Date()));
 //		System.out.println(longToTime(System.currentTimeMillis()));
 //		System.out.println(currentDate());
 //		System.out.println(currentDateTime());

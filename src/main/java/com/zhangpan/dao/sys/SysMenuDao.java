@@ -19,4 +19,10 @@ public interface SysMenuDao extends BaseDao<SysMenu,Integer> {
      * @return
      */
     public int hasChild(int id);
+    
+    /**
+     * 查询子节点
+     * @return
+     */
+    public List<SysMenu> findMenuByPid(int id);
 }

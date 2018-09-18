@@ -1,12 +1,16 @@
 package com.zhangpan.controller;
 
+import java.util.List;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zhangpan.model.SysMenu;
 import com.zhangpan.model.SysUser;
+import com.zhangpan.service.sys.menu.SysMenuService;
 import com.zhangpan.service.sys.user.SysUserService;
 
 @Controller
@@ -15,6 +19,9 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	private SysUserService userService;
+	
+	@Autowired
+    private SysMenuService sysMenuService;
 	
 	@RequestMapping("/")
     public String login() {
@@ -25,13 +32,26 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	public Object auth(){
 	    String password = paramMap.get("password");
-//	    paramMap.put("password", DigestUtils.md5Hex(password));
-	    SysUser user = userService.userAuth(paramMap);
-	    if(user != null) {
-	        session.setAttribute("user", user);
-	        result.put("code","1");
+	    paramMap.put("password", DigestUtils.md5Hex(password));
+	    List<SysUser> users = userService.findList(paramMap);
+	    if(users.size() > 0) {
+	        SysUser sysUser = users.get(0);
+	        if(sysUser.getStatus() == 1) {
+	            SysUser user = userService.userAuth(paramMap);
+	            if(user != null) {
+	                session.setAttribute("user", user);
+	                List<SysMenu> menuList = sysMenuService.listAllMenu(1);
+	                session.setAttribute("menuList", menuList);
+	                session.setAttribute("test", "123");
+	                getResults("1", "", "");
+	            }else {
+	                getResults("0", "帐户名或登录密码不正确，请重新输入", "");
+	            }
+	        }else {
+	            getResults("0", "此帐户已被禁用，请联系管理员", "");
+	        }
 	    }else {
-	        result.put("code","0");
+	        getResults("0", "用户不存在", "");
 	    }
 	    return result;
 	}

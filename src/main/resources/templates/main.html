@@ -47,14 +47,20 @@
     <div class="layui-side-scroll">
       <!-- 左侧导航区域 -->
       <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a href="javascript:;">系统管理</a>
-          <dl class="layui-nav-child">
-            <dd><a id="2" href="javascript:;" url="/user/list">用户管理</a></dd>
-            <dd><a id="3" href="javascript:;" url="/menu/list">菜单管理</a></dd>
-            <dd><a id="4" href="javascript:;" url="/file/scan">源码</a></dd>
-          </dl>
-        </li>
+        <#if (menuList?size > 0)>
+			<#list menuList as parentMenu>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a href="javascript:;">${parentMenu.menuName}</a>
+					<#if (parentMenu.childList?size > 0)>
+						<#list parentMenu.childList as childMenu>
+							<dl class="layui-nav-child">
+					            <dd><a id="${childMenu.id}" href="javascript:;" url="${childMenu.url}">${childMenu.menuName}</a></dd>
+					        </dl>
+						</#list>
+					</#if>
+				</li>
+			</#list>
+		</#if>
       </ul>
     </div>
   </div>
@@ -95,7 +101,6 @@
 </div>
 <script src="/js/lib/layui/layui.js"></script>
 <script>
-
 layui.use(['element'], function(){
 	var element = layui.element;
 	var tabId="tabs";
@@ -103,7 +108,7 @@ layui.use(['element'], function(){
 	element.on('nav(nav-tree)',function(data){
 	    var id = data[0].id;
 	    if(id == ""){
-	    	return ;
+	    	return false;
 	    }
 	    var url = data[0].getAttribute("url");
 	    var title = data[0].text;
@@ -114,23 +119,22 @@ layui.use(['element'], function(){
 		        isData = true;
 		        return false;
 		    }
-		})
+		});
 		if (!isData) {
-		 active.tabAdd(url, id, title);
+			active.tabAdd(url, id, title);
 		}
+		active.tabChange(id); ////切换到指定id的Tab项
 	});
 	//触发事件
 	var active = {
 	    //在这里给active绑定几项事件，后面可通过active调用这些事件
 	    tabAdd: function(url,id,title) {
-	    	var height = ($(window).height() -41- 10 - 60 -10-44 -10-20)+"px";//嵌入页面的高度
 	        //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
 	        element.tabAdd(tabId, {
 	            title: title,
-	            content: '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:'+height+';"></iframe>',
+	            content: '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:445px;"></iframe>',
 	            id: id //规定好的id
 	        })
-	        active.tabChange(id); ////切换到指定id的Tab项
 	    },
 	    tabChange: function(id) {
 	        element.tabChange(tabId, id); ////切换到指定id的Tab项
@@ -146,6 +150,7 @@ layui.use(['element'], function(){
 	};
 	//addTab首页
 	active.tabAdd("/login/home", "0", "首页");
+	active.tabChange("0"); //切换到指定id的Tab项
 });
 </script>
 

@@ -20,5 +20,5 @@ public interface BaseDao<T,PK extends Serializable> {
     
     public List<T> findList(Map<String, String> params);
     
-    public Page<T> findPage(Map<String, String> params);
+    public Page<Object> findPage(Map<String, String> params);
 }

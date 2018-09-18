@@ -11,7 +11,7 @@
 	<div class="layui-main">
 		<div class="layui-inline table-search">
 			<div class="layui-input-inline">
-	    		<input class="layui-input" id="menuName" type="search" placeholder="请输入菜单名称">
+	    		<input class="layui-input" id="key" type="search" placeholder="请输入名称">
 	    	</div>
 	    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
 	  	</div>
@@ -30,8 +30,7 @@
 	function initTable(table){
 		var params = {
 			 id: "#table",
-			 url: "/user/pageList",
-			 width: 1000,
+			 url: "/sys/user/pageList",
 			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
@@ -50,13 +49,7 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
-			
-		$("#menuName").keydown(function(event){
-			  if(event.keyCode == 13){
-				  active.searchModel(table);
-			  }
-		  });
-		  //监听工具条事件
+		//监听工具条事件
 		  table.on('toolbar(table_event)', function(obj){
 		      var method = obj.event;
 		      active[method] ? active[method].call(this, table) : '';
@@ -69,19 +62,19 @@
 	});
 	var active = {
 		searchModel: function(table){
-			var menuName = $("#menuName").val();
+			var key = $("#key").val();
 			tableIns.reload({
-				where:{menuName: menuName}
+				where:{key: key}
 		  	});
 		},
 		addModel: function(table){
-			openDialog(table, 'table', '/user/saveOrUpdate');
+			openDialog(table, 'table', '/sys/user/saveOrUpdate');
 		},
 		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/user/deleteByIds", "userId");
+			confirm_Delete(table, 'table', "/sys/user/deleteByIds", "userId");
 		},
 		editModel: function(table){
-			editDialog(table, 'table', '/user/saveOrUpdate', "userId");
+			editDialog(table, 'table', '/sys/user/saveOrUpdate', "userId");
 		}
 	}
 	</script>

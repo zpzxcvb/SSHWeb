@@ -42,28 +42,9 @@
 
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
-		layui.use('form', function() {
-			formSubmit("/user/save");
+		layui.use(['form'], function() {
+			formSubmit("/sys/user/save");
 		});
-		function formSubmit(url){
-			$("#postBtn").click(function(){
-				var param = $("form").serialize();
-				$.ajax({
-					url: url,
-					type: "post",
-					data: param,
-					success: function(data){
-						if(data.status == "ok"){
-							parent.layer.msg("操作成功",{icon:1});
-						}else{
-							parent.layer.msg("操作失败",{icon:0});
-						}
-						//关闭页面
-						closeDialog();
-					}
-				})
-			})
-		}
 	</script>
 </body>
 </html>

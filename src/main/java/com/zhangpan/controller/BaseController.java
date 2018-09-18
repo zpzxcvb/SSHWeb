@@ -20,7 +20,8 @@ public class BaseController {
 	protected HttpServletResponse response;
 	protected HttpSession session;
 	protected Map<String, String> paramMap;
-	Map<String, Object> result;
+	protected Map<String, Object> map;
+	protected ResponseData result;
 	
 	@ModelAttribute
 	public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
@@ -28,7 +29,7 @@ public class BaseController {
 		this.response = response;
 		this.session = request.getSession();
 		this.paramMap = getParamMap();
-		result = new HashMap<String, Object>();
+		map = new HashMap<String, Object>();
 		
         if(paramMap.get("pageNum") != null && paramMap.get("pageSize") != null) {
             int pageNum = Integer.parseInt(paramMap.get("pageNum"));
@@ -52,8 +53,8 @@ public class BaseController {
 		return paramMap;
 	}
 	
-	public ResponseData getResults(String code, String msg, String data) {
-        ResponseData result = new ResponseData(code, msg, data);
+	public ResponseData getResults(String code, String msg, String JsonData) {
+	    result = new ResponseData(code, msg, JsonData);
         return result;
     }
 	

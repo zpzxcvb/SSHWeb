@@ -9,6 +9,15 @@
   <select id="findPage" parameterType="map" resultType="SysUser">
   	select * from sys_user
   	where 1=1
+  	<if test="key != null">
+		<bind name="pattern" value="'%' + key + '%'" />
+		and user_name like #{pattern}
+	</if>
+  </select>
+  
+  <select id="findList" parameterType="map" resultType="SysUser">
+  	select * from sys_user
+  	where 1=1
   	<if test="userName != null">
 		and user_name = #{userName}
 	</if>
@@ -40,7 +49,7 @@
   <update id="update" parameterType="SysUser">
   	update sys_user
   	<set>
-  		<if test="password != null">
+  		<if test="password != null and password != ''">
   			password=#{password},
   		</if>
   		<if test="status != null">

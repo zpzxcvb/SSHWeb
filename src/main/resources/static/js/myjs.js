@@ -45,7 +45,6 @@ function table_layui(table, params){
 		method: 'post',
 		where: params.param,
 		cellMinWidth: 80,
-		width: params.width,
 		even: false,//条纹
 	    page: true,//分页
 	    cols: [params.columns],
@@ -120,4 +119,26 @@ function confirm_Delete(table, tableId, url, id){
 	}else{
 		layer.msg("请至少选择一行记录",{icon:0});
 	}
+}
+/**
+ * 通用表单提交
+ * */
+function formSubmit(url){
+	$("#postBtn").click(function(){
+		var param = $("form").serialize();
+		$.ajax({
+			url: url,
+			type: "post",
+			data: param,
+			success: function(data){
+				if(data.status == "ok"){
+					parent.layer.msg("操作成功",{icon:1});
+				}else{
+					parent.layer.msg("操作失败",{icon:0});
+				}
+				//关闭页面
+				closeDialog();
+			}
+		})
+	})
 }

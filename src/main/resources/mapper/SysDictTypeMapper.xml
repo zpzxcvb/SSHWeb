@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangpan.dao.sys.SysDictTypeDao">
+
+  <select id="findById" parameterType="int" resultType="SysDictType">
+  	select * from sys_dict_type where id = #{id}
+  </select>
+  
+  <select id="findList" parameterType="map" resultType="SysDictType">
+  	select * from sys_dict_type
+  	where 1=1
+  	<if test="dictName != null">
+		and dict_name = #{dictName}
+	</if>
+  </select>
+  
+  <insert id="save" parameterType="SysDictType">
+  	insert into sys_dict_type
+  		(dict_name,dict_code,remark)
+  	values
+  		(#{dictName},#{dictCode},#{remark})
+  </insert>
+  
+  <delete id="deleteByIds" parameterType="int">
+  	delete from sys_dict_type 
+  	where
+  	<choose>
+		<when test="array.length == 1">
+			id = #{array[0]}
+		</when>
+		<otherwise>
+			id in
+			<foreach collection="array" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+		</otherwise>
+	</choose>
+  </delete>
+  
+  <update id="update" parameterType="SysDictType">
+  	update sys_dict_type
+  	<set>
+  		<if test="dictName != null">
+  			dict_name=#{dictName},
+  		</if>
+  	</set>
+	where id = #{id}
+  </update>
+  
+  <select id="findDictTypes" parameterType="map" resultType="map">
+  	select id,dict_name as name,dict_code,'0' as pid from sys_dict_type
+  </select>
+</mapper>

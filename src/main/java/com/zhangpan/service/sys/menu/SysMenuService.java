@@ -23,4 +23,17 @@ public interface SysMenuService extends BaseService<SysMenu,Integer>{
      * @return
      */
     public int hasChild(int id);
+    
+    /**
+     * 查询子节点
+     * @param id
+     * @return
+     */
+    public List<SysMenu> findMenuByPid(int id);
+    
+    /**
+     * 查询所有节点
+     * @return
+     */
+    public List<SysMenu> listAllMenu(int id);
 }

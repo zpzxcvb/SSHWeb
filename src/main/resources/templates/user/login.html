@@ -29,21 +29,32 @@
 		</form>
 	</div>
 	<script>
-		$(function(){
-			login();
+		layui.use(['form'], function(){
+			var form = layui.form;
+			//点击按钮登录
+			$("#postBtn").click(function(){
+				login();
+			});
+			//回车键登录
+			$(document).keydown(function(){
+				if(event.keyCode == 13){
+					login();
+				}
+			})
 		})
 		function login(){
-			$("#postBtn").click(function(){
-				var param = $("form").serialize();
-				$.ajax({
-					url:"/login/auth",
-					type: "post",
-					data: param,
-					success:function(data){
-						console.log(data);
+			var param = $("form").serialize();
+			$.ajax({
+				url:"/login/auth",
+				type: "post",
+				data: param,
+				success:function(data){
+					if(data.code=="1"){
 						window.location.href="/login/main";
+					}else{
+						layer.msg(data.msg, {icon:0});
 					}
-				});
+				}
 			});
 		}
 	

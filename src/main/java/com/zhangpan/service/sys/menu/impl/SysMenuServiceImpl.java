@@ -56,7 +56,7 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public Page<SysMenu> findPage(Map<String, String> params) {
+    public Page<Object> findPage(Map<String, String> params) {
         return sysMenuDao.findPage(params);
     }
 
@@ -68,5 +68,19 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public int hasChild(int id) {
         return sysMenuDao.hasChild(id);
+    }
+
+    @Override
+    public List<SysMenu> listAllMenu(int id) {
+        List<SysMenu> menuList = this.findMenuByPid(id);
+        for (SysMenu menu : menuList) {
+            menu.setChildList(listAllMenu(menu.getId()));
+        }
+        return menuList;
+    }
+
+    @Override
+    public List<SysMenu> findMenuByPid(int id) {
+        return sysMenuDao.findMenuByPid(id);
     }
 }

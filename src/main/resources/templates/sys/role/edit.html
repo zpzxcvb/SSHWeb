@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>菜单信息</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
+</head>
+<body>
+	<div>
+		<form class="layui-form layui-form-pane">
+			<input id="roleId" type="hidden" name="roleId" value="${(role.roleId)!''}"/>
+			<div class="layui-form-item">
+				<label class="layui-form-label">角色名称</label>
+				<div class="layui-input-inline">
+					<input type="text" name="roleName" class="layui-input" placeholder="请输入角色名称" value="${(role.roleName)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-inline">
+					<a id="postBtn" class="layui-btn">保存</a>
+					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+		layui.use('form', function() {
+			var form = layui.form;
+			
+			var id = "${(role.roleId)!''}";
+			var url="/sys/role/save";
+			if(id != ""){
+				url = "/sys/role/update";
+			}
+			formSubmit(url);
+		});
+	</script>
+</body>
+</html>

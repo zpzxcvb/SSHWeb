@@ -1,7 +1,5 @@
 package com.zhangpan.controller.sys;
 
-import java.util.Date;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,7 @@ import com.zhangpan.util.DateUtil;
 import com.zhangpan.util.StringUtil;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class SysUserController extends BaseController {
     
 	@Autowired
@@ -34,7 +32,7 @@ public class SysUserController extends BaseController {
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Object pageList(){
-		Page<SysUser> page = userService.findPage(paramMap);
+		Page<Object> page = userService.findPage(paramMap);
         return pageData(page);
 	}
 	
@@ -75,6 +73,11 @@ public class SysUserController extends BaseController {
     @ResponseBody
     public Object update(SysUser model){
         model.setUpdateTime(DateUtil.currentDateTime());
+        String password = model.getPassword();
+        if(!StringUtil.isEmpty(password)) {
+            password = DigestUtils.md5Hex(password);
+            model.setPassword(password);
+        }
         int count = userService.update(model);
         return getResponseState(count);
     }

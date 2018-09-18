@@ -18,7 +18,7 @@
 		<div style="width: 80%;float: left;">
 			<div class="layui-inline table-search">
 				<div class="layui-input-inline">
-		    		<input class="layui-input" id="menuName" type="search" placeholder="请输入菜单名称">
+		    		<input class="layui-input" id="key" type="search" placeholder="请输入菜单名称">
 		    	</div>
 		    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
 		  	</div>
@@ -34,11 +34,11 @@
 		</div>
 	</script>
 	<script>
+	var table,tableIns;
 	function initTable(table){
 		var params = {
 			 id: "#table",
-			 url: "/menu/pageList",
-			 width: 1000,
+			 url: "/sys/menu/pageList",
 			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
@@ -51,22 +51,15 @@
 		      	}}
 		    ]
 		};
-		table_layui(table, params);
+		tableIns = table_layui(table, params);
 	}
-	var table;
 	layui.use('table', function(){
 		table = layui.table;
 		//初始化tree(非异步)
-		initTree("menuTree", "/menu/menuList");
+		initTree("menuTree", "/sys/menu/menuList");
 		//初始化table
 		initTable(table);
-			
-		$("#menuName").keydown(function(event){
-			  if(event.keyCode == 13){
-				  active.searchModel(table);
-			  }
-		  });
-		  //监听工具条事件
+		//监听工具条事件
 		  table.on('toolbar(table_event)', function(obj){
 		      var method = obj.event;
 		      active[method] ? active[method].call(this, table) : '';
@@ -79,25 +72,25 @@
 	});
 	var active = {
 		searchModel: function(table){
-			var menuName = $("#menuName").val();
+			var key = $("#key").val();
 		  	table.reload('table',{
-				where:{menuName: menuName}
+				where:{key: key}
 		  	});
 		},
 		addModel: function(table){
-			openDialog(table, 'table', '/menu/saveOrUpdate');
+			openDialog(table, 'table', '/sys/menu/saveOrUpdate');
 		},
 		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/menu/deleteByIds", "id");
+			confirm_Delete(table, 'table', "/sys/menu/deleteByIds", "id");
 		},
 		editModel: function(table){
-			editDialog(table, 'table', '/menu/saveOrUpdate', "id");
+			editDialog(table, 'table', '/sys/menu/saveOrUpdate', "id");
 		}
 	}
 	function zTreeClick(event, treeId, treeNode) {
 		table.reload('table',{
 			where:{
-				pid: treeNode.id,
+				pid: treeNode.id
 			}
 	  	});
 	}

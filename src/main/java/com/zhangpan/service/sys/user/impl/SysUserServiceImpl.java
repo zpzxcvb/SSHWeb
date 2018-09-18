@@ -49,7 +49,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public Page<SysUser> findPage(Map<String, String> params) {
+	public Page<Object> findPage(Map<String, String> params) {
 		return sysUserDao.findPage(params);
 	}
 

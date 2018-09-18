@@ -30,8 +30,8 @@
 			<if test="type != null">
 				and type = #{type}
 			</if>
-			<if test="menuName != null and menuName != ''">
-				<bind name="pattern" value="'%' + menuName + '%'" />
+			<if test="key != null">
+				<bind name="pattern" value="'%' + key + '%'" />
 				and menu_name like #{pattern}
 			</if>
 			order by pid,order_no
@@ -103,4 +103,12 @@
 			</otherwise>
 		</choose>
 	</delete>
+	
+	<!-- 查询子菜单-->
+	<select id="findMenuByPid" parameterType="int" resultType="SysMenu">
+		select * from sys_menu
+		where
+		type = 1
+		and pid = #{id}
+	</select>
 </mapper>

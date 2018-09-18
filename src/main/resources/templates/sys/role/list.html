@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>菜单信息列表</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
+</head>
+<body>
+	<div class="layui-main">
+		<div class="layui-inline table-search">
+			<div class="layui-input-inline">
+	    		<input class="layui-input" id="key" type="search" placeholder="请输入名称">
+	    	</div>
+	    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+	  	</div>
+	  	<table id="table" lay-filter="table_event"> </table>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script type="text/html" id="toolbars">
+		<div id="" class="layui-btn-container">
+			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
+			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
+			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+		</div>
+	</script>
+	<script type="text/html" id="rowbars">
+		<div id="" class="layui-btn-container">
+			<a lay-event="grantMenu" class="layui-btn layui-btn-xs">菜单分配</a>
+		</div>
+	</script>
+	<script>
+	var table,tableIns;
+	function initTable(table){
+		var params = {
+			 id: "#table",
+			 url: "/sys/role/pageList",
+			 toolbar: '#toolbars',
+			 columns: [
+		    	{type: 'checkbox', fixed: 'left'},
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'roleName', title: '角色名称'},
+		      	{field: 'createTime', title: '创建时间'},
+		      	{fixed: 'right', title:'操作', toolbar: '#rowbars'}
+		    ]
+		};
+		tableIns = table_layui(table, params);
+	}
+	layui.use('table', function(){
+		table = layui.table;
+		//初始化table
+		initTable(table);
+		//监听头工具条事件
+		  table.on('toolbar(table_event)', function(obj){
+		      var method = obj.event;
+		      active[method] ? active[method].call(this, table) : '';
+		  });
+		//监听行工具条事件
+		  table.on('tool(table_event)', function(obj){
+		      var method = obj.event;
+		      active[method] ? active[method].call(this, table) : '';
+		  });
+		  //监听普通按钮事件
+		  $('.table-search .layui-btn').click(function(){
+		  	  var method = this.id;
+		  	  active[method] ? active[method].call(this, table) : '';
+		  });
+	});
+	var active = {
+		searchModel: function(table){
+			var key = $("#key").val();
+		  	table.reload('table',{
+				where:{key: key}
+		  	});
+		},
+		addModel: function(table){
+			openDialog(table, 'table', '/sys/role/saveOrUpdate');
+		},
+		deleteModel: function(table){
+			confirm_Delete(table, 'table', "/sys/role/deleteByIds", "roleId");
+		},
+		editModel: function(table){
+			editDialog(table, 'table', '/sys/role/saveOrUpdate', "roleId");
+		},
+		grantMenu: function(table){
+			layer.msg("操作成功",{icon:1});
+		}
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>字典信息列表</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
+</head>
+<body>
+	<div class="layui-main">
+		<div style="width: 20%;float: left;">
+			<ul id="menuTree" class="ztree"></ul>
+		</div>
+		<div style="width: 80%;float: left;">
+			<div class="layui-inline table-search">
+				<div class="layui-input-inline">
+		    		<input class="layui-input" id="key" type="search" placeholder="请输入字典名称">
+		    	</div>
+		    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+		  	</div>
+		  	<table id="table" lay-filter="table_event"> </table>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script type="text/html" id="toolbars">
+		<div id="" class="layui-btn-container">
+			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
+			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
+			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+		</div>
+	</script>
+	<script>
+	var table,tableIns,dictType;
+	function initTable(table){
+		var params = {
+			 id: "#table",
+			 url: "/sys/dict/item/pageList",
+			 toolbar: '#toolbars',
+			 columns: [
+		    	{type: 'checkbox', fixed: 'left'},
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'dict_name', title: '字典名称'},
+		      	{field: 'dict_code', title: '字典编码'},
+		      	{field: 'type', title: '字典类型'},
+		      	{field: 'remark', title: '备注'}
+		    ]
+		};
+		tableIns = table_layui(table, params);
+	}
+	layui.use('table', function(){
+		table = layui.table;
+		//初始化tree(非异步)
+		initTree("menuTree", "/sys/dict/type/findList");
+		//初始化table
+		initTable(table);
+		//监听工具条事件
+		  table.on('toolbar(table_event)', function(obj){
+		      var method = obj.event;
+		      active[method] ? active[method].call(this, table) : '';
+		  });
+		  //监听普通按钮事件
+		  $('.table-search .layui-btn').click(function(){
+		  	  var method = this.id;
+		  	  active[method] ? active[method].call(this, table) : '';
+		  });
+	});
+	var active = {
+		searchModel: function(table){
+			var key = $("#key").val();
+		  	table.reload('table',{
+				where:{key: key}
+		  	});
+		},
+		addModel: function(table){
+			if(!dictType){
+				layer.msg("请选择左侧字典类型",{icon:0});
+				return false;
+			}
+			openDialog(table, 'table', '/sys/dict/item/saveOrUpdate?dictType='+dictType);
+		},
+		deleteModel: function(table){
+			confirm_Delete(table, 'table', "/sys/dict/item/deleteByIds", "id");
+		},
+		editModel: function(table){
+			editDialog(table, 'table', '/sys/dict/item/saveOrUpdate', "id");
+		}
+	}
+	function zTreeClick(event, treeId, treeNode) {
+		dictType = treeNode.dict_code;
+		table.reload('table',{
+			where:{
+				dictType: dictType
+			}
+	  	});
+	}
+	</script>
+</body>
+</html>

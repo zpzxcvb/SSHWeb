@@ -21,7 +21,7 @@
 			<div id="password_div" class="layui-form-item">
 				<label class="layui-form-label">密码</label>
 				<div class="layui-input-inline">
-					<input type="password" id="password" name="password" class="layui-input" placeholder="请输入密码" value="${(user.password)!''}" autocomplete="new-password"/>
+					<input type="password" id="password" name="password" class="layui-input" placeholder="请输入密码" value="" autocomplete="new-password"/>
 				</div>
 			</div>
 			<div class="layui-form-item" pane>
@@ -48,32 +48,12 @@
 		$(function() {
 			var id = "${(user.userId)!''}";
 			if(id != ""){
-				var url = "/user/update";
 				var status = "${(user.status)!''}";
 				$("#userName").attr("disabled",true);
 				$("input[name='status'][value='"+status+"']").attr("checked",true);
-				formSubmit(url);
+				formSubmit("/sys/user/update");
 			}
 		})
-		function formSubmit(url){
-			$("#postBtn").click(function(){
-				var param = $("form").serialize();
-				$.ajax({
-					url: url,
-					type: "post",
-					data: param,
-					success: function(data){
-						if(data.status == "ok"){
-							parent.layer.msg("操作成功",{icon:1});
-						}else{
-							parent.layer.msg("操作失败",{icon:0});
-						}
-						//关闭页面
-						closeDialog();
-					}
-				})
-			})
-		}
 	</script>
 </body>
 </html>

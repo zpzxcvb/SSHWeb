@@ -19,7 +19,7 @@ import com.zhangpan.service.sys.menu.SysMenuService;
 import com.zhangpan.util.FileUtil;
 
 @Controller
-@RequestMapping("/menu")
+@RequestMapping("/sys/menu")
 public class SysMenuController extends BaseController {
 	
     @Autowired
@@ -33,7 +33,7 @@ public class SysMenuController extends BaseController {
     @RequestMapping("/pageList")
     @ResponseBody
     public Object pageList(){
-        Page<SysMenu> page = sysMenuService.findPage(paramMap);
+        Page<Object> page = sysMenuService.findPage(paramMap);
         return pageData(page);
     }
     
@@ -60,12 +60,12 @@ public class SysMenuController extends BaseController {
     }
 	
 	@RequestMapping("/saveOrUpdate")
-    public String model(Integer id, Model model){
+    public String saveOrUpdate(Integer id, Model model){
 	    if(id != null) {
 	        SysMenu menu = sysMenuService.findById(id);
 	        model.addAttribute("menu", menu);
 	    }
-        return "/sys/menu/model";
+        return "/sys/menu/edit";
     }
 	
 	@RequestMapping("/save")
@@ -95,4 +95,18 @@ public class SysMenuController extends BaseController {
 	    FileUtil.downLoad(this.response, path, "me.jpg");
 	    return null;
 	}
+	
+	/**
+	 * 查询所有节点
+	 * @param MENU_ID
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/menuAll")
+    @ResponseBody
+	public Object listAllMenu() throws Exception {
+	    //根节点id=1
+	    List<SysMenu> listAllMenu = sysMenuService.listAllMenu(1);
+        return listAllMenu;
+    }
 }
