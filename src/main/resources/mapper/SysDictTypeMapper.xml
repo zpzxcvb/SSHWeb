@@ -21,20 +21,10 @@
   		(#{dictName},#{dictCode},#{remark})
   </insert>
   
-  <delete id="deleteByIds" parameterType="int">
+  <delete id="deleteById" parameterType="int">
   	delete from sys_dict_type 
   	where
-  	<choose>
-		<when test="array.length == 1">
-			id = #{array[0]}
-		</when>
-		<otherwise>
-			id in
-			<foreach collection="array" item="item" open="(" separator="," close=")" >
-				#{item}
-			</foreach>
-		</otherwise>
-	</choose>
+  	id = #{id}
   </delete>
   
   <update id="update" parameterType="SysDictType">
@@ -48,6 +38,11 @@
   </update>
   
   <select id="findDictTypes" parameterType="map" resultType="map">
-  	select id,dict_name as name,dict_code,'0' as pid from sys_dict_type
+  	select id,dict_name as name,dict_code,'0' as pid,remark from sys_dict_type
+  </select>
+  
+  <select id="checkTypeCode" parameterType="string" resultType="int">
+  	select count(*) from sys_dict_type
+  	where dict_code = #{dictCode}
   </select>
 </mapper>

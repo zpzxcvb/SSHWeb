@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.Page;
 import com.zhangpan.dao.sys.SysDictItemDao;
 import com.zhangpan.model.SysDictItem;
-import com.zhangpan.service.sys.dict.impl.SysDictItemService;
+import com.zhangpan.service.sys.dict.item.SysDictItemService;
 
 /**
  * @author zhangpan
@@ -55,6 +55,11 @@ public class SysDictItemServiceImpl implements SysDictItemService {
     @Override
     public Page<Object> findPage(Map<String, String> params) {
         return dictItemDao.findPage(params);
+    }
+
+    @Override
+    public int checkItemCode(Map<String, String> params) {
+        return dictItemDao.checkItemCode(params);
     }
 
 }

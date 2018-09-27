@@ -15,14 +15,6 @@
 	</if>
   </select>
   
-  <select id="findList" parameterType="map" resultType="SysRole">
-  	select * from sys_role
-  	where 1=1
-  	<if test="roleName != null">
-		and role_name = #{roleName}
-	</if>
-  </select>
-  
   <insert id="save" parameterType="SysRole">
   	insert into sys_role
   		(role_name,create_time)
@@ -55,4 +47,15 @@
   	</set>
 	where role_id = #{roleId}
   </update>
+  
+  <select id="findUserByRoleId" parameterType="int" resultType="map">
+  	select user_id,user_name,status from sys_user 
+  	where
+  	user_id in(
+		select b.user_id from sys_role a,sys_user_role b 
+		where 
+		a.role_id=b.role_id
+		and a.role_id=#{roleId}
+	)
+  </select>
 </mapper>

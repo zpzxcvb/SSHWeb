@@ -45,29 +45,29 @@ public class BaseController {
 		Map<String, String[]> params = request.getParameterMap();
 		
 		for(Map.Entry<String, String[]> param : params.entrySet()) {
+		    String value = "";
 		    String key = param.getKey();
 		    String[] values = param.getValue();
-            paramMap.put(key, values[0]);
+		    value = String.join(",", values);
+            paramMap.put(key, value);
 		}
 		System.err.println("requestParams=====>【"+this.paramMap+"】");
 		return paramMap;
 	}
 	
-	public ResponseData getResults(String code, String msg, String JsonData) {
+	public ResponseData getResults(String code, String msg, Object JsonData) {
 	    result = new ResponseData(code, msg, JsonData);
         return result;
     }
 	
-	protected Map<String, Object> getResponseState(int count) {
-	    Map<String, Object> map = new HashMap<String, Object>();
-		String status = "";
+	protected ResponseData getResponseState(int count) {
+	    ResponseData resp = null;
 		if (count > 0) {
-		    status = Constant.OK;
+		    resp = getResults(Constant.OK, "操作成功", "");
 		} else {
-		    status = Constant.ERROR;
+		    resp = getResults(Constant.ERROR, "操作失败", "");
 		}
-		map.put("status", status);
-		return map;
+		return resp;
 	}
 	
 	protected Map<String, Object> pageData(Page<?> page) {

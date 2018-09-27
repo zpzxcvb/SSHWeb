@@ -28,15 +28,24 @@
   <div class="layui-header">
     <div class="layui-logo">后台</div>
     <ul class="layui-nav layui-layout-right">
-    	<li class="layui-nav-item"><span id="currentTime"/></li>
+    	<li class="layui-nav-item">
+    		<a href="javascript:;">
+	        	<i class="layui-icon layui-icon-notice" title="通知"><span class="layui-badge">99</span></i>
+	        </a>
+    	</li>
+    	<li class="layui-nav-item">
+    		<a href="javascript:;">
+	        	<span id="currentTime"/>
+	        </a>
+    	</li>
       	<li class="layui-nav-item">
 	        <a href="javascript:;">
-	        	您好,<span id="username"">${user.userName}</span>
+	        	您好,<span id="username">${(user.userName)!''}</span>
 	          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
 	        </a>
 	        <dl class="layui-nav-child">
-	          <dd><a href="">基本资料</a></dd>
-	          <dd><a href="">安全设置</a></dd>
+	          <dd><a onclick="userInfo()" href="javascript:;">基本资料</a></dd>
+	          <dd><a onclick="safeConfig()" href="javascript:;">安全设置</a></dd>
 	        </dl>
       	</li>
       	<li class="layui-nav-item"><a href="/login/logout">注销</a></li>
@@ -99,10 +108,12 @@
 		</a>
 	</div>
 </div>
-<script src="/js/lib/layui/layui.js"></script>
+<script type="text/javascript" src="/js/myjs.js"></script>
 <script>
-layui.use(['element'], function(){
+var table;
+layui.use(['element','table'], function(){
 	var element = layui.element;
+	table = layui.table;
 	var tabId="tabs";
 	//监听左侧菜单addTab
 	element.on('nav(nav-tree)',function(data){
@@ -149,10 +160,15 @@ layui.use(['element'], function(){
 	    }
 	};
 	//addTab首页
-	active.tabAdd("/login/home", "0", "首页");
+	active.tabAdd("/login/home", "0", "<i class='layui-icon layui-icon-home' title='首页'> 首页</i>");
 	active.tabChange("0"); //切换到指定id的Tab项
 });
+function safeConfig(){
+	openDialog(table, 'table', '/sys/user/safeConfig');
+}
+function userInfo(){
+	layer.msg('123');
+}
 </script>
-
 </body>
 </html>

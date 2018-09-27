@@ -19,6 +19,10 @@
 	    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
 	  	</div>
 	  	<table id="table" lay-filter="table_event"> </table>
+	  	<fieldset>
+	  		<legend>角色所属用户</legend>
+	  		<table id="table_user" lay-filter=""> </table>
+	  	</fieldset>
 	</div>
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script type="text/html" id="toolbars">
@@ -26,11 +30,7 @@
 			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
 			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
 			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
-		</div>
-	</script>
-	<script type="text/html" id="rowbars">
-		<div id="" class="layui-btn-container">
-			<a lay-event="grantMenu" class="layui-btn layui-btn-xs">菜单分配</a>
+			<a lay-event="grantMenu" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-auz"></i> 分配菜单</a>
 		</div>
 	</script>
 	<script>
@@ -44,8 +44,7 @@
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
 		      	{field: 'roleName', title: '角色名称'},
-		      	{field: 'createTime', title: '创建时间'},
-		      	{fixed: 'right', title:'操作', toolbar: '#rowbars'}
+		      	{field: 'createTime', title: '创建时间'}
 		    ]
 		};
 		tableIns = table_layui(table, params);
@@ -54,16 +53,16 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
+		loadUserTable(table,"0");
 		//监听头工具条事件
 		  table.on('toolbar(table_event)', function(obj){
 		      var method = obj.event;
 		      active[method] ? active[method].call(this, table) : '';
 		  });
-		//监听行工具条事件
-		  table.on('tool(table_event)', function(obj){
-		      var method = obj.event;
-		      active[method] ? active[method].call(this, table) : '';
-		  });
+		//监听单击行事件
+		  table.on('row(table_event)', function(obj){
+			  loadUserTable(table, obj.data.roleId);
+			});
 		  //监听普通按钮事件
 		  $('.table-search .layui-btn').click(function(){
 		  	  var method = this.id;
@@ -73,7 +72,7 @@
 	var active = {
 		searchModel: function(table){
 			var key = $("#key").val();
-		  	table.reload('table',{
+			tableIns.reload({
 				where:{key: key}
 		  	});
 		},
@@ -89,6 +88,21 @@
 		grantMenu: function(table){
 			layer.msg("操作成功",{icon:1});
 		}
+	}
+	function loadUserTable(table, roleId){
+		var params = {
+			 id: "#table_user",
+			 url: "/sys/role/findUserByRoleId/"+roleId,
+			 width: 500,
+			 columns: [
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'user_name', title: '用户名'},
+		      	{field: 'status', title: '状态', sort: true, templet: function(d){
+		        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
+			    }}
+		    ]
+		};
+		table_layui(table, params);
 	}
 	</script>
 </body>

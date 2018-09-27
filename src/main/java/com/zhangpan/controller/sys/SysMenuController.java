@@ -1,13 +1,11 @@
 package com.zhangpan.controller.sys;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +14,6 @@ import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysMenu;
 import com.zhangpan.service.sys.menu.SysMenuService;
-import com.zhangpan.util.FileUtil;
 
 @Controller
 @RequestMapping("/sys/menu")
@@ -88,13 +85,6 @@ public class SysMenuController extends BaseController {
         int count = sysMenuService.deleteByIds(ids);
         return getResponseState(count);
     }
-	
-	@RequestMapping("/downLoad")
-	public String downLoad() throws FileNotFoundException {
-	    String path = ResourceUtils.getURL("classpath:").getPath()+"upload/image";
-	    FileUtil.downLoad(this.response, path, "me.jpg");
-	    return null;
-	}
 	
 	/**
 	 * 查询所有节点

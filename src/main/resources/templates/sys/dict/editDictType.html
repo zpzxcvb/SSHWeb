@@ -13,25 +13,23 @@
 <body>
 	<div>
 		<form class="layui-form layui-form-pane">
-			<input id="id" type="hidden" name="id" value="${(item.id)!''}"/>
-			<input type="hidden" name="dictType" value="${dictType}"/>
 			<div class="layui-form-item">
-				<label class="layui-form-label">字典名称</label>
+				<label class="layui-form-label">类型名称</label>
 				<div class="layui-input-inline">
-					<input type="text" name="dictName" class="layui-input" placeholder="请输入字典名称" value="${(item.dictName)!''}"/>
+					<input type="text" name="dictName" class="layui-input" placeholder="请输入字典类型名称"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">字典编码</label>
+				<label class="layui-form-label">类型编码</label>
 				<div class="layui-input-inline">
-					<input type="text" id="dictCode" name="dictCode" class="layui-input" placeholder="请输入字典编码" value="${(item.dictCode)!''}"/>
+					<input type="text" id="dictCode" name="dictCode" class="layui-input" placeholder="请输入字典类型编码"/>
 						
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">备注</label>
 				<div class="layui-input-inline">
-					<input type="text" name="remark" class="layui-input" placeholder="请输入备注信息" value="${(item.remark)!''}"/>
+					<input type="text" name="remark" class="layui-input" placeholder="请输入备注信息"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -47,17 +45,26 @@
 	<script>
 		layui.use(['form'], function() {
 			var form = layui.form;
+			$("#postBtn").click(function(){
+				var param = $("form").serialize();
+				$.ajax({
+					url: "/sys/dict/type/saveDictType",
+					type: "post",
+					data: param,
+					success: function(data){
+						if(data.code == "ok"){
+							parent.layer.msg(data.msg,{icon:1});
+							parent.initDictType();
+						}else{
+							parent.layer.msg(data.msg,{icon:0});
+						}
+						//关闭页面
+						closeDialog();
+					}
+				})
+			})
 		});
 
-		$(function() {
-			var id = "${(item.id)!''}";
-			var url="/sys/dict/item/save";
-			if(id != ""){
-				url = "/sys/dict/item/update";
-				$("#dictCode").attr("readonly",true);
-			}
-			formSubmit(url);
-		})
 	</script>
 </body>
 </html>

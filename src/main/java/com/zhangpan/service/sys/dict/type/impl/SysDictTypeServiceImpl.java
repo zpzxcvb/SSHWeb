@@ -62,4 +62,9 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
         return dictTypeDao.findDictTypes(params);
     }
 
+    @Override
+    public int checkTypeCode(Map<String, String> params) {
+        return dictTypeDao.checkTypeCode(params);
+    }
+
 }

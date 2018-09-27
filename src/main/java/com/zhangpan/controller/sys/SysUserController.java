@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
+import com.zhangpan.constant.Constant;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.sys.user.SysUserService;
+import com.zhangpan.service.sys.userRole.SysUserRoleService;
 import com.zhangpan.util.DateUtil;
 import com.zhangpan.util.StringUtil;
 
@@ -23,6 +25,9 @@ public class SysUserController extends BaseController {
     
 	@Autowired
 	private SysUserService userService;
+	
+	@Autowired
+	private SysUserRoleService sysUserRoleService;
 	
 	@RequestMapping("/list")
     public String list(){
@@ -37,49 +42,67 @@ public class SysUserController extends BaseController {
 	}
 	
 	@RequestMapping("/find/{userId}")
-	public String findById(@PathVariable("userId")Integer userId,ModelMap map){
+	public String findById(@PathVariable("userId")Integer userId,Model model){
 		System.out.println("userId---->"+userId);
 		Object user = userService.findById(userId);
-		map.put("user", user);
-		map.put("sex", 1);
+		model.addAttribute("user", user);
+		model.addAttribute("sex", 1);
 		return "sys/user/sysUser";
 	}
 	
-	@RequestMapping("/saveOrUpdate")
-    public String model(Integer id, Model model){
-	    String view = "";
-        if(id != null) {
-            SysUser user = userService.findById(id);
-            model.addAttribute("user", user);
-            view = "/sys/user/edit";
-        }else {
-            view = "/sys/user/add";
-        }
-        return view;
+	@RequestMapping("/goAdd")
+    public String goAdd(){
+        return "/sys/user/add";
     }
-    
-    @RequestMapping("/save")
+	
+    @RequestMapping("/saveUser")
     @ResponseBody
-    public Object save(SysUser model){
-        model.setCreateTime(DateUtil.currentDateTime());
+    public Object saveUser(SysUser model){
         String password = model.getPassword();
         password = DigestUtils.md5Hex(password);
         model.setPassword(password);
+        
+        model.setStatus(1);//默认可用
+        model.setCreateTime(DateUtil.currentDateTime());
+        
         int count = userService.save(model);
         return getResponseState(count);
     }
     
-    @RequestMapping("/update")
+    @RequestMapping("/changeUserStatus")
     @ResponseBody
-    public Object update(SysUser model){
+    public Object changeUserStatus(SysUser model){
         model.setUpdateTime(DateUtil.currentDateTime());
-        String password = model.getPassword();
-        if(!StringUtil.isEmpty(password)) {
-            password = DigestUtils.md5Hex(password);
-            model.setPassword(password);
-        }
         int count = userService.update(model);
         return getResponseState(count);
+    }
+    
+    @RequestMapping("/safeConfig")
+    public String safeConfig(Model model){
+        return "/sys/user/safeConfig";
+    }
+    
+    @RequestMapping("/password")
+    @ResponseBody
+    public Object password(SysUser model){
+        String oldPwd = paramMap.get("oldPwd");
+        oldPwd = DigestUtils.md5Hex(oldPwd);
+        
+        Integer userId = (Integer) session.getAttribute("userId");
+        SysUser user = userService.findById(userId);
+        if(user.getPassword().equals(oldPwd)) {
+            model.setUserId(userId);
+            model.setUpdateTime(DateUtil.currentDateTime());
+            String password = model.getPassword();
+            if(!StringUtil.isEmpty(password)) {
+                password = DigestUtils.md5Hex(password);
+                model.setPassword(password);
+            }
+            int count = userService.update(model);
+            return getResponseState(count);
+        }else {
+            return getResults("0", "用户输入密码错误", "");
+        }
     }
     
     @RequestMapping("/deleteByIds")
@@ -89,4 +112,18 @@ public class SysUserController extends BaseController {
         return getResponseState(count);
     }
 	
+    @RequestMapping("/grantRole")
+    public String grantRole(Integer id, Model model){
+        model.addAttribute("userId", id);
+        return "/sys/user/grantRole";
+    }
+    
+    @RequestMapping("/saveUserRole")
+    @ResponseBody
+    public Object saveUserRole(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
+        map.put("userId", userId);
+        map.put("ids", ids);
+        int count = sysUserRoleService.saveBatchUserRole(map);
+        return getResponseState(count);
+    }
 }

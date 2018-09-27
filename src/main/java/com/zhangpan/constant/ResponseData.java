@@ -6,12 +6,12 @@ public class ResponseData {
 	
 	private String msg;//返回信息
 	
-	private String data;//数据集合json字符串
+	private Object data;//数据集合json对象
 
 	public ResponseData() {
     }
 
-    public ResponseData(String code, String msg, String data) {
+    public ResponseData(String code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -33,11 +33,11 @@ public class ResponseData {
         this.msg = msg;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 

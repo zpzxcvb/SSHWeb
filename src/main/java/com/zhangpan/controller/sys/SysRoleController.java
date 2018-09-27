@@ -1,8 +1,11 @@
 package com.zhangpan.controller.sys;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysRole;
+import com.zhangpan.model.SysUser;
 import com.zhangpan.service.sys.role.SysRoleService;
 import com.zhangpan.util.DateUtil;
 
@@ -62,5 +66,11 @@ public class SysRoleController extends BaseController {
         int count = roleService.deleteByIds(ids);
         return getResponseState(count);
     }
-	
+    
+    @RequestMapping("/findUserByRoleId/{roleId}")
+    @ResponseBody
+    public Object findUserByRoleId(@PathVariable("roleId") Integer roleId) {
+        Page<Object> page = roleService.findUserByRoleId(roleId);
+        return pageData(page);
+    }
 }

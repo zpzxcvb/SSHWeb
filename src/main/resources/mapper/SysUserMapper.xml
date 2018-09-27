@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhangpan.dao.sys.SysUserDao">
+	
+	<sql id="columns">
+		user_id,user_name,create_time,update_time,status
+	</sql>
 
   <select id="findById" parameterType="int" resultType="SysUser">
   	select * from sys_user where user_id = #{userId}
   </select>
   
   <select id="findPage" parameterType="map" resultType="SysUser">
-  	select * from sys_user
+  	select <include refid="columns"/> from sys_user
   	where 1=1
   	<if test="key != null">
 		<bind name="pattern" value="'%' + key + '%'" />
@@ -16,7 +20,7 @@
   </select>
   
   <select id="findList" parameterType="map" resultType="SysUser">
-  	select * from sys_user
+  	select <include refid="columns"/> from sys_user
   	where 1=1
   	<if test="userName != null">
 		and user_name = #{userName}
@@ -62,8 +66,8 @@
 	where user_id = #{userId}
   </update>
   
-  <select id="userAuth" parameterType="map" resultType="SysUser">
-  	select * from sys_user
+  <select id="userAuth" parameterType="map" resultType="int">
+  	select count(*) from sys_user
 	where
 	status = 1
 	and user_name = #{userName}

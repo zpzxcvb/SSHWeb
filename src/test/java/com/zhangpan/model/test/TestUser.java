@@ -66,8 +66,8 @@ public class TestUser {
         Map<String, String> map=new HashMap<String, String>();
         map.put("userName", "admin");
         map.put("password", "1");
-        SysUser user = userService.userAuth(map);
-        System.err.println(JSON.toJSONString(user));
+        int user = userService.userAuth(map);
+        System.err.println(user);
     }
 	
 	@After

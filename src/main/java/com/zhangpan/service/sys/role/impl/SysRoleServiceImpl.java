@@ -53,4 +53,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return sysRoleDao.findPage(params);
 	}
 
+    @Override
+    public Page<Object> findUserByRoleId(Integer roleId) {
+        return sysRoleDao.findUserByRoleId(roleId);
+    }
+
 }

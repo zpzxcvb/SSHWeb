@@ -14,6 +14,20 @@
 	<div class="layui-main">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
+				<label class="layui-form-label">文件</label>
+				<div class="layui-input-block">
+					<a id="uploadBtn" class="layui-btn"><i class="layui-icon layui-icon-upload"></i> 上传</a>
+					<a id="textBtn" class="layui-btn">文本</a>
+					<a id="testBtn" class="layui-btn">test</a>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">文字</label>
+				<div class="layui-input-block">
+					<textarea class="layui-textarea" id="LAY_demo1"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">选择</label>
 				<div class="layui-input-block">
 					<select>
@@ -32,48 +46,32 @@
 				</div>
 			</div>
 			<input id="createDate" class="layui-input" type="text"/>
-			<a class="layui-btn">弹弹弹</a>
 		</form>
-		<pre>
-		
-	
-		
-		${menuList?size}---${menuList[1].childList?size}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		</pre>
 	</div>
 	<script>
-		layui.use([ 'laydate', 'form' ], function() {
+		layui.use([ 'laydate', 'form', 'layedit', 'upload' ], function() {
+			var layedit = layui.layedit;
 			var laydate = layui.laydate;
+			var upload = layui.upload;
+			var uploadInst = upload.render({
+			    elem: '#uploadBtn' //绑定元素
+			    ,url: '/file/upLoad' //上传接口
+			    ,acceptMime:'image/*'
+			    ,done: function(res, index, upload){
+			      console.log(res);
+			    }
+			    ,error: function(){
+			      //请求异常回调
+			    }
+			  });
+			//构建一个默认的编辑器
+			var index = layedit.build('LAY_demo1',{
+				height: 180,
+				uploadImage: {
+				    url: '/file/upLoad'
+				}
+			});
+			
 			laydate.render({
 				elem : '#createDate',
 				type : 'datetime',
@@ -86,13 +84,13 @@
 					console.log(date);
 				}
 			});
+			$('#textBtn').click(function(){
+				alert(layedit.getContent(index));
+			  });
+			$('#testBtn').click(function(){
+				alert("111");
+			  });
 		});
-		function test() {
-			layer.open({
-				content : "弹出鱼尾纹"
-			});
-		}
 	</script>
-
 </body>
 </html>

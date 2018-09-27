@@ -22,8 +22,11 @@
 		<div id="" class="layui-btn-container">
 			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
 			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
-			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+			<a lay-event="grantRole" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-auz"></i> 分配角色</a>
 		</div>
+	</script>
+	<script type="text/html" id="statusTpl">
+		<input type='checkbox' name='status' lay-skin='switch' lay-text='可用|禁用' lay-filter='userStatus' {{ d.status == 1 ? 'checked' : '' }} value='{{d.userId}}'>
 	</script>
 	<script>
 	var table,tableIns;
@@ -36,16 +39,16 @@
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
 		      	{field: 'userName', title: '用户名'},
+		      	{field: 'userName', title: '所属角色'},
 		      	{field: 'createTime', title: '创建时间'},
 		      	{field: 'updateTime', title: '更新时间'},
-		      	{field: 'status', title: '状态', sort: true, templet: function(d){
-		        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
-		      	}}
+		      	{field: 'status', title: '状态', sort: true, templet: '#statusTpl'}
 		    ]
 		};
 		tableIns = table_layui(table, params);
 	}
-	layui.use('table', function(){
+	layui.use(['table'], function(){
+		form = layui.form;
 		table = layui.table;
 		//初始化table
 		initTable(table);
@@ -59,6 +62,30 @@
 		  	  var method = this.id;
 		  	  active[method] ? active[method].call(this, table) : '';
 		  });
+		//监听指定开关
+		  form.on('switch(userStatus)', function(data){
+		  	var status = this.checked ? 1 : 0;
+		  	var userId = this.value;
+		  	var url = "/sys/user/changeUserStatus";
+		  	var param = {userId:userId, status:status};
+		    layer.confirm('您确定要操作吗?', {icon: 3}, function(index){
+				$.ajax({
+					url: url,
+					type: "post",
+					data: param,
+					success: function(data){
+						if(data.code == "ok"){
+							layer.msg(data.msg,{icon:1});
+							layer.close(index);
+						}else{
+							layer.msg(data.msg,{icon:0});
+						}
+					}
+				});
+			},function (){
+				tableIns.reload();
+			});
+		  });
 	});
 	var active = {
 		searchModel: function(table){
@@ -68,15 +95,16 @@
 		  	});
 		},
 		addModel: function(table){
-			openDialog(table, 'table', '/sys/user/saveOrUpdate');
+			openDialog(table, 'table', '/sys/user/goAdd');
 		},
 		deleteModel: function(table){
 			confirm_Delete(table, 'table', "/sys/user/deleteByIds", "userId");
 		},
-		editModel: function(table){
-			editDialog(table, 'table', '/sys/user/saveOrUpdate', "userId");
+		grantRole: function(table){
+			editDialog(table, 'table', '/sys/user/grantRole', "userId");
 		}
 	}
 	</script>
+	
 </body>
 </html>

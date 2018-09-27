@@ -41,6 +41,7 @@ function table_layui(table, params){
 	return table.render({
 		elem: params.id,
 		url: params.url,
+		width: params.width,
 		toolbar: params.toolbar,
 		method: 'post',
 		where: params.param,
@@ -61,7 +62,6 @@ function table_layui(table, params){
     	}
 	});
 }
-
 //layer 弹出层
 function openDialog(table, tableId, url){
 	layer.open({
@@ -69,7 +69,7 @@ function openDialog(table, tableId, url){
 	  	area: ['400px', '400px'], //宽高
 	  	content: url,
 	  	end: function(){
-	  		tableIns.reload(tableId);
+	  		tableIns.reload();
 	  	}
 	});
 }
@@ -106,12 +106,12 @@ function confirm_Delete(table, tableId, url, id){
 				type: "post",
 				data: {ids:ids},
 				success: function(data){
-					if(data.status == "ok"){
-						layer.msg("删除成功",{icon:1});
+					if(data.code == "ok"){
+						layer.msg(data.msg,{icon:1});
 						layer.close(index);
 						tableIns.reload();
 					}else{
-						layer.msg("操作失败",{icon:0});
+						layer.msg(data.msg,{icon:0});
 					}
 				}
 			});
@@ -131,10 +131,10 @@ function formSubmit(url){
 			type: "post",
 			data: param,
 			success: function(data){
-				if(data.status == "ok"){
-					parent.layer.msg("操作成功",{icon:1});
+				if(data.code == "ok"){
+					parent.layer.msg(data.msg,{icon:1});
 				}else{
-					parent.layer.msg("操作失败",{icon:0});
+					parent.layer.msg(data.msg,{icon:0});
 				}
 				//关闭页面
 				closeDialog();

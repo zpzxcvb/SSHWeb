@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysDictItem;
+import com.zhangpan.model.SysDictType;
 import com.zhangpan.model.SysRole;
-import com.zhangpan.service.sys.dict.impl.SysDictItemService;
+import com.zhangpan.service.sys.dict.item.SysDictItemService;
 import com.zhangpan.service.sys.dict.type.SysDictTypeService;
 import com.zhangpan.util.DateUtil;
 
@@ -37,15 +38,30 @@ public class SysDictController extends BaseController {
     @ResponseBody
     public Object findList(){
         List<Map<String, Object>> menus=dictTypeService.findDictTypes(paramMap);
-        for(Map<String, Object> map : menus) {
-            int pid = Integer.valueOf(map.get("pid").toString());
-            int id = Integer.valueOf(map.get("id").toString());
-            if(pid == 0) {
-                map.put("open", true);
-            }
-        }
-        
+        map.put("open", true);
+        map.put("id", 0);
+        map.put("name", "字典类型");
+        menus.add(map);
         return menus;
+    }
+    
+    @RequestMapping("/type/goAddDictType")
+    public String goAddDictType(){
+        return "/sys/dict/editDictType";
+    }
+    
+    @RequestMapping("/type/saveDictType")
+    @ResponseBody
+    public Object saveDictType(SysDictType model){
+        int count = dictTypeService.save(model);
+        return getResponseState(count);
+    }
+    
+    @RequestMapping("/type/deleteById")
+    @ResponseBody
+    public Object deleteById(Integer id){
+        int count = dictTypeService.deleteById(id);
+        return getResponseState(count);
     }
     
     @RequestMapping("/item/saveOrUpdate")
@@ -59,7 +75,7 @@ public class SysDictController extends BaseController {
             dictType = paramMap.get("dictType");
         }
         model.addAttribute("dictType", dictType);
-        return "/sys/dict/edit";
+        return "/sys/dict/editDictItem";
     }
     
     @RequestMapping("/item/save")
@@ -88,5 +104,19 @@ public class SysDictController extends BaseController {
     public Object pageList(){
         Page<Object> page = dictItemService.findPage(paramMap);
         return pageData(page);
+    }
+    
+    @RequestMapping("/type/checkCode")
+    @ResponseBody
+    public Object checkTypeCode(){
+        int count = dictTypeService.checkTypeCode(paramMap);
+        return getResponseState(count);
+    }
+    
+    @RequestMapping("/item/checkCode")
+    @ResponseBody
+    public Object checkItemCode(){
+        int count = dictItemService.checkItemCode(paramMap);
+        return getResponseState(count);
     }
 }

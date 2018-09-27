@@ -15,5 +15,5 @@ public interface SysUserService extends BaseService<SysUser,Integer>{
      * @param params
      * @return
      */
-    public SysUser userAuth(Map<String, String> params);
+    public int userAuth(Map<String, String> params);
 }

@@ -73,7 +73,7 @@
 	var active = {
 		searchModel: function(table){
 			var key = $("#key").val();
-		  	table.reload('table',{
+			tableIns.reload({
 				where:{key: key}
 		  	});
 		},
@@ -88,7 +88,7 @@
 		}
 	}
 	function zTreeClick(event, treeId, treeNode) {
-		table.reload('table',{
+		tableIns.reload({
 			where:{
 				pid: treeNode.id
 			}

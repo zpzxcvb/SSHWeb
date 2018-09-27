@@ -13,5 +13,7 @@ import com.zhangpan.service.BaseService;
 public interface SysDictTypeService extends BaseService<SysDictType, Integer> {
     
     public List<Map<String, Object>> findDictTypes(Map<String, String> params);
+    
+    public int checkTypeCode(Map<String, String> params);
 
 }

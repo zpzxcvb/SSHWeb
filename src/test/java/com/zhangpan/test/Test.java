@@ -36,6 +36,9 @@ public class Test {
         //灰度化
 //        BufferedImage grayImage = ImageHelper.convertImageToGrayscale(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(grayImage, "jpg", new File("H:/photo/", "test2.jpg"));
+        String[] s= {""};
+        String s1=String.join(",", s);
+        System.out.println(s1);
     }
 
 }

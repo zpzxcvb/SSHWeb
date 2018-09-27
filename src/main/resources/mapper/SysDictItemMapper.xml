@@ -67,4 +67,11 @@
   	</set>
 	where id = #{id}
   </update>
+  
+  <select id="checkItemCode" parameterType="map" resultType="int">
+  	select count(*) from sys_dict_item
+  	where
+	dict_code = #{dictCode}
+  	and dict_type = #{dictType}
+  </select>
 </mapper>

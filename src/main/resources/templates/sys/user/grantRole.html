@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>用户信息列表</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+	<div class="layui-main">
+		<a id="saveUserRole" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add"></i> 保存</a>
+	  	<table id="table"> </table>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+	var table,tableIns;
+	var userId = '${userId}';
+	function loadUserTable(table){
+		var params = {
+			 id: "#table",
+			 width: 300,
+			 url: "/sys/role/pageList?userId="+userId,
+			 columns: [
+				 {type: 'checkbox', fixed: 'left'},
+				 {type: 'numbers', title: '序号', fixed: 'left'},
+			     {field: 'roleName', title: '角色名称',width: 200}
+		    ]
+		};
+		table_layui(table, params);
+	}
+	layui.use('table', function(){
+		table = layui.table;
+		//初始化table
+		loadUserTable(table);
+		
+		saveUserRole(table, 'table');
+	});
+	function saveUserRole(table, tableId){
+		$('#saveUserRole').click(function(){
+	  		var checkStatus = table.checkStatus(tableId);
+	  		if(checkStatus.data.length > 0){
+	  			var ids=[];
+	  			$.each(checkStatus.data, function(index, item){
+	  				ids.push(item["roleId"]);
+	  			});
+	  			var param = {ids:ids, userId:userId};
+	  			$.ajax({
+	  				url: "/sys/user/saveUserRole",
+	  				type: "post",
+	  				data: param,
+	  				success: function(data){
+	  					if(data.code == "ok"){
+	  						parent.layer.msg(data.msg,{icon:1});
+	  					}else{
+	  						parent.layer.msg(data.msg,{icon:0});
+	  					}
+	  					//关闭页面
+	  					closeDialog();
+	  				}
+	  			})
+	  		}else{
+	  			layer.msg("请至少选择一行记录",{icon:0});
+	  		}
+	  	});
+	}
+	</script>
+	
+</body>
+</html>

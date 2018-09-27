@@ -54,7 +54,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
     @Override
-    public SysUser userAuth(Map<String, String> params) {
+    public int userAuth(Map<String, String> params) {
         return sysUserDao.userAuth(params);
     }
 

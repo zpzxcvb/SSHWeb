@@ -37,12 +37,12 @@ public class LoginController extends BaseController {
 	    if(users.size() > 0) {
 	        SysUser sysUser = users.get(0);
 	        if(sysUser.getStatus() == 1) {
-	            SysUser user = userService.userAuth(paramMap);
-	            if(user != null) {
-	                session.setAttribute("user", user);
+	            int hasUser = userService.userAuth(paramMap);
+	            if(hasUser == 1) {
+	                session.setAttribute("userId", sysUser.getUserId());
+	                session.setAttribute("userName", sysUser.getUserName());
 	                List<SysMenu> menuList = sysMenuService.listAllMenu(1);
 	                session.setAttribute("menuList", menuList);
-	                session.setAttribute("test", "123");
 	                getResults("1", "", "");
 	            }else {
 	                getResults("0", "帐户名或登录密码不正确，请重新输入", "");
@@ -69,7 +69,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/logout")
 	public String logout() {
         // 移除session
-        session.removeAttribute("user");
+        session.invalidate();
         return "redirect:/login/";
     }
 	
