@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>分配角色列表</title>
+	<title>分配菜单列表</title>
 	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
 	
 	<script src="/js/lib/layui/layui.js"></script>
@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="layui-main">
-		<a id="saveUserRole" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add"></i> 保存</a>
+		<a id="saveRolePermission" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add"></i> 保存</a>
 	  	<table id="table"> </table>
 	</div>
 	<script type="text/javascript" src="/js/myjs.js"></script>
@@ -36,8 +36,8 @@
 		
 		saveUserRole(table, 'table');
 	});
-	function saveUserRole(table, tableId){
-		$('#saveUserRole').click(function(){
+	function saveRolePermission(table, tableId){
+		$('#saveRolePermission').click(function(){
 	  		var checkStatus = table.checkStatus(tableId);
 	  		if(checkStatus.data.length > 0){
 	  			var ids=[];
@@ -46,7 +46,7 @@
 	  			});
 	  			var param = {ids:ids, userId:userId};
 	  			$.ajax({
-	  				url: "/sys/user/saveUserRole",
+	  				url: "/sys/user/saveRolePermission",
 	  				type: "post",
 	  				data: param,
 	  				success: function(data){

@@ -83,4 +83,9 @@ public class SysMenuServiceImpl implements SysMenuService {
     public List<SysMenu> findMenuByPid(int id) {
         return sysMenuDao.findMenuByPid(id);
     }
+
+    @Override
+    public int batchSave(Map<String, Object> params) {
+        return 0;
+    }
 }

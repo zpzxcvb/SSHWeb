@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.annotations.JsonAdapter;
+import com.zhangpan.controller.BaseController;
 import com.zhangpan.util.ImageUtil;
 
 import net.sourceforge.tess4j.ITesseract;
@@ -27,9 +28,10 @@ import net.sourceforge.tess4j.util.ImageHelper;
 import net.sourceforge.tess4j.util.LoadLibs;
 
 public class Test {
-    
+    private static final Logger log = LoggerFactory.getLogger(BaseController.class);
 
     public static void main(String[] args) throws Exception {
+        log.info("1-----3");
         //二值化
 //        BufferedImage BinaryImage = ImageHelper.convertImageToBinary(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(BinaryImage, "jpg", new File("H:/photo/", "test2.jpg"));

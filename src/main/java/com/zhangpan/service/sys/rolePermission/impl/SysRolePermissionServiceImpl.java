@@ -1,4 +1,4 @@
-package com.zhangpan.service.sys.userRole.impl;
+package com.zhangpan.service.sys.rolePermission.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -8,23 +8,23 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
-import com.zhangpan.dao.sys.SysUserRoleDao;
-import com.zhangpan.model.SysUserRole;
-import com.zhangpan.service.sys.userRole.SysUserRoleService;
+import com.zhangpan.dao.sys.SysRolePermissionDao;
+import com.zhangpan.model.SysRolePermission;
+import com.zhangpan.service.sys.rolePermission.SysRolePermissionService;
 
 /**
  * @author zhangpan
- * @date 2018年9月25日
+ * @date 2018年9月27日
  */
 @Service
-public class SysUserRoleServiceImpl implements SysUserRoleService {
-
-    @Resource
-    private SysUserRoleDao sysUserRoleDao;
+public class SysRolePermissionServiceImpl implements SysRolePermissionService {
     
+    @Resource
+    private SysRolePermissionDao sysRolePermissionDao;
+
     @Override
-    public int save(SysUserRole model) {
-        return sysUserRoleDao.save(model);
+    public int save(SysRolePermission model) {
+        return 0;
     }
 
     @Override
@@ -38,17 +38,17 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
     }
 
     @Override
-    public int update(SysUserRole model) {
+    public int update(SysRolePermission model) {
         return 0;
     }
 
     @Override
-    public SysUserRole findById(Integer id) {
+    public SysRolePermission findById(Integer id) {
         return null;
     }
 
     @Override
-    public List<SysUserRole> findList(Map<String, String> params) {
+    public List<SysRolePermission> findList(Map<String, String> params) {
         return null;
     }
 
@@ -59,7 +59,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
     @Override
     public int batchSave(Map<String, Object> params) {
-        return sysUserRoleDao.batchSave(params);
+        return sysRolePermissionDao.batchSave(params);
     }
 
 }

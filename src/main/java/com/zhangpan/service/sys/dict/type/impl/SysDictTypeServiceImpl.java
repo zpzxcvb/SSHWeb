@@ -67,4 +67,9 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
         return dictTypeDao.checkTypeCode(params);
     }
 
+    @Override
+    public int batchSave(Map<String, Object> params) {
+        return 0;
+    }
+
 }

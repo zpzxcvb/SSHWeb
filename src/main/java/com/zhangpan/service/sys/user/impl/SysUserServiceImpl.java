@@ -58,4 +58,9 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserDao.userAuth(params);
     }
 
+    @Override
+    public int batchSave(Map<String, Object> params) {
+        return 0;
+    }
+
 }

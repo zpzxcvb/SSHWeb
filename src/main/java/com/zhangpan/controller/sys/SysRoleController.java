@@ -70,4 +70,19 @@ public class SysRoleController extends BaseController {
         Page<Object> page = roleService.findUserByRoleId(roleId);
         return pageData(page);
     }
+    
+    @RequestMapping("/grantMenu")
+    public String grantMenu(Integer id, Model model){
+        model.addAttribute("roleId", id);
+        return "/sys/user/grantMenu";
+    }
+    
+    @RequestMapping("/saveRolePermission")
+    @ResponseBody
+    public Object saveRolePermission(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
+        map.put("roleId", userId);
+        map.put("ids", ids);
+        int count = roleService.batchSave(map);
+        return getResponseState(count);
+    }
 }

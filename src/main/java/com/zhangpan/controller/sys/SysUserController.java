@@ -121,7 +121,7 @@ public class SysUserController extends BaseController {
     public Object saveUserRole(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
         map.put("userId", userId);
         map.put("ids", ids);
-        int count = sysUserRoleService.saveBatchUserRole(map);
+        int count = sysUserRoleService.batchSave(map);
         return getResponseState(count);
     }
 }

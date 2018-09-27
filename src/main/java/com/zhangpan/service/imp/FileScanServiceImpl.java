@@ -9,7 +9,6 @@ import com.zhangpan.service.FileScanService;
 import com.zhangpan.util.FileUtil;
 import com.zhangpan.util.StringUtil;
 import com.zhangpan.util.TreeNode;
-import com.zhangpan.util.TreeUtil;
 
 @Service
 public class FileScanServiceImpl implements FileScanService {
@@ -20,12 +19,21 @@ public class FileScanServiceImpl implements FileScanService {
 		if(StringUtil.isEmpty(path)){
 			path=System.getProperty("user.dir");
 			treeNodes=FileUtil.scanFiles(path);
-			TreeNode treeNode=TreeUtil.buildRootNode("项目列表", path);
+			TreeNode treeNode=buildRootNode("项目列表", path);
 			treeNodes.add(treeNode);
 		}else{
 			treeNodes=FileUtil.scanFiles(path);
 		}
 		return treeNodes;
 	}
-
+	
+	private TreeNode buildRootNode(String rootName,String path){
+        TreeNode treeNode=new TreeNode();
+        treeNode.setName(rootName);
+        treeNode.setPath(path);
+        treeNode.setOpen(true);
+        treeNode.setParent(true);
+        treeNode.setId(path);
+        return treeNode;
+    }
 }

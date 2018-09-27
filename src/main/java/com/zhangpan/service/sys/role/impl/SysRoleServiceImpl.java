@@ -58,4 +58,9 @@ public class SysRoleServiceImpl implements SysRoleService {
         return sysRoleDao.findUserByRoleId(roleId);
     }
 
+    @Override
+    public int batchSave(Map<String, Object> params) {
+        return 0;
+    }
+
 }

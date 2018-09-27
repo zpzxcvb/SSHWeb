@@ -62,4 +62,9 @@ public class SysDictItemServiceImpl implements SysDictItemService {
         return dictItemDao.checkItemCode(params);
     }
 
+    @Override
+    public int batchSave(Map<String, Object> params) {
+        return 0;
+    }
+
 }
