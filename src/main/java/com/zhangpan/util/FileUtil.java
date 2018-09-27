@@ -12,6 +12,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 文件读写工具类
+ * @author zhangpan
+ * @date 2018年9月27日
+ */
 public class FileUtil {
     
     /**
