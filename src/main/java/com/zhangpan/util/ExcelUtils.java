@@ -24,6 +24,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
+/**
+ * excel导出工具类
+ * @author zhangpan
+ * @date 2018年9月27日
+ */
 public class ExcelUtils {
 	
     public static final short DEFAULT_FONT_SIZE = 15;
