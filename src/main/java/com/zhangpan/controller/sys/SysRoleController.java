@@ -1,7 +1,5 @@
 package com.zhangpan.controller.sys;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysRole;
-import com.zhangpan.model.SysUser;
 import com.zhangpan.service.sys.role.SysRoleService;
 import com.zhangpan.util.DateUtil;
 
