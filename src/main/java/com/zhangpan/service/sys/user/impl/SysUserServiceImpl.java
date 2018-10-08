@@ -44,17 +44,17 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<SysUser> findList(Map<String, String> params) {
+	public List<SysUser> findList(Map<String, Object> params) {
 		return sysUserDao.findList(params);
 	}
 
 	@Override
-	public Page<Object> findPage(Map<String, String> params) {
+	public Page<Object> findPage(Map<String, Object> params) {
 		return sysUserDao.findPage(params);
 	}
 
     @Override
-    public int userAuth(Map<String, String> params) {
+    public int userAuth(Map<String, Object> params) {
         return sysUserDao.userAuth(params);
     }
 

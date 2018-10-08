@@ -48,12 +48,12 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
     }
 
     @Override
-    public List<SysUserRole> findList(Map<String, String> params) {
+    public List<SysUserRole> findList(Map<String, Object> params) {
         return null;
     }
 
     @Override
-    public Page<Object> findPage(Map<String, String> params) {
+    public Page<Object> findPage(Map<String, Object> params) {
         return null;
     }
 

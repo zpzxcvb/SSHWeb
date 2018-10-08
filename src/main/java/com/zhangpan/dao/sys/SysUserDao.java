@@ -7,6 +7,6 @@ import com.zhangpan.model.SysUser;
 
 public interface SysUserDao extends BaseDao<SysUser,Integer> {
     
-    public int userAuth(Map<String, String> params);
+    public int userAuth(Map<String, Object> params);
 
 }

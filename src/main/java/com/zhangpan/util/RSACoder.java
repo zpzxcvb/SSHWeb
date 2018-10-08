@@ -176,7 +176,6 @@ public class RSACoder {
         //甲方进行数据的加密
         byte[] code1 = RSACoder.encryptByPrivateKey(str.getBytes(),privateKey,true);
         System.out.println("加密后的数据：" + Base64.encodeBase64String(code1));
-        System.out.println("乙方解密后的数据：" + new String(code1));
         //乙方进行数据的解密
         byte[] decode1 = RSACoder.decryptByPublicKey(code1, publicKey);
         System.out.println("乙方解密后的数据：" + new String(decode1));

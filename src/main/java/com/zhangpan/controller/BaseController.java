@@ -23,7 +23,7 @@ public class BaseController {
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
 	protected HttpSession session;
-	protected Map<String, String> paramMap;
+	protected Map<String, Object> paramMap;
 	protected Map<String, Object> map;
 	protected ResponseData result;
 	
@@ -36,15 +36,15 @@ public class BaseController {
 		map = new HashMap<String, Object>();
 		
         if(paramMap.get("pageNum") != null && paramMap.get("pageSize") != null) {
-            int pageNum = Integer.parseInt(paramMap.get("pageNum"));
-            int pageSize = Integer.parseInt(paramMap.get("pageSize"));
+            int pageNum = Integer.valueOf(paramMap.get("pageNum").toString());
+            int pageSize = Integer.parseInt(paramMap.get("pageSize").toString());
             
             PageHelper.startPage(pageNum, pageSize);
         }
 	}
 
-	private Map<String, String> getParamMap(){
-		paramMap = new HashMap<String, String>();
+	private Map<String, Object> getParamMap(){
+		paramMap = new HashMap<String, Object>();
 		
 		Map<String, String[]> params = request.getParameterMap();
 		

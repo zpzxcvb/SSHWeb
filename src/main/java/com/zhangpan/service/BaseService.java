@@ -49,7 +49,7 @@ public interface BaseService<T, PK extends Serializable> {
     public int update(T model);
 
     /**
-     * 根据id查询
+     * 根据id查询单个
      * 
      * @param id
      * @return
@@ -57,19 +57,19 @@ public interface BaseService<T, PK extends Serializable> {
     public T findById(PK id);
 
     /**
-     * 查询
+     * 查询数据集合
      * 
      * @param params
      * @return
      */
-    public List<T> findList(Map<String, String> params);
+    public List<T> findList(Map<String, Object> params);
 
     /**
-     * 带分页查询
+     * 查询带分页的数据集合
      * 
      * @param params
      * @return
      */
-    public Page<Object> findPage(Map<String, String> params);
+    public Page<Object> findPage(Map<String, Object> params);
 
 }

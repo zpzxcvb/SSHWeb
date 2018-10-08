@@ -28,6 +28,8 @@ public class TestUser {
 	@Autowired
 	private SysUserService userService;
 	
+	Map<String, Object> map=new HashMap<String, Object>();
+	
 	@Test
 	public void testAdd() {
 		SysUser user=new SysUser();
@@ -54,7 +56,6 @@ public class TestUser {
 	
 	@Test
     public void testfindAll() {
-	    Map<String, String> map=new HashMap<String, String>();
 	    map.put("userName", "admin");
 	    map.put("password", "1");
         List<?> list = userService.findList(map);
@@ -63,7 +64,6 @@ public class TestUser {
 	
 	@Test
     public void testUserAuth() {
-        Map<String, String> map=new HashMap<String, String>();
         map.put("userName", "admin");
         map.put("password", "1");
         int user = userService.userAuth(map);

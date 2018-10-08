@@ -31,7 +31,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/auth")
 	@ResponseBody
 	public Object auth(){
-	    String password = paramMap.get("password");
+	    String password = paramMap.get("password").toString();
 	    paramMap.put("password", DigestUtils.md5Hex(password));
 	    List<SysUser> users = userService.findList(paramMap);
 	    if(users.size() > 0) {

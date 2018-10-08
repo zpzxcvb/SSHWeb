@@ -2,12 +2,11 @@
 <html>
 <head>
 	<title>字典信息列表</title>
-	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
 	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
 	
 	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
-	<script src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/layui/layui.js"></script>
 	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
 </head>
 <body>
@@ -55,7 +54,12 @@
 	}
 	//初始化tree(非异步)
 	function initDictType(){
-		initTree("menuTree", "/sys/dict/type/findList");
+		initTree({
+			id: "menuTree",
+			async: false,
+			check: false,
+			url: "/sys/dict/type/findList"
+		});
 	}
 	layui.use('table', function(){
 		table = layui.table;

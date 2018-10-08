@@ -74,7 +74,7 @@ public class SysRoleController extends BaseController {
     @RequestMapping("/grantMenu")
     public String grantMenu(Integer id, Model model){
         model.addAttribute("roleId", id);
-        return "/sys/user/grantMenu";
+        return "/sys/role/grantMenu";
     }
     
     @RequestMapping("/saveRolePermission")

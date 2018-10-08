@@ -44,12 +44,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public List<SysRole> findList(Map<String, String> params) {
+	public List<SysRole> findList(Map<String, Object> params) {
 		return sysRoleDao.findList(params);
 	}
 
 	@Override
-	public Page<Object> findPage(Map<String, String> params) {
+	public Page<Object> findPage(Map<String, Object> params) {
 		return sysRoleDao.findPage(params);
 	}
 

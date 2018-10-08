@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysUser;
+import com.zhangpan.model.SysUserInfo;
 import com.zhangpan.service.sys.user.SysUserService;
+import com.zhangpan.service.sys.userInfo.SysUserInfoService;
 import com.zhangpan.service.sys.userRole.SysUserRoleService;
 import com.zhangpan.util.DateUtil;
 import com.zhangpan.util.StringUtil;
@@ -25,7 +27,10 @@ public class SysUserController extends BaseController {
 	private SysUserService userService;
 	
 	@Autowired
-	private SysUserRoleService sysUserRoleService;
+    private SysUserInfoService userInfoService;
+	
+	@Autowired
+	private SysUserRoleService userRoleService;
 	
 	@RequestMapping("/list")
     public String list(){
@@ -83,7 +88,7 @@ public class SysUserController extends BaseController {
     @RequestMapping("/password")
     @ResponseBody
     public Object password(SysUser model){
-        String oldPwd = paramMap.get("oldPwd");
+        String oldPwd = paramMap.get("oldPwd").toString();
         oldPwd = DigestUtils.md5Hex(oldPwd);
         
         Integer userId = (Integer) session.getAttribute("userId");
@@ -121,7 +126,36 @@ public class SysUserController extends BaseController {
     public Object saveUserRole(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
         map.put("userId", userId);
         map.put("ids", ids);
-        int count = sysUserRoleService.batchSave(map);
+        int count = userRoleService.batchSave(map);
+        return getResponseState(count);
+    }
+    
+    @RequestMapping("/userInfo")
+    public String userInfo(Model model){
+        SysUserInfo userInfo = userInfoService.findByParams(paramMap);
+        if(userInfo != null) {
+            model.addAttribute("userInfo", userInfo);
+        }
+        return "/sys/userInfo/edit";
+    }
+    
+    /**
+     * 更新基本资料
+     * @param model
+     * @return
+     */
+    @RequestMapping("/saveUserInfo")
+    @ResponseBody
+    public Object saveUserInfo(SysUserInfo model){
+        int count = 0;
+        Integer userId = (Integer) session.getAttribute("userId");
+        model.setUserId(userId);
+        
+        if(model.getId() == null) {
+            count = userInfoService.save(model);
+        }else {
+            count = userInfoService.update(model);
+        }
         return getResponseState(count);
     }
 }

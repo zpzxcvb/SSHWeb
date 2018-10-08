@@ -3,7 +3,7 @@
 <mapper namespace="com.zhangpan.dao.sys.SysUserRoleDao">
 
 	<!-- 批量保存用户角色关系 -->
-	<insert id="saveBatchUserRole" parameterType="map">
+	<insert id="batchSave" parameterType="map">
 	  	insert into sys_user_role
 	  		(user_id,role_id)
 	  	values

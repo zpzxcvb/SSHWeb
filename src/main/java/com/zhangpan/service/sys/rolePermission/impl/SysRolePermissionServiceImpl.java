@@ -48,12 +48,12 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
     }
 
     @Override
-    public List<SysRolePermission> findList(Map<String, String> params) {
+    public List<SysRolePermission> findList(Map<String, Object> params) {
         return null;
     }
 
     @Override
-    public Page<Object> findPage(Map<String, String> params) {
+    public Page<Object> findPage(Map<String, Object> params) {
         return null;
     }
 

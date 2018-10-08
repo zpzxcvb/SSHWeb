@@ -8,7 +8,7 @@ import com.zhangpan.model.SysDictType;
 
 public interface SysDictTypeDao extends BaseDao<SysDictType,Integer> {
     
-    public List<Map<String, Object>> findDictTypes(Map<String, String> params);
+    public List<Map<String, Object>> findDictTypes(Map<String, Object> params);
     
-    public int checkTypeCode(Map<String, String> params);
+    public int checkTypeCode(Map<String, Object> params);
 }

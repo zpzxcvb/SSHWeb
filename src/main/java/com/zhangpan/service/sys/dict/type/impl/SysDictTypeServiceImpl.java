@@ -48,22 +48,22 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
     }
 
     @Override
-    public List<SysDictType> findList(Map<String, String> params) {
+    public List<SysDictType> findList(Map<String, Object> params) {
         return dictTypeDao.findList(params);
     }
 
     @Override
-    public Page<Object> findPage(Map<String, String> params) {
+    public Page<Object> findPage(Map<String, Object> params) {
         return dictTypeDao.findPage(params);
     }
 
     @Override
-    public List<Map<String, Object>> findDictTypes(Map<String, String> params) {
+    public List<Map<String, Object>> findDictTypes(Map<String, Object> params) {
         return dictTypeDao.findDictTypes(params);
     }
 
     @Override
-    public int checkTypeCode(Map<String, String> params) {
+    public int checkTypeCode(Map<String, Object> params) {
         return dictTypeDao.checkTypeCode(params);
     }
 

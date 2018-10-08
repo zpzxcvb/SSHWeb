@@ -40,7 +40,7 @@
     	</li>
       	<li class="layui-nav-item">
 	        <a href="javascript:;">
-	        	您好,<span id="username">${(user.userName)!''}</span>
+	        	您好,<span id="username">${userName}</span>
 	          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
 	        </a>
 	        <dl class="layui-nav-child">
@@ -164,10 +164,17 @@ layui.use(['element','table'], function(){
 	active.tabChange("0"); //切换到指定id的Tab项
 });
 function safeConfig(){
-	openDialog(table, 'table', '/sys/user/safeConfig');
+	dialog('/sys/user/safeConfig');
 }
 function userInfo(){
-	layer.msg('123');
+	dialog('/sys/user/userInfo?userId=1');
+}
+function dialog(url){
+	layer.open({
+		type: 2,
+	  	area: ['400px', '400px'], //宽高
+	  	content: url
+	});
 }
 </script>
 </body>

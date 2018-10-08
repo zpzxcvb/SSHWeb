@@ -11,5 +11,5 @@ public interface SysDictItemDao extends BaseDao<SysDictItem,Integer> {
      * 判断重复code
      * @return
      */
-    public int checkItemCode(Map<String, String> params);
+    public int checkItemCode(Map<String, Object> params);
 }

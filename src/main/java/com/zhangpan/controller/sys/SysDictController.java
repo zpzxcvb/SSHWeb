@@ -70,7 +70,7 @@ public class SysDictController extends BaseController {
             dictType = item.getDictType();
             model.addAttribute("item", item);
         }else {
-            dictType = paramMap.get("dictType");
+            dictType = paramMap.get("dictType").toString();
         }
         model.addAttribute("dictType", dictType);
         return "/sys/dict/editDictItem";

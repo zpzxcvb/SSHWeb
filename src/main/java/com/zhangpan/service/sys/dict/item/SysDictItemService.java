@@ -15,5 +15,5 @@ public interface SysDictItemService extends BaseService<SysDictItem, Integer> {
      * 判断重复code
      * @return
      */
-    public int checkItemCode(Map<String, String> params);
+    public int checkItemCode(Map<String, Object> params);
 }

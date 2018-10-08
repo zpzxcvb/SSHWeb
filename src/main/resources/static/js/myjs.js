@@ -1,8 +1,30 @@
 //初始化tree
-function initTree(id, url){
-	var treeObj = $("#"+id);
+function initTree(param){
+	var treeObj = $("#" + param.id);
+	//是否自带搜索框
+	if(param.search){
+		treeObj.before("<input id=\"treeSearch\" type=\"text\" placeholder=\"请输入搜索内容\" onkeypress=\"treeSearch('"+param.id+"',this,event)\"/>");
+	}
+	//是否异步请求
+	var async;
+	if(param.async){
+		async={
+                enable: true,
+                url: param.url,
+                autoParam: ["id", "name", "path"]
+            };
+	}
+	//是否带复选框
+	var check;
+	if(param.check){
+		check = {
+			enable: true
+		}
+	}
 	//ztree非异步设置
 	var setting = {
+		async: async,
+		check: check,
 		data : {
 			simpleData : {
 				enable : true,
@@ -14,12 +36,41 @@ function initTree(id, url){
         	onClick: zTreeClick
         }
 	};
-	$.ajax({
-		url: url,
-		success: function(data) {
-			$.fn.zTree.init(treeObj, setting, data);
+	if(async){
+		$.fn.zTree.init(treeObj, setting, null);
+	}else{
+		$.ajax({
+			url: param.url,
+			success: function(data) {
+				$.fn.zTree.init(treeObj, setting, data);
+			}
+		})
+	}
+}
+
+/**
+ * 根据treeName进行搜索
+ */
+var allTreeNodes,nodeList,flag=true;
+function treeSearch(id,search,event){
+	if(event.which==13){
+		var param=$(search).val();
+		if(flag){
+			allTreeNodes=$.fn.zTree.getZTreeObj(id).getNodes();
+			flag=false;
 		}
-	})
+		if(param==""){
+			nodeList=allTreeNodes;
+		}else{
+			nodeList = zTree.getNodesByParamFuzzy("name", param);
+		}
+		initTree({
+			id:id,
+			async:false,
+			zTreeNodes:nodeList,
+			search:false
+		});
+	}
 }
 
 //获取下拉框数据,并根据传值进行默认选中
@@ -69,7 +120,9 @@ function openDialog(table, tableId, url){
 	  	area: ['400px', '400px'], //宽高
 	  	content: url,
 	  	end: function(){
-	  		tableIns.reload();
+	  		if(tableIns){
+	  			tableIns.reload();
+	  		}
 	  	}
 	});
 }

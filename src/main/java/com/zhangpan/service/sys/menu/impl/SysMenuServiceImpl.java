@@ -51,12 +51,12 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public List<SysMenu> findList(Map<String, String> params) {
+    public List<SysMenu> findList(Map<String, Object> params) {
         return sysMenuDao.findList(params);
     }
 
     @Override
-    public Page<Object> findPage(Map<String, String> params) {
+    public Page<Object> findPage(Map<String, Object> params) {
         return sysMenuDao.findPage(params);
     }
 

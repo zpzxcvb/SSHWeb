@@ -5,8 +5,6 @@ import java.io.Serializable;
 /**
  * 用户信息表 "sys_user_info"
  * @author 张攀
- * @ClassName : SysUserInfo
- * @ModifiedBy : 张攀
  * @date : 2017-3-22 下午5:34:48
  */
 public class SysUserInfo implements Serializable{
