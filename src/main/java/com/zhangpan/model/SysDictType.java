@@ -19,7 +19,7 @@ public class SysDictType implements Serializable{
 
     private String dictCode;
     
-    private String remark;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -45,12 +45,12 @@ public class SysDictType implements Serializable{
         this.dictCode = dictCode;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

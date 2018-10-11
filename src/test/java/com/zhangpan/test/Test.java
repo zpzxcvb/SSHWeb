@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.gson.annotations.JsonAdapter;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.util.ImageUtil;
+import com.zhangpan.util.TreeNode;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -38,9 +39,14 @@ public class Test {
         //灰度化
 //        BufferedImage grayImage = ImageHelper.convertImageToGrayscale(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(grayImage, "jpg", new File("H:/photo/", "test2.jpg"));
-        String[] s= {""};
-        String s1=String.join(",", s);
-        System.out.println(s1);
+        
+        
+        Map map=new HashMap();
+        map.put("id", 1);
+        map.put("pid", 0);
+        map.put("name", "张三");
+        TreeNode tree = JSON.parseObject(JSON.toJSONString(map), TreeNode.class);
+        System.out.println(tree);
     }
 
 }

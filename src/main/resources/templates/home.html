@@ -10,14 +10,97 @@
 	<script src="/js/lib/layui/layui.js"></script>
 </head>
 <body>
-	<div class="layui-main">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md6">
+			<div class="layui-card">
+              <div class="layui-card-header">快捷方式</div>
+              <div class="layui-card-body">
+                
+                <div id="card1" class="layui-carousel layadmin-carousel layadmin-shortcut">
+                  <div carousel-item>
+                    <ul class="layui-row layui-col-space10">
+                      <li class="layui-col-xs3">
+                        <a lay-href="home/homepage1.html">
+                          <i class="layui-icon layui-icon-console"></i>
+                          <cite>主页一</cite>
+                        </a>
+                      </li>
+                      <li class="layui-col-xs3">
+                        <a lay-href="home/homepage2.html">
+                          <i class="layui-icon layui-icon-chart"></i>
+                          <cite>主页二</cite>
+                        </a>
+                      </li>
+                      <li class="layui-col-xs3">
+                        <a lay-href="component/layer/list.html">
+                          <i class="layui-icon layui-icon-template-1"></i>
+                          <cite>弹层</cite>
+                        </a>
+                      </li>
+                      <li class="layui-col-xs3">
+                        <a layadmin-event="im">
+                          <i class="layui-icon layui-icon-chat"></i>
+                          <cite>聊天</cite>
+                        </a>
+                      </li>
+                      <li class="layui-col-xs3">
+                        <a lay-href="component/progress/index.html">
+                          <i class="layui-icon layui-icon-find-fill"></i>
+                          <cite>进度条</cite>
+                        </a>
+                      </li>
+                      
+                    </ul>
+                    
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
+		</div>
+		<div class="layui-col-md6">
+			<div class="layui-card">
+				<div class="layui-card-header">卡片面板</div>
+				<div class="layui-card-body">
+					<div class="layui-carousel" id="test1">
+						<div carousel-item>
+							<div>
+								<img src="/js/lib/layui/images/face/0.gif">
+							</div>
+							<div>
+								<img src="/js/lib/layui/images/face/1.gif">
+							</div>
+							<div>
+								<img src="/js/lib/layui/images/face/2.gif">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-card">
+		<div class="layui-card-header">
+			卡片面板
+		</div>
+		<div class="layui-card-body">
+		<div class="">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
 				<label class="layui-form-label">文件</label>
 				<div class="layui-input-block">
-					<a id="uploadBtn" class="layui-btn"><i class="layui-icon layui-icon-upload"></i> 上传</a>
-					<a id="textBtn" class="layui-btn">文本</a>
-					<a id="testBtn" class="layui-btn">test</a>
+					<a id="uploadBtn" class="layui-btn"><i
+						class="layui-icon layui-icon-upload"></i> 上传</a> <a id="textBtn"
+						class="layui-btn">文本</a> <a id="testBtn" class="layui-btn">test</a>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">菜单链接</label>
+				<div class="layui-input-inline">
+					<input type="text" name="url" class="layui-input"
+						placeholder="请输入菜单连接地址" value="${(menu.url)!''}" />
+
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -39,19 +122,37 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">开关</label>
+				<label class="layui-form-label">日期</label>
 				<div class="layui-input-block">
-					<input type="checkbox" name="switch" lay-skin="switch">
+					<input id="createDate" class="layui-input" type="text" />
 				</div>
 			</div>
-			<input id="createDate" class="layui-input" type="text"/>
 		</form>
 	</div>
+		</div>
+	</div>
+	
 	<script>
-		layui.use([ 'laydate', 'form', 'layedit', 'upload' ], function() {
+		layui.use([ 'laydate', 'form', 'layedit', 'upload', 'carousel' ], function() {
 			var layedit = layui.layedit;
 			var laydate = layui.laydate;
 			var upload = layui.upload;
+			var carousel = layui.carousel;
+			  //建造实例
+			  carousel.render({
+			    elem: '#test1',
+			    width: '100%', //设置容器宽度
+			    trigger: 'hover',
+// 			    arrow: 'always', //始终显示箭头
+			    anim: 'fade' //切换动画方式
+			  });
+			  carousel.render({
+				    elem: '#card1',
+				    width: '100%', //设置容器宽度
+				    trigger: 'hover',
+//	 			    arrow: 'always', //始终显示箭头
+				    anim: 'fade' //切换动画方式
+				  });
 			var uploadInst = upload.render({
 			    elem: '#uploadBtn' //绑定元素
 			    ,url: '/file/upLoad' //上传接口

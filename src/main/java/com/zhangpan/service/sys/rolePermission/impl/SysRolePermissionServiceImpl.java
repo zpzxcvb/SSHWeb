@@ -49,7 +49,7 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
 
     @Override
     public List<SysRolePermission> findList(Map<String, Object> params) {
-        return null;
+        return sysRolePermissionDao.findList(params);
     }
 
     @Override
@@ -60,6 +60,11 @@ public class SysRolePermissionServiceImpl implements SysRolePermissionService {
     @Override
     public int batchSave(Map<String, Object> params) {
         return sysRolePermissionDao.batchSave(params);
+    }
+
+    @Override
+    public int deleteRolePermissionByRoleId(Integer roleId) {
+        return sysRolePermissionDao.deleteRolePermissionByRoleId(roleId);
     }
 
 }

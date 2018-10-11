@@ -24,6 +24,8 @@ public class SysMenu implements Serializable{
     
     private Integer type;
     
+    private String description;
+    
     private List<SysMenu> childList;
 
     public Integer getId() {
@@ -80,6 +82,14 @@ public class SysMenu implements Serializable{
 
     public void setChildList(List<SysMenu> childList) {
         this.childList = childList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

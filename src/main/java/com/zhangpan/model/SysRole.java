@@ -16,6 +16,8 @@ public class SysRole implements Serializable{
     private String roleName;
 
     private String createTime;
+    
+    private String description;
 
     public Integer getRoleId() {
         return roleId;
@@ -39,6 +41,14 @@ public class SysRole implements Serializable{
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

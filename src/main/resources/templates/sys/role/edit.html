@@ -18,6 +18,12 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
+				<label class="layui-form-label">描述</label>
+				<div class="layui-input-inline">
+					<input type="text" name="description" class="layui-input" placeholder="请输入角色描述" value="${(role.description)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<div class="layui-input-inline">
 					<a id="postBtn" class="layui-btn">保存</a>
 					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>

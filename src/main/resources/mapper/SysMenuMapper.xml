@@ -54,7 +54,8 @@
 			menu_name,
 			url,
 			order_no,
-			type
+			type,
+			description
 		)
 		values
 		(
@@ -62,7 +63,8 @@
 			#{menuName},
 			#{url},
 			#{orderNo},
-			#{type}
+			#{type},
+			#{description}
 		)
 	</insert>
 
@@ -81,6 +83,9 @@
 			</if>
 			<if test="orderNo != null">
 				order_no = #{orderNo},
+			</if>
+			<if test="description != null">
+				description = #{description},
 			</if>
 			type = #{type},
 		</set>

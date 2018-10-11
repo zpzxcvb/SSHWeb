@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.excheck.js"></script>
 </head>
 <body>
-	<div class="layui-main">
+	<div class="">
 		<a id="saveRolePermission" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add"></i> 保存</a>
 		<div id="menu_div">
 			<ul id="menuTree" class="ztree"></ul>
@@ -20,35 +20,41 @@
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
 	layui.use(['form'], function(){
-		saveRolePermission();
+		console.log(parent.parent.$("#key").val());
+		var roleId = '${roleId}';
 		initTree({
 			id: "menuTree",
-			async: false,
-			check: true,
-			url: "/sys/menu/menuList"
+			url: "/sys/role/findCheckedPermissionByRoleId?roleId="+roleId,
+			check: true
 		});
+		saveRolePermission();
 	});
 	function saveRolePermission(){
 		$('#saveRolePermission').click(function(){
-	  			/* var param = {ids:ids, userId:userId};
-	  			$.ajax({
-	  				url: "/sys/user/saveRolePermission",
-	  				type: "post",
-	  				data: param,
-	  				success: function(data){
-	  					if(data.code == "ok"){
-	  						parent.layer.msg(data.msg,{icon:1});
-	  					}else{
-	  						parent.layer.msg(data.msg,{icon:0});
-	  					}
-	  					//关闭页面
-	  					closeDialog();
-	  				}
-	  			}) */
+			var treeObj = $.fn.zTree.getZTreeObj("menuTree");
+			var nodes = treeObj.getCheckedNodes(true);
+			var menuIds = [];
+			$.each(nodes, function(i, v){
+				menuIds.push(v.id);
+			})
+			console.log(menuIds);
+			var roleId = '${roleId}';
+			var param = {roleId: roleId, ids: menuIds};
+  			$.ajax({
+  				url: "/sys/role/saveRolePermission",
+  				type: "post",
+  				data: param,
+  				success: function(data){
+  					if(data.code == "ok"){
+  						parent.layer.msg(data.msg,{icon:1});
+  					}else{
+  						parent.layer.msg(data.msg,{icon:0});
+  					}
+  					//关闭页面
+  					closeDialog();
+  				}
+  			})
 	  	});
-	}
-	function zTreeClick(event, treeId, treeNode) {
-		alert(treeId);
 	}
 	</script>
 	

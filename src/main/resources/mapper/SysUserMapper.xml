@@ -17,6 +17,7 @@
 		<bind name="pattern" value="'%' + key + '%'" />
 		and user_name like #{pattern}
 	</if>
+	order by create_time desc
   </select>
   
   <select id="findList" parameterType="map" resultType="SysUser">

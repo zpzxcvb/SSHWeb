@@ -13,13 +13,14 @@
 		<bind name="pattern" value="'%' + key + '%'" />
 		and role_name like #{pattern}
 	</if>
+	order by create_time desc
   </select>
   
   <insert id="save" parameterType="SysRole">
   	insert into sys_role
-  		(role_name,create_time)
+  		(role_name,description,create_time)
   	values
-  		(#{roleName},#{createTime})
+  		(#{roleName},description,#{createTime})
   </insert>
   
   <delete id="deleteByIds" parameterType="int">
@@ -44,6 +45,9 @@
   		<if test="roleName != null">
   			role_name=#{roleName},
   		</if>
+  		<if test="description != null">
+			description = #{description},
+		</if>
   	</set>
 	where role_id = #{roleId}
   </update>
@@ -58,4 +62,23 @@
 		and a.role_id=#{roleId}
 	)
   </select>
+  
+	<!-- 根据角色Id查询权限 -->
+	<select id="findPermissionByRoleId" parameterType="int" resultType="map">
+		select b.id,pid,menu_name as name from sys_role_permission a,sys_menu b 
+		where a.permission_id = b.id
+		and a.role_id=#{roleId}
+	</select>
+	
+	<!-- 根据角色Id查询已选权限 -->
+	<select id="findCheckedPermissionByRoleId" parameterType="int" resultType="map">
+		select t.permission_id,b.id,b.pid,b.menu_name as name 
+		from (
+				select * from sys_role_permission a 
+				where a.role_id=#{roleId}
+			) t
+		right join 
+		sys_menu b 
+		on t.permission_id = b.id
+	</select>
 </mapper>

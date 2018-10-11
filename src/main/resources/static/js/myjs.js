@@ -1,4 +1,8 @@
-//初始化tree
+/**
+ * 初始化tree
+ * check 是否带复选框(true/false)
+ * async 是否异步模式(true/false)
+ * */
 function initTree(param){
 	var treeObj = $("#" + param.id);
 	//是否自带搜索框
@@ -6,7 +10,7 @@ function initTree(param){
 		treeObj.before("<input id=\"treeSearch\" type=\"text\" placeholder=\"请输入搜索内容\" onkeypress=\"treeSearch('"+param.id+"',this,event)\"/>");
 	}
 	//是否异步请求
-	var async;
+	var async = false;
 	if(param.async){
 		async={
                 enable: true,
@@ -15,7 +19,7 @@ function initTree(param){
             };
 	}
 	//是否带复选框
-	var check;
+	var check = false;
 	if(param.check){
 		check = {
 			enable: true
@@ -33,7 +37,7 @@ function initTree(param){
 			}
 		},
         callback:{
-        	onClick: zTreeClick
+        	onClick: (typeof zTreeClick == 'function') ? zTreeClick : ''
         }
 	};
 	if(async){

@@ -21,7 +21,7 @@ public class SysDictItem implements Serializable{
     
     private String dictType;
     
-    private String remark;
+    private String description;
 
     public Integer getId() {
         return id;
@@ -55,12 +55,12 @@ public class SysDictItem implements Serializable{
         this.dictType = dictType;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

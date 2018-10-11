@@ -63,4 +63,14 @@ public class SysRoleServiceImpl implements SysRoleService {
         return 0;
     }
 
+    @Override
+    public List<Map<String, Object>> findPermissionByRoleId(Integer roleId) {
+        return sysRoleDao.findPermissionByRoleId(roleId);
+    }
+
+    @Override
+    public List<Map<String, Object>> findCheckedPermissionByRoleId(Integer roleId) {
+        return sysRoleDao.findCheckedPermissionByRoleId(roleId);
+    }
+
 }

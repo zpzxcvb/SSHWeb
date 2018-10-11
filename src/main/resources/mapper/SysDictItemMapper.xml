@@ -34,9 +34,9 @@
   
   <insert id="save" parameterType="SysDictItem">
   	insert into sys_dict_item
-  		(dict_name,dict_code,dict_type,remark)
+  		(dict_name,dict_code,dict_type,description)
   	values
-  		(#{dictName},#{dictCode},#{dictType},#{remark})
+  		(#{dictName},#{dictCode},#{dictType},#{description})
   </insert>
   
   <delete id="deleteByIds" parameterType="int">
@@ -61,8 +61,8 @@
   		<if test="dictName != null">
   			dict_name=#{dictName},
   		</if>
-  		<if test="remark != null">
-  			remark=#{remark},
+  		<if test="description != null">
+  			description=#{description},
   		</if>
   	</set>
 	where id = #{id}

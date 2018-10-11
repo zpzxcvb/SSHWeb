@@ -16,9 +16,9 @@
   
   <insert id="save" parameterType="SysDictType">
   	insert into sys_dict_type
-  		(dict_name,dict_code,remark)
+  		(dict_name,dict_code,description)
   	values
-  		(#{dictName},#{dictCode},#{remark})
+  		(#{dictName},#{dictCode},#{description})
   </insert>
   
   <delete id="deleteById" parameterType="int">
@@ -38,7 +38,7 @@
   </update>
   
   <select id="findDictTypes" parameterType="map" resultType="map">
-  	select id,dict_name as name,dict_code,'0' as pid,remark from sys_dict_type
+  	select id, dict_name as name, dict_code, '0' as pid, description from sys_dict_type
   </select>
   
   <select id="checkTypeCode" parameterType="string" resultType="int">

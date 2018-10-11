@@ -8,15 +8,32 @@
 	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-	<div class="layui-main">
-		<div class="layui-inline table-search">
-			<div class="layui-input-inline">
-	    		<input class="layui-input" id="key" type="search" placeholder="请输入名称">
-	    	</div>
-	    	<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
-	  	</div>
-	  	<table id="table" lay-filter="table_event"> </table>
+	<div class="layui-row layui-col-space10">
+		<div class="layui-col-md9">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div class="layui-inline table-search">
+						<div class="layui-input-inline">
+							<input class="layui-input" id="key" type="search" placeholder="请输入名称">
+						</div>
+						<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+					</div>
+				</div>
+				<div class="layui-card-body">
+					<table id="table" lay-filter="table_event"></table>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3">
+			<div class="layui-card">
+				<div class="layui-card-header">用户所属权限</div>
+				<div class="layui-card-body">
+					1111111111
+				</div>
+			</div>
+		</div>
 	</div>
+	
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script type="text/html" id="toolbars">
 		<div id="" class="layui-btn-container">
@@ -39,7 +56,7 @@
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
 		      	{field: 'userName', title: '用户名'},
-		      	{field: 'userName', title: '所属角色'},
+		      	{field: '', title: '所属角色'},
 		      	{field: 'createTime', title: '创建时间'},
 		      	{field: 'updateTime', title: '更新时间'},
 		      	{field: 'status', title: '状态', sort: true, templet: '#statusTpl'}
@@ -105,6 +122,6 @@
 		}
 	}
 	</script>
-	
+
 </body>
 </html>

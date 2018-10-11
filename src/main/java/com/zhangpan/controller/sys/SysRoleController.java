@@ -1,5 +1,8 @@
 package com.zhangpan.controller.sys;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.model.SysRole;
+import com.zhangpan.model.SysRolePermission;
 import com.zhangpan.service.sys.role.SysRoleService;
+import com.zhangpan.service.sys.rolePermission.SysRolePermissionService;
 import com.zhangpan.util.DateUtil;
 
 @Controller
@@ -20,6 +25,9 @@ public class SysRoleController extends BaseController {
     
 	@Autowired
 	private SysRoleService roleService;
+	
+	@Autowired
+	private SysRolePermissionService rolePermissionService;
 	
 	@RequestMapping("/list")
     public String list(){
@@ -79,10 +87,43 @@ public class SysRoleController extends BaseController {
     
     @RequestMapping("/saveRolePermission")
     @ResponseBody
-    public Object saveRolePermission(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
-        map.put("roleId", userId);
+    public Object saveRolePermission(Integer roleId, @RequestParam(value = "ids[]")Integer[] ids){
+        map.put("roleId", roleId);
         map.put("ids", ids);
-        int count = roleService.batchSave(map);
+        //根据角色查询是否有权限
+        List<SysRolePermission> list = rolePermissionService.findList(map);
+        int count = 0;
+        //角色有权限时清空中间关系表，然后再添加关系
+        if(list.size()>0) {
+            rolePermissionService.deleteRolePermissionByRoleId(roleId);
+        }
+        count = rolePermissionService.batchSave(map);
         return getResponseState(count);
+    }
+    
+    @RequestMapping("/findPermissionByRoleId")
+    @ResponseBody
+    public Object findPermissionByRoleId(Integer roleId) {
+        List<Map<String, Object>> permissions = roleService.findPermissionByRoleId(roleId);
+        
+        for(Map<String, Object> map : permissions) {
+            map.put("open", true);
+        }
+        return permissions;
+    }
+    
+    @RequestMapping("/findCheckedPermissionByRoleId")
+    @ResponseBody
+    public Object findCheckedPermissionByRoleId(Integer roleId) {
+        List<Map<String, Object>> permissions = roleService.findCheckedPermissionByRoleId(roleId);
+        
+        for(Map<String, Object> map : permissions) {
+            Object permission_id = map.get("permission_id");
+            if(permission_id != null) {
+                map.put("checked", true);
+            }
+            map.put("open", true);
+        }
+        return permissions;
     }
 }
