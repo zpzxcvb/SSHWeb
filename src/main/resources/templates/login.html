@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+	<link rel="shortcut icon" href="/img/favicon.ico">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+	<style type="text/css">
+		.user-login-icon{
+			position: absolute;
+		    left: 1px;
+		    top: 1px;
+		    width: 38px;
+		    line-height: 36px;
+		    text-align: center;
+		    color: #d2d2d2;
+		}
+		.layui-form-item{
+			position: relative;
+		}
+		.layui-form-item .layui-input{
+			padding-left: 38px;
+		}
+	</style>
+</head>
+<body class="layui-layout-body home">
+	<div class="login_box">
+		<form class="layui-form" method="post">
+			<div class="layui-form-item">
+				<label class="user-login-icon layui-icon layui-icon-username"></label>
+				<input type="text" name="userName" placeholder="用户名" class="layui-input">
+			</div>
+			<div class="layui-form-item">
+				<label class="user-login-icon layui-icon layui-icon-password"></label>
+				<input type="password" name="password" placeholder="密码" autocomplete="new-password" class="layui-input">
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-row">
+					<div class="layui-col-md7">
+						<label class="user-login-icon layui-icon layui-icon-vercode"></label>
+						<input type="text" name="vercode" placeholder="图形验证码" class="layui-input">
+					</div>
+					<div class="layui-col-md5">
+						<div style="margin-left: 10px;">
+							<img id="get-vercode" src="https://www.oschina.net/action/user/captcha" style="width: 100%;height: 38px;cursor: pointer;">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<a id="postBtn" class="layui-btn layui-btn-fluid">登录</a>
+			</div>
+		</form>
+	</div>
+	<script>
+		layui.use(['form'], function(){
+			var form = layui.form;
+			//点击按钮登录
+			$("#postBtn").click(function(){
+				login();
+			});
+			//回车键登录
+			$(document).keydown(function(){
+				if(event.keyCode == 13){
+					login();
+				}
+			})
+			$("#get-vercode").click(function(){
+				this.src="https://www.oschina.net/action/user/captcha?t="+(new Date().getTime());
+			})
+		})
+		function login(){
+			var param = $("form").serialize();
+			$.ajax({
+				url:"/login",
+				type: "post",
+				data: param,
+				success:function(data){
+					if(data.code=="1"){
+						window.location.href="/main";
+					}else{
+						layer.msg(data.msg, {icon:0});
+					}
+				}
+			});
+		}
+	
+	</script>
+
+</body>
+</html>

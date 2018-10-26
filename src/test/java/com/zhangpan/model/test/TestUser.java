@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhangpan.model.SysRole;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.sys.user.SysUserService;
 import com.zhangpan.util.DateUtil;
@@ -63,17 +64,21 @@ public class TestUser {
     }
 	
 	@Test
-    public void testUserAuth() {
-        map.put("userName", "admin");
-        map.put("password", "1");
-        int user = userService.userAuth(map);
+    public void testFindUserByName() {
+        SysUser user = userService.findUserByName("zp");
         System.err.println(user);
+    }
+	
+	@Test
+    public void findRoleByUserName() {
+        List<SysRole> list = userService.findRoleByUserName("zp");
+        System.err.println(JSON.toJSONString(list));
     }
 	
 	@After
 	public void findAll() {
-		List<SysUser> list = userService.findList(null);
-		System.err.println("不带分页信息："+JSON.toJSONString(list));
+		/*List<SysUser> list = userService.findList(null);
+		System.err.println("不带分页信息："+JSON.toJSONString(list));*/
 		
 //		PageHelper.startPage(1, 2);
 //		List<Map<String, String>> pageList = userService.findPage(null);

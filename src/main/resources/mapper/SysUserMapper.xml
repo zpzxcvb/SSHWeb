@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhangpan.dao.sys.SysUserDao">
-	
+
 	<sql id="columns">
 		user_id,user_name,create_time,update_time,status
 	</sql>
@@ -10,8 +10,14 @@
   	select * from sys_user where user_id = #{userId}
   </select>
   
-  <select id="findPage" parameterType="map" resultType="SysUser">
-  	select <include refid="columns"/> from sys_user
+  <select id="findPage" parameterType="map" resultType="map">
+  	select a.user_id,a.user_name,a.create_time,a.update_time,a.status,c.role_name
+  	from sys_user a
+  	left join
+	sys_user_role b
+	on a.user_id = b.user_id
+	left join sys_role c
+	on b.role_id = c.role_id
   	where 1=1
   	<if test="key != null">
 		<bind name="pattern" value="'%' + key + '%'" />
@@ -26,6 +32,11 @@
   	<if test="userName != null">
 		and user_name = #{userName}
 	</if>
+  </select>
+  
+  <select id="findUserByName" parameterType="String" resultType="SysUser">
+  	select * from sys_user
+  	where user_name = #{userName}
   </select>
   
   <insert id="save" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
@@ -74,4 +85,34 @@
 	and user_name = #{userName}
 	and password = #{password}
   </select>
+  
+  	<!-- 根据用户查角色 -->
+	<select id="findRoleByUserName" resultType="SysRole">
+		select c.* from sys_user a 
+		left join 
+			sys_user_role b 
+		on 
+			a.user_id = b.user_id
+		left join 
+			sys_role c
+		on 
+			b.role_id = c.role_id
+		where a.user_name=#{userName}
+	</select>
+	
+	<!-- 根据用户查询权限 -->
+	<select id="findPermissionByUserId" parameterType="int" resultType="map">
+		select e.id,e.pid,e.menu_name as name
+		from sys_user a
+		left join
+		sys_user_role b
+		on a.user_id = b.user_id
+		left join sys_role c
+		on b.role_id = c.role_id
+		left join sys_role_permission d
+		on c.role_id=d.role_id
+		left join sys_menu e
+		on d.permission_id=e.id
+		where a.user_id=#{userId}
+	</select>
 </mapper>

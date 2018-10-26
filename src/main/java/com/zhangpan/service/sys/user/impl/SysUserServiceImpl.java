@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
 import com.zhangpan.dao.sys.SysUserDao;
+import com.zhangpan.model.SysRole;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.service.sys.user.SysUserService;
 
@@ -54,13 +55,23 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
     @Override
-    public int userAuth(Map<String, Object> params) {
-        return sysUserDao.userAuth(params);
+    public int batchSave(Map<String, Object> params) {
+        return 0;
     }
 
     @Override
-    public int batchSave(Map<String, Object> params) {
-        return 0;
+    public SysUser findUserByName(String name) {
+        return sysUserDao.findUserByName(name);
+    }
+
+    @Override
+    public List<SysRole> findRoleByUserName(String userName) {
+        return sysUserDao.findRoleByUserName(userName);
+    }
+
+    @Override
+    public List<Map<String, Object>> findPermissionByUserId(Integer userId) {
+        return sysUserDao.findPermissionByUserId(userId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.zhangpan.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 系统用户表 "sys_user"
@@ -24,7 +25,7 @@ public class SysUser implements Serializable{
     private String updateTime;
     
     private Integer status;
-
+    
 	public Integer getUserId() {
 		return userId;
 	}
@@ -72,5 +73,4 @@ public class SysUser implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
 }

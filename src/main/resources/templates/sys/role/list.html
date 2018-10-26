@@ -11,35 +11,31 @@
 </head>
 <body>
 	<div class="layui-row layui-col-space10">
-		<div class="layui-col-md9">
-			<div class="layui-row">
-				<div class="layui-col-md12">
-					<div class="layui-card-header">
-						<div class="layui-inline table-search">
-							<div class="layui-input-inline">
-								<input class="layui-input" id="key" type="search" placeholder="请输入名称">
-							</div>
-							<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+		<div class="layui-col-md7">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div class="layui-inline table-search">
+						<div class="layui-input-inline">
+							<input class="layui-input" id="key" type="search" placeholder="请输入名称">
 						</div>
-					</div>
-					<div class="layui-card-body">
-						<table id="table" lay-filter="table_event">
-						</table>
+						<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
 					</div>
 				</div>
-				<div class="layui-col-md12">
-					<div class="layui-card">
-						<div class="layui-card-header">角色所属用户</div>
-						<div class="layui-card-body">
-							<table id="table_user" lay-filter=""></table>
-						</div>
-					</div>
+				<div class="layui-card-body">
+					<table id="table" lay-filter="table_event">
+					</table>
 				</div>
 			</div>
 		</div>
-		<div class="layui-col-md3">
+		<div class="layui-col-md5">
 			<div class="layui-card">
-				<div class="layui-card-header">角色所属权限</div>
+				<div class="layui-card-header">【<span id="role_name"></span>】角色所属用户</div>
+				<div class="layui-card-body">
+					<table id="table_user" lay-filter=""></table>
+				</div>
+			</div>
+			<div class="layui-card">
+				<div class="layui-card-header">【<span id="role_permission"></span>】角色所属权限</div>
 				<div class="layui-card-body">
 					<ul id="menuTree" class="ztree"></ul>
 				</div>
@@ -76,7 +72,7 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
-		loadUserTable(table,"0");
+		active.loadUserTable(table,"0");
 		//监听头工具条事件
 		  table.on('toolbar(table_event)', function(obj){
 		      var method = obj.event;
@@ -84,8 +80,10 @@
 		  });
 		//监听单击行事件
 		  table.on('row(table_event)', function(obj){
-			  loadRolePermission(obj.data.roleId);
-			  loadUserTable(table, obj.data.roleId);
+			  $("#role_name").text(obj.data.roleName);
+			  $("#role_permission").text(obj.data.roleName);
+			  active.loadRolePermission(obj.data.roleId);
+			  active.loadUserTable(table, obj.data.roleId);
 		  });
 		  //监听普通按钮事件
 		  $('.table-search .layui-btn').click(function(){
@@ -111,30 +109,29 @@
 		},
 		grantMenu: function(table){
 			editDialog(table, 'table', '/sys/role/grantMenu', "roleId");
+		},
+		loadRolePermission(roleId){
+			//初始化tree(非异步)
+			initTree({
+				id: "menuTree",
+				url: "/sys/role/findPermissionByRoleId?roleId="+roleId,
+			});
+		},
+		loadUserTable(table, roleId){
+			var params = {
+				 id: "#table_user",
+				 url: "/sys/role/findUserByRoleId/"+roleId,
+				 width: 500,
+				 columns: [
+			      	{type: 'numbers', title: '序号', fixed: 'left'},
+			      	{field: 'user_name', title: '用户名'},
+			      	{field: 'status', title: '状态', sort: true, templet: function(d){
+			        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
+				    }}
+			    ]
+			};
+			table_layui(table, params);
 		}
-	}
-	
-	function loadRolePermission(roleId){
-		//初始化tree(非异步)
-		initTree({
-			id: "menuTree",
-			url: "/sys/role/findPermissionByRoleId?roleId="+roleId,
-		});
-	}
-	function loadUserTable(table, roleId){
-		var params = {
-			 id: "#table_user",
-			 url: "/sys/role/findUserByRoleId/"+roleId,
-			 width: 500,
-			 columns: [
-		      	{type: 'numbers', title: '序号', fixed: 'left'},
-		      	{field: 'user_name', title: '用户名'},
-		      	{field: 'status', title: '状态', sort: true, templet: function(d){
-		        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
-			    }}
-		    ]
-		};
-		table_layui(table, params);
 	}
 	</script>
 </body>

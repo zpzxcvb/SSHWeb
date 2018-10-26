@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,12 +43,17 @@ public class Test {
 //        ImageIO.write(grayImage, "jpg", new File("H:/photo/", "test2.jpg"));
         
         
-        Map map=new HashMap();
-        map.put("id", 1);
-        map.put("pid", 0);
-        map.put("name", "张三");
-        TreeNode tree = JSON.parseObject(JSON.toJSONString(map), TreeNode.class);
-        System.out.println(tree);
+        String algorithmName = "md5";
+        String username = "wang";
+        String password = "111111";
+        String salt1 = username;
+        String salt2 = new SecureRandomNumberGenerator().nextBytes().toHex();
+        int hashIterations = 3;
+        SimpleHash hash = new SimpleHash(algorithmName, password,
+                salt1 + salt2, hashIterations);
+        String encodedPassword = hash.toHex();
+        System.out.println(encodedPassword);
+        System.out.println(salt2);
     }
 
 }

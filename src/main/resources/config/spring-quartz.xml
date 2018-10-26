@@ -32,7 +32,7 @@ W：月中最接近指定日期的普通日（星期一到星期五），只能�
     <bean id="helloTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
     	<property name="jobDetail" ref="helloJob"/>
     	<property name="cronExpression">
-    		<value>0 */1 1 * * ?</value>
+    		<value>0 */1 * * * ?</value>
     	</property>
     </bean>
     

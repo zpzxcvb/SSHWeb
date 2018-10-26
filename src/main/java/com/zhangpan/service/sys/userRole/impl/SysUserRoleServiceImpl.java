@@ -49,7 +49,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
     @Override
     public List<SysUserRole> findList(Map<String, Object> params) {
-        return null;
+        return sysUserRoleDao.findList(params);
     }
 
     @Override
@@ -60,6 +60,11 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
     @Override
     public int batchSave(Map<String, Object> params) {
         return sysUserRoleDao.batchSave(params);
+    }
+
+    @Override
+    public int deleteUserRoleByUserId(Integer userId) {
+        return sysUserRoleDao.deleteUserRoleByUserId(userId);
     }
 
 }

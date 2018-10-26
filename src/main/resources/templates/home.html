@@ -112,7 +112,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">选择</label>
 				<div class="layui-input-block">
-					<select>
+					<select lay-search>
 						<option>北京</option>
 						<option>上海</option>
 						<option>西安</option>
@@ -160,7 +160,8 @@
 			    ,done: function(res, index, upload){
 			      console.log(res);
 			    }
-			    ,error: function(){
+			    ,error: function(e){
+			    	console.log(e);
 			      //请求异常回调
 			    }
 			  });

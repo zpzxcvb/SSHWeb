@@ -1,5 +1,8 @@
 package com.zhangpan.controller.sys;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
+import com.zhangpan.model.SysRolePermission;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.model.SysUserInfo;
+import com.zhangpan.model.SysUserRole;
 import com.zhangpan.service.sys.user.SysUserService;
 import com.zhangpan.service.sys.userInfo.SysUserInfoService;
 import com.zhangpan.service.sys.userRole.SysUserRoleService;
@@ -126,7 +131,14 @@ public class SysUserController extends BaseController {
     public Object saveUserRole(Integer userId, @RequestParam(value = "ids[]")Integer[] ids){
         map.put("userId", userId);
         map.put("ids", ids);
-        int count = userRoleService.batchSave(map);
+        //根据用户查询是否已有角色
+        List<SysUserRole> list = userRoleService.findList(map);
+        int count = 0;
+        //清空用户角色关系表，然后再添加
+        if(list.size()>0) {
+            userRoleService.deleteUserRoleByUserId(userId);
+        }
+        count = userRoleService.batchSave(map);
         return getResponseState(count);
     }
     
@@ -157,5 +169,16 @@ public class SysUserController extends BaseController {
             count = userInfoService.update(model);
         }
         return getResponseState(count);
+    }
+    
+    @RequestMapping("/findPermissionByUserId")
+    @ResponseBody
+    public Object findPermissionByUserId(Integer userId) {
+        List<Map<String, Object>> permissions = userService.findPermissionByUserId(userId);
+        
+        for(Map<String, Object> map : permissions) {
+            map.put("open", true);
+        }
+        return permissions;
     }
 }

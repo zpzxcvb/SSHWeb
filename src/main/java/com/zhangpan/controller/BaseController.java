@@ -55,7 +55,7 @@ public class BaseController {
 		    value = String.join(",", values);
             paramMap.put(key, value);
 		}
-		log.info("requestParams=====>【{}】", paramMap);
+		log.info(request.getRequestURI() + ": Params=====>【{}】", paramMap);
 		return paramMap;
 	}
 	

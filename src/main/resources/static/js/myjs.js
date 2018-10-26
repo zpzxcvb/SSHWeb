@@ -84,9 +84,11 @@ function queryOptions(id,url,value){
 		url: url,
 		success: function(data){
 			$.each(data, function (i, e) {
-				dom.append("<option value='"+e.id+"'>"+e.name+"</option>")
+				dom.append("<option value='"+e.value+"'>"+e.name+"</option>")
             });
-			dom.find("option[value='"+value+"']").attr("selected","selected");
+			if(value){
+				dom.find("option[value='"+value+"']").attr("selected","selected");
+			}
 		}
 	});
 }
@@ -135,7 +137,11 @@ function closeDialog(){
 	var index = parent.layer.getFrameIndex(window.name);
 	parent.layer.close(index);
 }
-//layer 弹出编辑层
+
+/**
+ * layer 弹出编辑层
+ * id 表示数据行字段
+ * */
 function editDialog(table, tableId, url, id){
 	var checkStatus = table.checkStatus(tableId);
 	if(checkStatus.data.length == 1){
@@ -149,6 +155,7 @@ function editDialog(table, tableId, url, id){
 
 /**
  * 删除询问框
+ * id 表示数据行字段
  * */
 function confirm_Delete(table, tableId, url, id){
 	var checkStatus = table.checkStatus(tableId);

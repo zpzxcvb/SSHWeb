@@ -20,7 +20,7 @@
   	insert into sys_role
   		(role_name,description,create_time)
   	values
-  		(#{roleName},description,#{createTime})
+  		(#{roleName},#{description},#{createTime})
   </insert>
   
   <delete id="deleteByIds" parameterType="int">
