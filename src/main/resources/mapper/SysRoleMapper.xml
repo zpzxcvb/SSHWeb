@@ -52,6 +52,7 @@
 	where role_id = #{roleId}
   </update>
   
+  <!-- 根据角色Id查询用户 -->
   <select id="findUserByRoleId" parameterType="int" resultType="map">
   	select user_id,user_name,status from sys_user 
   	where
@@ -59,7 +60,7 @@
 		select b.user_id from sys_role a,sys_user_role b 
 		where 
 		a.role_id=b.role_id
-		and a.role_id=#{roleId}
+		and a.role_id = #{roleId}
 	)
   </select>
   
@@ -67,7 +68,7 @@
 	<select id="findPermissionByRoleId" parameterType="int" resultType="map">
 		select b.id,pid,menu_name as name from sys_role_permission a,sys_menu b 
 		where a.permission_id = b.id
-		and a.role_id=#{roleId}
+		and a.role_id = #{roleId}
 	</select>
 	
 	<!-- 根据角色Id查询已选权限 -->

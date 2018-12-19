@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>文章列表</title>
+<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+
+<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div class="layui-row">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div style="margin: 10px;">
+						<div style="text-align: center;">
+							<h1>${obj.title}</h1>
+						</div>
+						<div>${obj.create_time} ${obj.nick_name}</div>
+					</div>
+				</div>
+				<div class="layui-card-body">
+					<div>
+						<span>${obj.content}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+		layui.use([ 'table' ], function() {
+			
+		});
+	</script>
+</body>
+</html>

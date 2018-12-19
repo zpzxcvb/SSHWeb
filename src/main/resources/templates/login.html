@@ -74,6 +74,7 @@
 		})
 		function login(){
 			var param = $("form").serialize();
+			console.log(encodeURIComponent(param));
 			$.ajax({
 				url:"/login",
 				type: "post",

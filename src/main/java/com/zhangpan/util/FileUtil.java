@@ -27,11 +27,10 @@ public class FileUtil {
      * @return
      */
     public static void downLoad(HttpServletResponse response, String filePath, String filename){
-        File file = new File(filePath + File.separator + filename);
-        if(file.exists()){ //判断文件父目录是否存在
+        File file = new File(filePath, filename);
+        if(file.exists()){
             response.setContentType("application/force-download");
             response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
-            
             
             FileInputStream fis = null; //文件输入流
             OutputStream os = null; //输出流

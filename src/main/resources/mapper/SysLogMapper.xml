@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangpan.dao.sys.SysLogDao">
+
+	<!-- 根据参数查询日志信息 -->
+	<select id="findPage" parameterType="map" resultType="SysLog">
+		select * from sys_log
+		<where>
+			1=1
+			<if test="createTime != null">
+				and create_time between #{createTime} and #{endTime}
+			</if>
+			order by create_time desc
+		</where>
+	</select>
+	
+	<!-- 保存用户基本资料 -->
+	<insert id="save" parameterType="SysLog">
+		insert into sys_log
+			(create_user,create_time,log_type,log_desc)
+		values
+			(#{createUser},#{createTime},#{logType},#{logDesc})
+	</insert>
+
+</mapper>

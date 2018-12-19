@@ -26,19 +26,18 @@ a {
 }
 .fixed-btn{
 	position: fixed;
-	right: 10px;
+	right: 40px;
 	bottom: 50px;
-	width: 40px;
-	border: 1px solid #008040;
-	font-size: 24px;
 	text-align: center;
-	z-index: 999;
 }
 .fixed-btn a{
-	display: inline-block;
-	width: 40px;
-    height: 40px;
-	border-bottom: 1px solid #eee;
+	display: block;
+	background-color: #eee;
+	margin-top: 3px;
+}
+.fixed-btn a i{
+	font-size: 50px;
+	color: #1E9FFF;
 }
 .wechat{
 	display: none;

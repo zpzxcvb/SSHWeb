@@ -1,16 +1,22 @@
 package com.zhangpan.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.jni.Mmap;
+import org.dom4j.Attribute;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
 
+import com.alibaba.fastjson.JSON;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -135,19 +141,90 @@ public class XMLUtils {
         }
         return sb.toString();
     }
+    
+    
+    /**
+     * 读取xml文件，返回document
+     * @param filePath
+     * @return
+     */
+    private static Document readXMLFile(String filePath) {
+        Document doc = null;
+        SAXReader reader = new SAXReader();
+        try {
+            doc = reader.read(new File(filePath));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return doc;
+    }
 
+    public static Object getXMLAttr(String filePath) {
+        Map<String, Object> map=new HashMap<String, Object>();
+        Document doc = readXMLFile(filePath);
+        Element root = doc.getRootElement();
+        
+        System.out.println(root.getName());
+        
+        Node node = doc.selectSingleNode("/Location/CountryRegion[@Name='美国']");
+        Element ele = (Element) node;
+        List<Map<String, Object>> list = listNodes(ele);
+        String name = ele.getName();
+        map.put(name, list);
+        System.out.println(JSON.toJSONString(map));
+//        System.out.println(node.asXML());
+        return null;
+    }
+    
+    private static Map<String, Object> getElementAttrValue(Element node) {
+        Map<String, Object> map=new HashMap<String, Object>();
+        //获取当前节点的所有属性节点  
+        List<Attribute> attrs = node.attributes();
+        for(Attribute attr : attrs) {
+            map.put(attr.getName(), attr.getValue());
+        }
+        return map;
+    }
+    
+    public static List<Map<String, Object>> listNodes(Element node) {
+        List<Map<String, Object>> list =new ArrayList<Map<String, Object>>();
+        /*
+        
+        String nodeName = node.getName();
+        System.out.println("当前节点的名称：：" + nodeName);
+        
+        Map<String, Object> ele = getElementAttrValue(node);
+        ele.put(nodeName, list);*/
+        
+        // 当前节点下面子节点迭代器  
+        Iterator<Element> it = node.elementIterator();
+        while (it.hasNext()) {
+            Element child = it.next();
+            Map<String, Object> childMap = getElementAttrValue(child);
+            childMap.put(child.getName(), listNodes(child));
+            list.add(childMap);
+        }
+        return list;
+    }
+    
+    private static void mm(Element node, List list) {
+        
+    }
+    
     /**
      * @param args
      */
     public static void main(String[] args) {
         try {
-            String xmlData = createDom();
+            String path = "E:/temp/LocList.xml";
+            getXMLAttr(path);
+            /*String xmlData = createDom();
             System.out.println(xmlData);
             
             String text = getTextByXPath(xmlData, "/root/time");
             System.out.println(text);
             List<Map<String, String>> list2 = getListByXPath(xmlData, "/root/students/student", new String[] {"name","age","sex","test"});
-            System.out.println(list2);
+            System.out.println(list2);*/
         } catch (Exception e) {
             e.printStackTrace();
         }

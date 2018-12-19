@@ -17,10 +17,10 @@ import com.zhangpan.intercepter.GlobalExceptionHandler;
  * @author zhangpan
  * @date 2018年10月11日
  */
-@Configuration
+//@Configuration
 public class WebConfig extends WebMvcConfigurerAdapter{
     
-    /*@Bean
+    @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         //新建过滤器注册类
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -28,12 +28,13 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         registration.setFilter(new SessionFilter());
         //设置过滤器的URL模式
         registration.addUrlPatterns("/*");
+        registration.setOrder(1);
         return registration;
-    }*/
+    }
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new GlobalExceptionHandler()).addPathPatterns("/mm");
+        registry.addInterceptor(new GlobalExceptionHandler()).addPathPatterns("/*");
         super.addInterceptors(registry);
     }
 }

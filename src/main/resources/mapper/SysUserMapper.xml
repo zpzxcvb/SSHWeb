@@ -43,7 +43,7 @@
   	insert into sys_user
   		(user_name,password,status,create_time)
   	values
-  		(#{userName},#{password},#{status},#{createTime})
+  		(#{userName},#{password},1,#{createTime})
   </insert>
   
   <delete id="deleteByIds" parameterType="int">

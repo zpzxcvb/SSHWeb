@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangpan.dao.article.ArticleDao">
+
+  <select id="findById" parameterType="int" resultType="Article">
+  	select * from article where id = #{id}
+  </select>
+  
+  <select id="findPage" parameterType="map" resultType="map">
+  	select a.id,title,content,create_time,file_url,dict_name as type
+	from article a
+	left join sys_dict_item
+	on type = dict_code
+	where 1=1
+	and dict_type = #{articleType}
+	order by create_time desc
+  </select>
+  
+  <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="userId">
+  	insert into article
+  		(title,content,type,file_url,create_time)
+  	values
+  		(#{title},#{content},#{type},#{fileUrl},#{createTime})
+  </insert>
+  
+  <delete id="deleteByIds" parameterType="int">
+  	delete from article 
+  	where
+  	<choose>
+		<when test="array.length == 1">
+			id = #{array[0]}
+		</when>
+		<otherwise>
+			id in
+			<foreach collection="array" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+		</otherwise>
+	</choose>
+  </delete>
+  
+  <update id="update" parameterType="Article">
+  	update article
+  	<set>
+  		<if test="title != null">
+  			title=#{title},
+  		</if>
+  		<if test="content != null">
+  			content=#{content},
+  		</if>
+  		<if test="fileUrl != null">
+  			file_url=#{fileUrl},
+  		</if>
+  		<if test="type != null">
+  			type=#{type},
+  		</if>
+  	</set>
+	where id = #{id}
+  </update>
+  
+  <select id="preview" parameterType="int" resultType="map">
+  	SELECT a.*,b.nick_name
+  	FROM article a, sys_user_info b
+	where a.user_id=b.user_id
+	and a.id = #{id}
+  </select>
+</mapper>

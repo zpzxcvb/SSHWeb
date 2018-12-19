@@ -1,4 +1,4 @@
-package com.zhangpan.service;
+package com.zhangpan.service.filescan;
 
 import java.util.List;
 

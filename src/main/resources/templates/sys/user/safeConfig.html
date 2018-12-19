@@ -11,9 +11,15 @@
 	<div>
 		<form class="layui-form layui-form-pane">
 			<div id="password_div" class="layui-form-item">
+				<label class="layui-form-label">用户名</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" value="${userName}" disabled/>
+				</div>
+			</div>
+			<div id="password_div" class="layui-form-item">
 				<label class="layui-form-label">原始密码</label>
 				<div class="layui-input-inline">
-					<input type="password" name="oldPwd" class="layui-input" placeholder="请输入原始密码" autocomplete="new-password"/>
+					<input type="password" name="oldPwd" lay-verify="required" class="layui-input" placeholder="请输入原始密码" autocomplete="new-password"/>
 				</div>
 			</div>
 			<div id="password_div" class="layui-form-item">
@@ -30,7 +36,7 @@
 			</div>
 			<div class="layui-form-item">
 				<div class="layui-input-inline">
-					<a id="postBtn" class="layui-btn">保存</a>
+					<a id="postBtn" lay-submit class="layui-btn" lay-filter="demo1">保存</a>
 					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
 				</div>
 			</div>
@@ -41,7 +47,16 @@
 	<script>
 		layui.use('form', function() {
 			var form = layui.form;
-			formSubmit("/sys/user/password");
+			form.verify({
+				
+			})
+			form.on('submit(demo1)', function(data){
+			    layer.alert(JSON.stringify(data.field), {
+			      title: '最终的提交信息'
+			    })
+// 			    return false;
+			  });
+// 			formSubmit("/sys/user/password");
 		});
 	</script>
 </body>

@@ -26,26 +26,23 @@
 			  	</div>
 			</div>
 			<div class="layui-card-body">
-				<table id="table" lay-filter="table_event"> </table>
+				<div id="" class="layui-btn-container">
+					<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+					<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
+					<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+				</div>
+				<table id="table" lay-filter="table_event"></table>
 			</div>
 		</div>
 	</div>
 	
 	<script type="text/javascript" src="/js/myjs.js"></script>
-	<script type="text/html" id="toolbars">
-		<div id="" class="layui-btn-container">
-			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
-			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
-			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
-		</div>
-	</script>
 	<script>
 	var table,tableIns,dictType,typeId;
 	function initTable(table){
 		var params = {
 			 id: "#table",
 			 url: "/sys/dict/item/pageList",
-			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
@@ -68,18 +65,10 @@
 	}
 	layui.use('table', function(){
 		table = layui.table;
-		
 		initDictType();
-		
 		//初始化table
 		initTable(table);
-		
-		//监听工具条事件
-		  table.on('toolbar(table_event)', function(obj){
-		      var method = obj.event;
-		      active[method] ? active[method].call(this, table) : '';
-		  });
-		  //监听普通按钮事件
+		//监听普通按钮事件
 		  $('.layui-btn').click(function(){
 		  	  var method = this.id;
 		  	  active[method] ? active[method].call(this, table) : '';

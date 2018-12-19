@@ -20,9 +20,13 @@ public class SysMenu implements Serializable{
 
     private Integer pid;
     
+    private String parentName;
+    
     private Integer orderNo;
     
     private Integer type;
+    
+    private Integer status;
     
     private String description;
     
@@ -60,6 +64,14 @@ public class SysMenu implements Serializable{
         this.pid = pid;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public Integer getOrderNo() {
         return orderNo;
     }
@@ -90,6 +102,14 @@ public class SysMenu implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
 }

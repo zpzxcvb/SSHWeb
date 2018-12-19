@@ -9,15 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.zhangpan.service.FileScanService;
+import com.zhangpan.constant.Constant;
+import com.zhangpan.service.filescan.FileScanService;
 import com.zhangpan.util.FileUtil;
 import com.zhangpan.util.TreeNode;
 
@@ -26,6 +23,9 @@ import com.zhangpan.util.TreeNode;
 public class FileController extends BaseController {
     
     private static final Logger log = Logger.getLogger(FileController.class);
+    
+    @Value("${uploadPath}")
+    private String uploadPath;
 	
 	@Autowired
 	private FileScanService fileScanService;
@@ -56,20 +56,29 @@ public class FileController extends BaseController {
 	    if(file.isEmpty()){
             return false;
         }
-        String path = ResourceUtils.getURL("classpath:").getPath();
-        File dest = new File(path, "static/upload/" + file.getOriginalFilename());
-        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
+	    String fileType = file.getContentType();   //图片文件类型
+	    long fileSize = file.getSize();   //图片文件大小
+        String fileName = file.getOriginalFilename();  //图片名字
+        
+	    File dir = new File(uploadPath);
+	    //判断文件目录是否存在
+	    if(!dir.exists()){
+	        dir.mkdir();
         }
-        file.transferTo(dest);
-        map.put("src", "/upload/"+file.getOriginalFilename());
-        return getResults("0", "", map);
+        File dest = new File(uploadPath, fileName);
+        try {
+            file.transferTo(dest);
+            //返回上传文件路径
+            String downLoadUrl = dest.getAbsolutePath();
+            map.put("url", downLoadUrl);
+            return getResults(Constant.OK, "上传成功", map);
+        } catch (Exception e) {
+            return getResults(Constant.ERROR, "上传失败");
+        }
     }
 	
 	@RequestMapping("/downLoad")
     public String downLoad() throws FileNotFoundException {
-        String path = ResourceUtils.getURL("classpath:").getPath()+"upload/image";
-        FileUtil.downLoad(this.response, path, "me.jpg");
         return null;
     }
 }

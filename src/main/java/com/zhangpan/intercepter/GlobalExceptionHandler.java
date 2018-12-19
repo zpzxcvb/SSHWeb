@@ -26,6 +26,6 @@ public class GlobalExceptionHandler implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
         System.out.printf("preHandle被调用");
-        return true;    //如果false，停止流程，api被拦截
+        return false;    //如果false，停止流程，api被拦截
     }
 }

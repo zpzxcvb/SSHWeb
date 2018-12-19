@@ -162,12 +162,28 @@ public class DateUtil {
 	}
 	
 	/**
+     * 指定日期加n天
+     * @return
+	 * @throws ParseException 
+     */
+    public static String sumDay(String date, int n) {
+        Date begin;
+        try {
+            begin = paserDate(date);
+            calendar.setTime(begin);
+            calendar.add(Calendar.DAY_OF_MONTH, n);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return formatDateToString(calendar.getTime());
+    }
+	
+	/**
 	 * @param args
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws ParseException {
-	    SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
-	    System.out.println(sdf.format(new Date()));
+	    System.out.println(sumDay("2018-10-26",1));
 //		System.out.println(longToTime(System.currentTimeMillis()));
 //		System.out.println(currentDate());
 //		System.out.println(currentDateTime());

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>接口信息列表</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div class="layui-row">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div class="layui-inline table-search">
+						<div class="layui-input-inline">
+							<input class="layui-input" id="key" type="search" placeholder="请输入名称">
+						</div>
+						<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+					</div>
+				</div>
+				<div class="layui-card-body">
+					<div id="" class="layui-btn-container">
+						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
+						<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					</div>
+					<table id="table" lay-filter="table_event"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script type="text/html" id="statusTpl">
+		<input type='checkbox' name='status' lay-skin='switch' lay-text='启用|禁用' lay-filter='status' {{ d.status == 1 ? 'checked' : '' }} value='{{d.id}}'>
+	</script>
+	<script>
+	var table,tableIns;
+	function initTable(table){
+		var params = {
+			 id: "#table",
+			 url: "/sys/interface/pageList",
+			 columns: [
+		    	{type: 'checkbox', fixed: 'left'},
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'name', title: '接口名称'},
+		      	{field: 'url', title: '接口地址'},
+		      	{field: 'description', title: '描述'},
+		      	{field: 'createTime', title: '创建时间', templet: function(d){
+		      		return util.toDateString(d.createTime);
+		      	}},
+		      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'}
+		    ]
+		};
+		tableIns = table_layui(table, params);
+	}
+	layui.use(['table', 'util'], function(){
+		util = layui.util;
+		form = layui.form;
+		table = layui.table;
+		//初始化table
+		initTable(table);
+		//监听普通按钮事件
+	    $('.layui-btn').click(function(){
+	  	  	var method = this.id;
+	  	  	active[method] ? active[method].call(this, table) : '';
+	    });
+		//监听指定开关
+		switchStatusForUpdate(form, 'status', "/sys/interface/update", "id");
+	});
+	var active = {
+		searchModel: function(table){
+			var key = $("#key").val();
+			tableIns.reload({
+				where:{key: key}
+		  	});
+		},
+		addModel: function(table){
+			openDialog(table, 'table', '/sys/interface/saveOrUpdate');
+		},
+		deleteModel: function(table){
+			confirm_Delete(table, 'table', "/sys/interface/deleteByIds", "id");
+		},
+		editModel: function(table){
+			editDialog(table, 'table', '/sys/interface/saveOrUpdate', "id");
+		}
+	}
+	</script>
+</body>
+</html>

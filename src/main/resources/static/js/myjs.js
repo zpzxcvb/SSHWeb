@@ -99,12 +99,13 @@ function table_layui(table, params){
 		elem: params.id,
 		url: params.url,
 		width: params.width,
-		toolbar: params.toolbar,
 		method: 'post',
 		where: params.param,
 		cellMinWidth: 80,
 		even: false,//条纹
-	    page: true,//分页
+	    page: {//分页
+	    	layout:['prev', 'page', 'next', 'limit', 'skip', 'count', 'refresh']
+	    },
 	    cols: [params.columns],
 	    request: {
 	    	pageName: 'pageNum', //页码的参数名称，默认：page
@@ -120,16 +121,15 @@ function table_layui(table, params){
 	});
 }
 //layer 弹出层
-function openDialog(table, tableId, url){
+function openDialog(table, tableId, url, width, height){
+	if(!width){
+		width="500px";
+		height="400px";
+	}
 	layer.open({
 		type: 2,
-	  	area: ['400px', '400px'], //宽高
-	  	content: url,
-	  	end: function(){
-	  		if(tableIns){
-	  			tableIns.reload();
-	  		}
-	  	}
+	  	area: [width, height], //宽高
+	  	content: url
 	});
 }
 //关闭子页面
@@ -197,6 +197,7 @@ function formSubmit(url){
 			success: function(data){
 				if(data.code == "ok"){
 					parent.layer.msg(data.msg,{icon:1});
+					parent.tableIns.reload();
 				}else{
 					parent.layer.msg(data.msg,{icon:0});
 				}
@@ -205,4 +206,86 @@ function formSubmit(url){
 			}
 		})
 	})
+}
+
+/**
+ * 表单赋值
+ * */
+function loadFormValue(form, formFilter, url, param){
+	$.ajax({
+		url: url,
+		type: "post",
+		data: param,
+		success: function(data){
+			form.val(formFilter, data);
+		}
+	})
+}
+
+/**
+ * 开关状态修改
+ * */
+function switchStatusForUpdate(form, switchFilter, url, id) {
+	form.on('switch('+switchFilter+')', function(data) {
+		var status = this.checked ? 1 : 0;
+		var param = {
+			[id] : this.value,
+			status : status
+		};
+		layer.confirm('您确定要操作吗?', {
+			icon : 3
+		}, function(index) {
+			$.ajax({
+				url : url,
+				type : "post",
+				data : param,
+				success : function(data) {
+					if (data.code == "ok") {
+						layer.msg(data.msg, {
+							icon : 1
+						});
+						layer.close(index);
+					} else {
+						layer.msg(data.msg, {
+							icon : 0
+						});
+					}
+				}
+			});
+		}, function() {
+			tableIns.reload();
+		});
+	});
+}
+
+/**
+ * 文件上传
+ * */
+function fileUpload(upload, domId, fileType){
+	var loadIndex;
+	var uploadInst = upload.render({
+	    elem: '#'+domId, //绑定元素
+	    url: '/file/upLoad', //上传接口
+	    accept: 'file',
+//	    acceptMime:'image/*',//过滤文件类型
+	    exts: fileType,//文件类型  txt|jpg|pdf
+	    before: function(input){
+	        console.log('文件上传中');
+	        loadIndex = layer.load(1);
+	    },
+	    done: function(res, index, upload){
+	    	layer.close(loadIndex);
+		    if(res.code == 'ok'){
+		    	$("#fileName").text(res.data.url);
+		    	$("#fileUrl").val(res.data.url);
+		    	layer.msg(res.msg,{icon:1});
+		    }else{
+		    	layer.msg(res.msg,{icon:0});
+		    }
+	    },
+	    error: function(e){
+	    	layer.close(loadIndex);
+	    	layer.msg('服务器异常',{icon:5});
+	    }
+	  });
 }

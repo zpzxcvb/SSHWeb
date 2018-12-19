@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.Page;
 import com.zhangpan.controller.BaseController;
-import com.zhangpan.model.SysRolePermission;
 import com.zhangpan.model.SysUser;
 import com.zhangpan.model.SysUserInfo;
 import com.zhangpan.model.SysUserRole;
@@ -142,13 +141,18 @@ public class SysUserController extends BaseController {
         return getResponseState(count);
     }
     
-    @RequestMapping("/userInfo")
-    public String userInfo(Model model){
-        SysUserInfo userInfo = userInfoService.findByParams(paramMap);
-        if(userInfo != null) {
-            model.addAttribute("userInfo", userInfo);
-        }
+    @RequestMapping("/userInfoEdit")
+    public String userInfoEdit(){
         return "/sys/userInfo/edit";
+    }
+    
+    @RequestMapping("/userInfoByUserId")
+    @ResponseBody
+    public Object userInfoByUserId(){
+        Integer userId = (Integer) session.getAttribute("userId");
+        paramMap.put("userId", userId);
+        SysUserInfo userInfo = userInfoService.findByParams(paramMap);
+        return userInfo;
     }
     
     /**
@@ -160,8 +164,6 @@ public class SysUserController extends BaseController {
     @ResponseBody
     public Object saveUserInfo(SysUserInfo model){
         int count = 0;
-        Integer userId = (Integer) session.getAttribute("userId");
-        model.setUserId(userId);
         
         if(model.getId() == null) {
             count = userInfoService.save(model);

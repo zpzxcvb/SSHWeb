@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>文章信息</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div style="">
+		<form class="layui-form">
+			<input id="id" type="hidden" name="id" value="${(obj.id)!''}"/>
+			<div class="layui-form-item">
+				<label class="layui-form-label">文章标题</label>
+				<div class="layui-input-inline">
+					<input type="text" name="title" class="layui-input" placeholder="请输入文章标题" value="${(obj.title)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">文章类型</label>
+				<div class="layui-input-inline">
+					<select id="type" name="type" lay-search name="type">
+						<option value="">请选择文章类型</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">文章内容</label>
+				<div class="layui-input-block">
+					<textarea class="layui-textarea" id="content" name="content" placeholder="请输入内容">${(obj.content)!''}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">附件</label>
+				<div class="layui-input-inline">
+					<a id="file" class="layui-btn">
+						<i class="layui-icon layui-icon-upload"></i> 附件
+					</a>
+					<span id='fileName'></span>
+					<input type="hidden" id="fileUrl" name="fileUrl" value="${(obj.fileUrl)!''}">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-inline">
+					<a id="postBtn" class="layui-btn">保存</a>
+					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+	$(function(){
+		queryOptions("type", "/article/articleTypes", "${(obj.type)!''}");
+	})
+		layui.use(['form', 'upload'], function() {
+			var form = layui.form;
+			upload = layui.upload;
+			fileUpload(upload, 'file');//, 'txt|jpg|pdf'
+// 			form.render('select');
+			var id = "${(obj.id)!''}";
+			var url="/article/save";
+			if(id != ""){
+				url = "/article/update";
+			}
+			formSubmit(url);
+		});
+	</script>
+</body>
+</html>

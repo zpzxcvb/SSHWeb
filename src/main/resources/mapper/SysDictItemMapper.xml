@@ -30,6 +30,9 @@
   	<if test="dictName != null">
 		and dict_name = #{dictName}
 	</if>
+	<if test="dictType != null">
+		and dict_type = #{dictType}
+	</if>
   </select>
   
   <insert id="save" parameterType="SysDictItem">

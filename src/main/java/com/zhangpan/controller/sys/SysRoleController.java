@@ -72,13 +72,6 @@ public class SysRoleController extends BaseController {
         return getResponseState(count);
     }
     
-    @RequestMapping("/findUserByRoleId/{roleId}")
-    @ResponseBody
-    public Object findUserByRoleId(@PathVariable("roleId") Integer roleId) {
-        Page<Object> page = roleService.findUserByRoleId(roleId);
-        return pageData(page);
-    }
-    
     @RequestMapping("/grantMenu")
     public String grantMenu(Integer id, Model model){
         model.addAttribute("roleId", id);
@@ -101,6 +94,23 @@ public class SysRoleController extends BaseController {
         return getResponseState(count);
     }
     
+    /**
+     * 根据角色查询用户
+     * @param roleId
+     * @return
+     */
+    @RequestMapping("/findUserByRoleId")
+    @ResponseBody
+    public Object findUserByRoleId(Integer roleId) {
+        Page<Object> page = roleService.findUserByRoleId(roleId);
+        return pageData(page);
+    }
+    
+    /**
+     * 根据角色查询权限
+     * @param roleId
+     * @return
+     */
     @RequestMapping("/findPermissionByRoleId")
     @ResponseBody
     public Object findPermissionByRoleId(Integer roleId) {

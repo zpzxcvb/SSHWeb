@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.annotations.JsonAdapter;
+import com.zhangpan.constant.DictTypeEnum;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.util.ImageUtil;
 import com.zhangpan.util.TreeNode;
@@ -30,11 +30,13 @@ import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.ImageHelper;
 import net.sourceforge.tess4j.util.LoadLibs;
 
-public class Test {
-    private static final Logger log = LoggerFactory.getLogger(BaseController.class);
+public class Test{
+    private static final Logger log = LoggerFactory.getLogger(Test.class);
 
     public static void main(String[] args) throws Exception {
-        log.info("1-----3");
+        log.info("----------------------");
+        long id=100;
+        System.out.println(DictTypeEnum.CITY.getValue());
         //二值化
 //        BufferedImage BinaryImage = ImageHelper.convertImageToBinary(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(BinaryImage, "jpg", new File("H:/photo/", "test2.jpg"));
@@ -43,7 +45,7 @@ public class Test {
 //        ImageIO.write(grayImage, "jpg", new File("H:/photo/", "test2.jpg"));
         
         
-        String algorithmName = "md5";
+        /*String algorithmName = "md5";
         String username = "wang";
         String password = "111111";
         String salt1 = username;
@@ -53,7 +55,7 @@ public class Test {
                 salt1 + salt2, hashIterations);
         String encodedPassword = hash.toHex();
         System.out.println(encodedPassword);
-        System.out.println(salt2);
+        System.out.println(salt2);*/
     }
 
 }

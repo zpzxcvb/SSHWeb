@@ -43,6 +43,10 @@ public class BaseController {
         }
 	}
 
+	/**
+	 * 封装请求参数
+	 * @return
+	 */
 	private Map<String, Object> getParamMap(){
 		paramMap = new HashMap<String, Object>();
 		
@@ -59,6 +63,24 @@ public class BaseController {
 		return paramMap;
 	}
 	
+	/**
+	 * 返回信息
+	 * @param code 返回码
+	 * @param msg 返回提示信息
+	 * @return
+	 */
+	public ResponseData getResults(String code, String msg) {
+        result = new ResponseData(code, msg, "");
+        return result;
+    }
+	
+	/**
+	 * 返回信息
+	 * @param code 返回码
+	 * @param msg 返回提示信息
+	 * @param JsonData 返回数据，可以是map、json、对象等格式
+	 * @return
+	 */
 	public ResponseData getResults(String code, String msg, Object JsonData) {
 	    result = new ResponseData(code, msg, JsonData);
         return result;
@@ -67,9 +89,9 @@ public class BaseController {
 	protected ResponseData getResponseState(int count) {
 	    ResponseData resp = null;
 		if (count > 0) {
-		    resp = getResults(Constant.OK, "操作成功", "");
+		    resp = getResults(Constant.OK, "操作成功");
 		} else {
-		    resp = getResults(Constant.ERROR, "操作失败", "");
+		    resp = getResults(Constant.ERROR, "操作失败");
 		}
 		return resp;
 	}

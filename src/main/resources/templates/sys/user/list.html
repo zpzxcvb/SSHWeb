@@ -22,6 +22,11 @@
 					</div>
 				</div>
 				<div class="layui-card-body">
+					<div id="" class="layui-btn-container">
+						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
+						<a id="grantRole" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-auz"></i> 分配角色</a>
+					</div>
 					<table id="table" lay-filter="table_event"></table>
 				</div>
 			</div>
@@ -37,15 +42,8 @@
 	</div>
 	
 	<script type="text/javascript" src="/js/myjs.js"></script>
-	<script type="text/html" id="toolbars">
-		<div id="" class="layui-btn-container">
-			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
-			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
-			<a lay-event="grantRole" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-auz"></i> 分配角色</a>
-		</div>
-	</script>
 	<script type="text/html" id="statusTpl">
-		<input type='checkbox' name='status' lay-skin='switch' lay-text='可用|禁用' lay-filter='userStatus' {{ d.status == 1 ? 'checked' : '' }} value='{{d.userId}}'>
+		<input type='checkbox' name='status' lay-skin='switch' lay-text='启用|禁用' lay-filter='status' {{ d.status == 1 ? 'checked' : '' }} value='{{d.user_id}}'>
 	</script>
 	<script>
 	var table,tableIns;
@@ -53,7 +51,6 @@
 		var params = {
 			 id: "#table",
 			 url: "/sys/user/pageList",
-			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
@@ -61,7 +58,7 @@
 		      	{field: 'role_name', title: '所属角色'},
 		      	{field: 'create_time', title: '创建时间', width: 170},
 		      	{field: 'update_time', title: '更新时间', width: 170},
-		      	{field: 'status', title: '状态', width: 100, sort: true, templet: '#statusTpl'}
+		      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'}
 		    ]
 		};
 		tableIns = table_layui(table, params);
@@ -71,45 +68,18 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
-		//监听工具条事件
-		  table.on('toolbar(table_event)', function(obj){
-		      var method = obj.event;
-		      active[method] ? active[method].call(this, table) : '';
-		  });
 		//监听单击行事件
 		  table.on('row(table_event)', function(obj){
 			  $("#user_name").text(obj.data.user_name);
 			  active.loadUserPermission(obj.data.user_id);
 		  });
 		  //监听普通按钮事件
-		  $('.table-search .layui-btn').click(function(){
+		  $('.layui-btn').click(function(){
 		  	  var method = this.id;
 		  	  active[method] ? active[method].call(this, table) : '';
 		  });
-		//监听指定开关
-		  form.on('switch(userStatus)', function(data){
-		  	var status = this.checked ? 1 : 0;
-		  	var userId = this.value;
-		  	var url = "/sys/user/changeUserStatus";
-		  	var param = {userId:userId, status:status};
-		    layer.confirm('您确定要操作吗?', {icon: 3}, function(index){
-				$.ajax({
-					url: url,
-					type: "post",
-					data: param,
-					success: function(data){
-						if(data.code == "ok"){
-							layer.msg(data.msg,{icon:1});
-							layer.close(index);
-						}else{
-							layer.msg(data.msg,{icon:0});
-						}
-					}
-				});
-			},function (){
-				tableIns.reload();
-			});
-		  });
+		  //监听指定开关
+		  switchStatusForUpdate(form, 'status', "/sys/user/changeUserStatus", "userId");
 	});
 	var active = {
 		searchModel: function(table){

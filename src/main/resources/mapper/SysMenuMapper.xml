@@ -21,7 +21,9 @@
 	</select>
 
 	<select id="findPage" parameterType="map" resultType="SysMenu">
-		select * from sys_menu
+		select a.*,
+			(select menu_name from sys_menu where id=a.pid) as parent_name 
+		from sys_menu a
 		<where>
 			id != 1
 			<if test="pid != null">
@@ -55,7 +57,8 @@
 			url,
 			order_no,
 			type,
-			description
+			description,
+			status
 		)
 		values
 		(
@@ -64,7 +67,8 @@
 			#{url},
 			#{orderNo},
 			#{type},
-			#{description}
+			#{description},
+			1
 		)
 	</insert>
 
@@ -87,7 +91,12 @@
 			<if test="description != null">
 				description = #{description},
 			</if>
-			type = #{type},
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -113,7 +122,8 @@
 	<select id="findMenuByPid" parameterType="int" resultType="SysMenu">
 		select * from sys_menu
 		where
-		type = 1
+		status = 1
 		and pid = #{id}
+		order by pid,order_no
 	</select>
 </mapper>

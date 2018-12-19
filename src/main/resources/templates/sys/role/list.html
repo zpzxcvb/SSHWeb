@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="layui-row layui-col-space10">
-		<div class="layui-col-md7">
+		<div class="layui-col-md6">
 			<div class="layui-card">
 				<div class="layui-card-header">
 					<div class="layui-inline table-search">
@@ -22,20 +22,27 @@
 					</div>
 				</div>
 				<div class="layui-card-body">
-					<table id="table" lay-filter="table_event">
-					</table>
+					<div id="" class="layui-btn-container">
+						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
+						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
+						<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
+						<a id="grantMenu" class="layui-btn"><i class="layui-icon layui-icon-auz"></i> 分配权限</a>
+					</div>
+					<table id="table" lay-filter="table_event"></table>
 				</div>
 			</div>
 		</div>
-		<div class="layui-col-md5">
+		<div class="layui-col-md3">
 			<div class="layui-card">
-				<div class="layui-card-header">【<span id="role_name"></span>】角色所属用户</div>
+				<div class="layui-card-header">【<span id="role_name">超级管理员</span>】角色所属用户</div>
 				<div class="layui-card-body">
-					<table id="table_user" lay-filter=""></table>
+					<table id="table_user"></table>
 				</div>
 			</div>
+		</div>
+		<div class="layui-col-md3">
 			<div class="layui-card">
-				<div class="layui-card-header">【<span id="role_permission"></span>】角色所属权限</div>
+				<div class="layui-card-header">【<span id="role_permission">超级管理员</span>】角色所属权限</div>
 				<div class="layui-card-body">
 					<ul id="menuTree" class="ztree"></ul>
 				</div>
@@ -43,21 +50,12 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="/js/myjs.js"></script>
-	<script type="text/html" id="toolbars">
-		<div id="" class="layui-btn-container">
-			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
-			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
-			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
-			<a lay-event="grantMenu" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-auz"></i> 分配权限</a>
-		</div>
-	</script>
 	<script>
 	var table,tableIns;
 	function initTable(table){
 		var params = {
 			 id: "#table",
 			 url: "/sys/role/pageList",
-			 toolbar: '#toolbars',
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
@@ -72,12 +70,8 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
-		active.loadUserTable(table,"0");
-		//监听头工具条事件
-		  table.on('toolbar(table_event)', function(obj){
-		      var method = obj.event;
-		      active[method] ? active[method].call(this, table) : '';
-		  });
+		active.loadRolePermission("");
+		active.loadUserTable(table,"");
 		//监听单击行事件
 		  table.on('row(table_event)', function(obj){
 			  $("#role_name").text(obj.data.roleName);
@@ -86,7 +80,7 @@
 			  active.loadUserTable(table, obj.data.roleId);
 		  });
 		  //监听普通按钮事件
-		  $('.table-search .layui-btn').click(function(){
+		  $('.layui-btn').click(function(){
 		  	  var method = this.id;
 		  	  active[method] ? active[method].call(this, table) : '';
 		  });
@@ -120,13 +114,12 @@
 		loadUserTable(table, roleId){
 			var params = {
 				 id: "#table_user",
-				 url: "/sys/role/findUserByRoleId/"+roleId,
-				 width: 500,
+				 url: "/sys/role/findUserByRoleId?roleId="+roleId,
 				 columns: [
 			      	{type: 'numbers', title: '序号', fixed: 'left'},
 			      	{field: 'user_name', title: '用户名'},
 			      	{field: 'status', title: '状态', sort: true, templet: function(d){
-			        	return d.status == 1 ? "可用" : "<span style='color: red;'>禁用</span>";
+			        	return d.status == 1 ? "启用" : "<span style='color: red;'>禁用</span>";
 				    }}
 			    ]
 			};

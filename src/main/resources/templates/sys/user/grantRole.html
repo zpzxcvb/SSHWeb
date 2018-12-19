@@ -52,6 +52,7 @@
 	  				success: function(data){
 	  					if(data.code == "ok"){
 	  						parent.layer.msg(data.msg,{icon:1});
+	  						parent.tableIns.reload();
 	  					}else{
 	  						parent.layer.msg(data.msg,{icon:0});
 	  					}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>菜单信息列表</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	<link rel="stylesheet" href="/js/lib/zTree/css/zTreeStyle/zTreeStyle.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/lib/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="/js/lib/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="layui-row">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div class="layui-inline table-search">
+						<div class="layui-input-inline">
+							<input class="layui-input" id="createTime" type="text" placeholder="请输入日期">
+						</div>
+						<a id="searchModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-search"></i> 查询</a>
+					</div>
+				</div>
+				<div class="layui-card-body">
+					<table id="table" lay-filter="table_event">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+	var table,tableIns;
+	function initTable(table){
+		var params = {
+			 id: "#table",
+			 url: "/sys/log/pageList",
+			 columns: [
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'createUser', title: '操作人'},
+		      	{field: 'createTime', title: '创建时间'},
+		      	{field: 'logType', title: '类型'},
+		      	{field: 'logDesc', title: '内容'},
+		    ]
+		};
+		tableIns = table_layui(table, params);
+	}
+	layui.use(['table','laydate'], function(){
+		  table = layui.table;
+		  //初始化table
+		  initTable(table);
+		  var laydate = layui.laydate;
+		  laydate.render({
+			  elem : '#createTime'
+		  });
+		  //监听普通按钮事件
+		  $('#searchModel').click(function(){
+			  var createTime = $("#createTime").val();
+				tableIns.reload({
+					where:{createTime: createTime}
+			  	});
+		  });
+	});
+	</script>
+</body>
+</html>

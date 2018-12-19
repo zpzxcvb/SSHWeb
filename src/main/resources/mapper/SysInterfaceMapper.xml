@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangpan.dao.sys.SysInterfaceDao">
+
+  <select id="findById" parameterType="int" resultType="SysInterface">
+  	select * from sys_interface where id = #{id}
+  </select>
+  
+  <select id="findPage" parameterType="map" resultType="SysInterface">
+  	select * from sys_interface 
+  	where 1=1
+  	<if test="key != null">
+		<bind name="pattern" value="'%' + key + '%'" />
+		and name like #{pattern}
+	</if>
+	order by create_time desc
+  </select>
+  
+  <insert id="save" parameterType="SysInterface" useGeneratedKeys="true" keyProperty="userId">
+  	insert into sys_interface
+  		(name,url,description,status,create_time)
+  	values
+  		(#{name},#{url},#{description},1,#{createTime})
+  </insert>
+  
+  <delete id="deleteByIds" parameterType="int">
+  	delete from sys_interface 
+  	where
+  	<choose>
+		<when test="array.length == 1">
+			id = #{array[0]}
+		</when>
+		<otherwise>
+			id in
+			<foreach collection="array" item="item" open="(" separator="," close=")" >
+				#{item}
+			</foreach>
+		</otherwise>
+	</choose>
+  </delete>
+  
+  <update id="update" parameterType="SysInterface">
+  	update sys_interface
+  	<set>
+  		<if test="name != null">
+  			name=#{name},
+  		</if>
+  		<if test="url != null">
+  			url=#{url},
+  		</if>
+  		<if test="description != null">
+  			description=#{description},
+  		</if>
+  		<if test="status != null">
+  			status=#{status},
+  		</if>
+  	</set>
+	where id = #{id}
+  </update>
+  
+</mapper>

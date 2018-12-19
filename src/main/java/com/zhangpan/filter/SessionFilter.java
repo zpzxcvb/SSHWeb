@@ -32,7 +32,7 @@ public class SessionFilter implements Filter{
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
 			FilterChain filterChain) throws IOException, ServletException {
-	    System.err.printf("过滤器实现");
+	    System.err.println("过滤器实现1");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
         // 加入filter链继续向下执行  

@@ -5,8 +5,6 @@ import java.io.Serializable;
 /**
  * 字典类型表 "sys_dict_type"
  * @author 张攀
- * @ClassName : SysDictType
- * @ModifiedBy : 张攀
  * @date : 2017-3-22 下午5:35:43
  */
 public class SysDictType implements Serializable{

@@ -32,7 +32,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">菜单链接</label>
 				<div class="layui-input-inline">
-					<input type="text" name="url" class="layui-input" placeholder="请输入菜单连接地址" value="${(menu.url)!''}"/>
+					<input type="text" id="url" name="url" readonly class="layui-input" placeholder="请输入菜单连接地址" value="${(menu.url)!''}"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -45,13 +45,6 @@
 				<label class="layui-form-label">排序</label>
 				<div class="layui-input-inline">
 					<input type="number" name="orderNo" class="layui-input" placeholder="请输入菜单连接地址" value="${(menu.orderNo)!''}"/>
-				</div>
-			</div>
-			<div class="layui-form-item" pane>
-				<label class="layui-form-label">显示</label>
-				<div class="layui-input-inline">
-					<input type="radio" name="type" value="1" title="显示" checked /> 
-					<input type="radio" name="type" value="0" title="隐藏" />
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -74,8 +67,6 @@
 			var url="/sys/menu/save";
 			if(id != ""){
 				url = "/sys/menu/update";
-				var type = "${(menu.type)!''}";
-				$("input[name='type'][value='"+type+"']").attr("checked",true);
 			}
 			formSubmit(url);
 			$("#parent_name").click(function(){
@@ -93,6 +84,12 @@
 			$("#parent_name").val(treeNode.name);
 			$("#pid").val(treeNode.id);
 			$("#menu_div").hide();
+			//根目录禁用url连接
+			if(treeNode.id == 1){
+				$("#url").attr("readonly", true);
+			}else{
+				$("#url").attr("readonly", false);
+			}
 		}
 	</script>
 </body>

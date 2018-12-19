@@ -38,4 +38,18 @@ public class TestMenu {
         int count=sysMenuService.deleteByIds(ids);
         System.err.println(count);
     }
+	
+	private List<SysMenu> listAllMenu(int id) {
+	    List<SysMenu> menuList = sysMenuService.findMenuByPid(id);
+        for (SysMenu menu : menuList) {
+            menu.setChildList(listAllMenu(menu.getId()));
+        }
+        return menuList;
+	}
+	
+	@Test
+    public void testlistAllMenu() {
+	    List<SysMenu> list = listAllMenu(1);
+        System.err.println(JSON.toJSONString(list));
+    }
 }

@@ -10,7 +10,8 @@
 <body>
 	<div>
 		<form class="layui-form layui-form-pane" lay-filter="userInfo">
-			<input type="hidden" name="id"/>
+			<input type="hidden" name="id" id="id"/>
+			<input type="hidden" name="userId" value="${userId}"/>
 			<div class="layui-form-item">
 				<label class="layui-form-label">昵称</label>
 				<div class="layui-input-inline">
@@ -43,14 +44,12 @@
 			</div>
 		</form>
 	</div>
-${userInfo}
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
 		layui.use(['form'], function() {
 			var form = layui.form;
-			form.val('userInfo', {
-				nickName:'123'
-			});
+			//修改表单时赋值
+			loadFormValue(form, 'userInfo', '/sys/user/userInfoByUserId');
 			formSubmit("/sys/user/saveUserInfo");
 		});
 	</script>

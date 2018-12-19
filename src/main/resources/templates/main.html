@@ -41,46 +41,61 @@
     	</li>
       	<li class="layui-nav-item">
 	        <a href="javascript:;">
-	        	您好,<span id="username">${userName}</span>
+	        	您好,<span id="username">${nickName!userName}</span>
 	          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
 	        </a>
-	        <dl class="layui-nav-child">
-	          <dd><a onclick="userInfo()" href="javascript:;">基本资料</a></dd>
-	          <dd><a onclick="safeConfig()" href="javascript:;">安全设置</a></dd>
-	        </dl>
+	        <ul class="layui-nav-child">
+	          <li><a onclick="userInfo()" href="javascript:;">基本资料</a></dd>
+	          <li><a onclick="safeConfig()" href="javascript:;">安全设置</a></dd>
+	        </ul>
       	</li>
       	<li class="layui-nav-item"><a href="/logout">注销</a></li>
     </ul>
   </div>
   
   <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域 -->
-      <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
-        <#if (menuList?size > 0)>
-			<#list menuList as parentMenu>
-				<li class="layui-nav-item layui-nav-itemed">
-					<a href="javascript:;">${parentMenu.menuName}</a>
-					<#if (parentMenu.childList?size > 0)>
-						<#list parentMenu.childList as childMenu>
-							<dl class="layui-nav-child">
-					            <dd><a id="${childMenu.id}" href="javascript:;" url="${childMenu.url}">${childMenu.menuName}</a></dd>
-					        </dl>
-						</#list>
-					</#if>
-				</li>
-			</#list>
-		</#if>
-      </ul>
-    </div>
+     <div class="layui-side-scroll">
+        <!-- 左侧导航区域 -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
+        	<li class="layui-nav-item layui-this">
+        		<a id="0" href="javascript:;">
+				    <i class='layui-icon layui-icon-home'></i>
+					<span>首页</span>
+				</a>
+        	</li>
+      		<#if (menuList?? && menuList?size > 0)>
+      			<#list menuList as menu>
+					<li class="layui-nav-item">
+						<#macro treeMenu menus>
+							<#if (menus?? && menus?size > 0)>
+								<a href="javascript:;">${menus.menuName}</a>
+								<ul class="layui-nav-child">
+									<#list menus.childList as childMenu>
+										<li>
+											<#if (childMenu.url != "")>
+												<a id="${childMenu.id}" href="javascript:;" url="${childMenu.url}">${childMenu.menuName}</a>
+											<#else>
+												<@treeMenu menus = childMenu/>
+											</#if>
+										</li>
+									</#list>
+								</ul>
+							</#if>
+						</#macro>
+						<@treeMenu menus = menu/>
+					</li>
+				</#list>
+      		</#if>
+        </ul>
+     </div>
   </div>
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div class="layui-tab" lay-filter="tabs" lay-allowClose="true">
+    <div class="layui-tab layui-tab-brief" lay-filter="tabs" lay-allowClose="true">
         <ul class="layui-tab-title">
         </ul>
-        <div class="layui-tab-content" style="background-color: #F2F2F2;"/>
+        <div class="layui-tab-content"/>
     </div>
   </div>
   
@@ -94,18 +109,29 @@
     </div>
 	<span>
 		<i class="iconfont icon-xiaolian"></i>备案号：京ICP备10000号-1
-		<input id="color" type="color" name="color" > <input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0"/>
+		<input id="color" type="color" name="color" /> 
+		<input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0"/>
 	</span>
   </div>
   <!-- 左下角按钮 -->
 	<div class="fixed-btn">
-		<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部"><i style="font-size: 30px; color: #1E9FFF;" class="layui-icon layui-icon-top"></i></a>
-		<a class="qrcode" href="javascript:;" title="关注我">
-			<i style="font-size: 30px; color: #1E9FFF;" class="layui-icon layui-icon-login-wechat"></i>
-			<div class="wechat">
-				<img alt="微信支付" src="/img/me_wechat.jpg" width="128" height="128">
-			</div>
-		</a>
+		<ul>
+			<li>
+				<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部">
+					<i class="layui-icon layui-icon-top"></i>
+				</a>
+			</li>
+			<li>
+				<a class="qrcode" href="javascript:;" title="关注我">
+					<i class="layui-icon layui-icon-login-wechat"></i>
+					<div class="wechat">
+						<img alt="关注我" src="/img/me_wechat.jpg" width="250" height="250">
+					</div>
+				</a>
+			</li>
+		</ul>
+		
+		
 	</div>
 </div>
 <script type="text/javascript" src="/js/myjs.js"></script>
@@ -115,6 +141,7 @@ layui.use(['element','table'], function(){
 	var element = layui.element;
 	table = layui.table;
 	var tabId="tabs";
+	$(".layui-nav-tree > li:first").addClass("layui-nav-itemed");
 	//监听左侧菜单addTab
 	element.on('nav(nav-tree)',function(data){
 	    var id = data[0].id;
@@ -143,7 +170,7 @@ layui.use(['element','table'], function(){
 	        //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
 	        element.tabAdd(tabId, {
 	            title: title,
-	            content: '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:445px;"></iframe>',
+	            content: '<iframe src="'+url+'" frameborder="1" style="position:absolute; height:100%; width:100%; border:0;"></iframe>',
 	            id: id //规定好的id
 	        })
 	    },
@@ -167,7 +194,7 @@ function safeConfig(){
 	dialog('/sys/user/safeConfig');
 }
 function userInfo(){
-	dialog('/sys/user/userInfo?userId=1');
+	dialog('/sys/user/userInfoEdit');
 }
 function dialog(url){
 	layer.open({

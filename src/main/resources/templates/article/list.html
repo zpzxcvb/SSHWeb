@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>文章列表</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div class="layui-row">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">
+					<div class="layui-inline table-search">
+						<div class="layui-input-inline">
+							<input class="layui-input" id="key" type="search" placeholder="请输入名称">
+						</div>
+						<a id="searchModel" class="layui-btn"><i class="layui-icon layui-icon-search"></i> 查询</a>
+					</div>
+				</div>
+				<div class="layui-card-body">
+					<div id="" class="layui-btn-container">
+						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
+						<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					</div>
+					<table id="table" lay-filter="table_event"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/html" id="rowbarTpl">
+		<a class="layui-btn layui-btn-xs" lay-event="preview">预览</a>
+	</script>
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+	var table,tableIns;
+	function initTable(){
+		var params = {
+			 id: "#table",
+			 url: "/article/pageList",
+			 columns: [
+		    	{type: 'checkbox', fixed: 'left'},
+		      	{type: 'numbers', title: '序号', fixed: 'left'},
+		      	{field: 'title', title: '标题'},
+		      	{field: 'create_time', title: '创建时间', templet: function(d){
+		      		return util.toDateString(d.create_time);
+		      	}},
+		      	{field: 'type', title: '类型', sort: true},
+		      	{fixed: 'right', title:'操作', fixed: 'right', toolbar: '#rowbarTpl'}
+		    ]
+		};
+		tableIns = table_layui(table, params);
+	}
+	layui.use(['table', 'util'], function(){
+		util = layui.util;
+		table = layui.table;
+		//初始化table
+		initTable();
+	    //监听普通按钮事件
+	    $('.layui-btn').click(function(){
+	  	  	var method = this.id;
+	  	  	active[method] ? active[method].call(this, table) : '';
+	    });
+	  	//监听行工具按钮事件
+	    table.on('tool(table_event)', function(obj){
+	    	var method = obj.event;
+	  	  	active[method] ? active[method].call(this, obj.data) : '';
+	    });
+	});
+	var active = {
+		searchModel: function(table){
+			var key = $("#key").val();
+			tableIns.reload({
+				where:{key: key}
+		  	});
+		},
+		addModel: function(table){
+			openDialog(table, 'table', '/article/saveOrUpdate');
+		},
+		deleteModel: function(table){
+			confirm_Delete(table, 'table', "/article/deleteByIds", "id");
+		},
+		editModel: function(table){
+			editDialog(table, 'table', '/article/saveOrUpdate', "id");
+		},
+		preview: function(data){
+			window.open("/article/preview/"+data.id);
+		}
+	}
+	</script>
+</body>
+</html>

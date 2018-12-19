@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>接口配置信息</title>
+	<link rel="stylesheet" href="/js/lib/layui/css/layui.css">
+	
+	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
+	<script src="/js/lib/layui/layui.js"></script>
+</head>
+<body>
+	<div>
+		<form class="layui-form layui-form-pane">
+			<input id="id" type="hidden" name="id" value="${(obj.id)!''}"/>
+			<div class="layui-form-item">
+				<label class="layui-form-label">接口名称</label>
+				<div class="layui-input-inline">
+					<input type="text" name="name" class="layui-input" placeholder="请输入接口名称" value="${(obj.name)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">接口地址</label>
+				<div class="layui-input-inline">
+					<input type="text" name="url" class="layui-input" placeholder="请输入接口地址" value="${(obj.url)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">接口描述</label>
+				<div class="layui-input-inline">
+					<input type="text" name="description" class="layui-input" placeholder="请输入接口描述" value="${(obj.description)!''}"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-inline">
+					<a id="postBtn" class="layui-btn">保存</a>
+					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript" src="/js/myjs.js"></script>
+	<script>
+	
+		layui.use('form', function() {
+			var form = layui.form;
+			var id = "${(obj.id)!''}";
+			var url="/sys/interface/save";
+			if(id != ""){
+				url = "/sys/interface/update";
+			}
+			formSubmit(url);
+		});
+	</script>
+</body>
+</html>

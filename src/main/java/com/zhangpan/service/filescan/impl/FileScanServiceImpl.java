@@ -1,11 +1,11 @@
-package com.zhangpan.service.imp;
+package com.zhangpan.service.filescan.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.zhangpan.service.FileScanService;
+import com.zhangpan.service.filescan.FileScanService;
 import com.zhangpan.util.FileUtil;
 import com.zhangpan.util.StringUtil;
 import com.zhangpan.util.TreeNode;

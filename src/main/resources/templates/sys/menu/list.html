@@ -26,87 +26,89 @@
 				  	</div>
 				</div>
 				<div class="layui-card-body">
-					<table id="table" lay-filter="table_event"> </table>
+					<div id="" class="layui-btn-container">
+						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
+						<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					</div>
+					<table id="table" lay-filter="table_event"></table>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<script type="text/javascript" src="/js/myjs.js"></script>
-	<script type="text/html" id="toolbars">
-		<div id="" class="layui-btn-container">
-			<a lay-event="addModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
-			<a lay-event="deleteModel" class="layui-btn layui-btn-sm layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
-			<a lay-event="editModel" class="layui-btn layui-btn-sm"><i class="layui-icon layui-icon-edit"></i> 编辑</a>
-		</div>
+	<script type="text/html" id="statusTpl">
+		{{#	if(d.pid != 1){	}}
+				<input type='checkbox' name='status' lay-skin='switch' lay-text='启用|禁用' lay-filter='status' {{ d.status == 1 ? 'checked' : '' }} value='{{d.id}}'>
+		{{#	}	}}
 	</script>
 	<script>
-	var table,tableIns;
-	function initTable(table){
-		var params = {
-			 id: "#table",
-			 url: "/sys/menu/pageList",
-			 toolbar: '#toolbars',
-			 columns: [
-		    	{type: 'checkbox', fixed: 'left'},
-		      	{type: 'numbers', title: '序号', fixed: 'left'},
-		      	{field: 'menuName', title: '菜单名称'},
-		      	{field: 'url', title: '链接地址'},
-		      	{field: 'pid', title: '父级'},
-		      	{field: 'description', title: '描述'},
-		      	{field: 'type', title: '状态', sort: true, templet: function(d){
-		        	return d.type == 1 ? "显示" : "<span style='color: red;'>隐藏</span>";
-		      	}}
-		    ]
-		};
-		tableIns = table_layui(table, params);
-	}
-	layui.use('table', function(){
-		table = layui.table;
-		//初始化tree(非异步)
-		initTree({
-			id: "menuTree",
-			async: false,
-			check: false,
-			url: "/sys/menu/menuList"
-		});
-		//初始化table
-		initTable(table);
-		//监听工具条事件
-		  table.on('toolbar(table_event)', function(obj){
-		      var method = obj.event;
-		      active[method] ? active[method].call(this, table) : '';
-		  });
-		  //监听普通按钮事件
-		  $('.table-search .layui-btn').click(function(){
-		  	  var method = this.id;
-		  	  active[method] ? active[method].call(this, table) : '';
-		  });
-	});
-	var active = {
-		searchModel: function(table){
-			var key = $("#key").val();
-			tableIns.reload({
-				where:{key: key}
-		  	});
-		},
-		addModel: function(table){
-			openDialog(table, 'table', '/sys/menu/saveOrUpdate');
-		},
-		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/sys/menu/deleteByIds", "id");
-		},
-		editModel: function(table){
-			editDialog(table, 'table', '/sys/menu/saveOrUpdate', "id");
+		var table,tableIns;
+		function initTable(table){
+			var params = {
+				 id: "#table",
+				 url: "/sys/menu/pageList",
+				 columns: [
+			    	{type: 'checkbox', fixed: 'left'},
+			      	{type: 'numbers', title: '序号', fixed: 'left'},
+			      	{field: 'menuName', title: '菜单名称'},
+			      	{field: 'orderNo', title: '排序'},
+			      	{field: 'parentName', title: '父级'},
+			      	{field: 'url', title: '链接地址'},
+			      	{field: 'description', title: '描述'},
+			      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'}
+			    ]
+			};
+			tableIns = table_layui(table, params);
 		}
-	}
-	function zTreeClick(event, treeId, treeNode) {
-		tableIns.reload({
-			where:{
-				pid: treeNode.id
+
+		layui.use('table', function() {
+			form = layui.form;
+			table = layui.table;
+			//初始化tree(非异步)
+			initTree({
+				id : "menuTree",
+				async : false,
+				check : false,
+				url : "/sys/menu/menuList"
+			});
+			//初始化table
+			initTable(table);
+			//监听普通按钮事件
+			$('.layui-btn').click(function() {
+				var method = this.id;
+				active[method] ? active[method].call(this, table) : '';
+			});
+			//监听指定开关
+			switchStatusForUpdate(form, 'status', "/sys/menu/update", "id");
+		});
+		var active = {
+			searchModel : function(table) {
+				var key = $("#key").val();
+				tableIns.reload({
+					where : {
+						key : key
+					}
+				});
+			},
+			addModel : function(table) {
+				openDialog(table, 'table', '/sys/menu/saveOrUpdate');
+			},
+			deleteModel : function(table) {
+				confirm_Delete(table, 'table', "/sys/menu/deleteByIds", "id");
+			},
+			editModel : function(table) {
+				editDialog(table, 'table', '/sys/menu/saveOrUpdate', "id");
 			}
-	  	});
-	}
+		}
+		function zTreeClick(event, treeId, treeNode) {
+			tableIns.reload({
+				where : {
+					pid : treeNode.id
+				}
+			});
+		}
 	</script>
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.zhangpan.model;
 import java.io.Serializable;
 
 /**
- * 系统角色权限表表 "sys_role"
+ * 系统角色权限关系表 "sys_role_permission"
  * @author zhangpan
  * @date 2018年9月17日
  */

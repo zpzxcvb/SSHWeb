@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zhangpan.model.SysMenu;
 import com.zhangpan.model.SysUser;
+import com.zhangpan.model.SysUserInfo;
 import com.zhangpan.service.sys.menu.SysMenuService;
 import com.zhangpan.service.sys.user.SysUserService;
+import com.zhangpan.service.sys.userInfo.SysUserInfoService;
 
 @Controller
 @RequestMapping
@@ -24,6 +26,9 @@ public class LoginController extends BaseController {
 	
 	@Autowired
 	private SysUserService userService;
+	
+	@Autowired
+    private SysUserInfoService userInfoService;
 	
 	@Autowired
     private SysMenuService sysMenuService;
@@ -54,6 +59,12 @@ public class LoginController extends BaseController {
             SysUser user = (SysUser) subject.getPrincipal();
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("userName", user.getUserName());
+            
+            paramMap.put("userId", user.getUserId());
+            SysUserInfo userInfo = userInfoService.findByParams(paramMap);
+            if(userInfo != null) {
+                session.setAttribute("nickName", userInfo.getNickName());
+            }
             
             List<SysMenu> menuList = sysMenuService.listAllMenu(1);
             session.setAttribute("menuList", menuList);
