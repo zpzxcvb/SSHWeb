@@ -38,12 +38,7 @@
 					<input type="text" name="description" class="layui-input" placeholder="请输入描述信息" value="${(item.description)!''}"/>
 				</div>
 			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-inline">
-					<a id="postBtn" class="layui-btn">保存</a>
-					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
-				</div>
-			</div>
+			<button class="layui-btn layui-hide" lay-submit lay-filter="form-submit">提交</button>
 		</form>
 	</div>
 
@@ -51,17 +46,15 @@
 	<script>
 		layui.use(['form'], function() {
 			var form = layui.form;
-		});
-
-		$(function() {
 			var id = "${(item.id)!''}";
 			var url="/sys/dict/item/save";
 			if(id != ""){
 				url = "/sys/dict/item/update";
 				$("#dictCode").attr("disabled",true).addClass("layui-disabled");
 			}
-			formSubmit(url);
-		})
+			//表单提交
+			formSubmit(form, url, 'form-submit');
+		});
 	</script>
 </body>
 </html>

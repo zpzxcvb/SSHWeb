@@ -29,18 +29,12 @@
 					<input type="text" name="description" class="layui-input" placeholder="请输入接口描述" value="${(obj.description)!''}"/>
 				</div>
 			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-inline">
-					<a id="postBtn" class="layui-btn">保存</a>
-					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
-				</div>
-			</div>
+			<button class="layui-btn layui-hide" lay-submit lay-filter="form-submit">提交</button>
 		</form>
 	</div>
 
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
-	
 		layui.use('form', function() {
 			var form = layui.form;
 			var id = "${(obj.id)!''}";
@@ -48,7 +42,8 @@
 			if(id != ""){
 				url = "/sys/interface/update";
 			}
-			formSubmit(url);
+			//表单提交
+			formSubmit(form, url, 'form-submit');
 		});
 	</script>
 </body>

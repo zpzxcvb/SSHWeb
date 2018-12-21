@@ -28,25 +28,20 @@
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">文章内容</label>
 				<div class="layui-input-block">
-					<textarea class="layui-textarea" id="content" name="content" placeholder="请输入内容">${(obj.content)!''}</textarea>
+					<textarea id="content" name="content" style="display: none;">${(obj.content)!''}</textarea>
 				</div>
 			</div>
 			<div class="layui-form-item">
 				<label class="layui-form-label">附件</label>
 				<div class="layui-input-inline">
 					<a id="file" class="layui-btn">
-						<i class="layui-icon layui-icon-upload"></i> 附件
+						<i class="layui-icon layui-icon-upload"></i>附件
 					</a>
-					<span id='fileName'></span>
+					<span id='fileName'>${(obj.fileUrl)!''}</span>
 					<input type="hidden" id="fileUrl" name="fileUrl" value="${(obj.fileUrl)!''}">
 				</div>
 			</div>
-			<div class="layui-form-item">
-				<div class="layui-input-inline">
-					<a id="postBtn" class="layui-btn">保存</a>
-					<a class="layui-btn layui-btn-primary" onclick="closeDialog()">取消</a>
-				</div>
-			</div>
+			<button class="layui-btn layui-hide" lay-submit lay-filter="form-submit">提交</button>
 		</form>
 	</div>
 
@@ -55,9 +50,18 @@
 	$(function(){
 		queryOptions("type", "/article/articleTypes", "${(obj.type)!''}");
 	})
-		layui.use(['form', 'upload'], function() {
+		layui.use(['form', 'upload', 'layedit'], function() {
 			var form = layui.form;
 			upload = layui.upload;
+			layedit = layui.layedit;
+			//富文本编辑器
+			var index = layedit.build('content', {
+				height: 180,
+				uploadImage: {
+				    url: '/file/upLoad'
+				}
+			});
+			//文件上传
 			fileUpload(upload, 'file');//, 'txt|jpg|pdf'
 // 			form.render('select');
 			var id = "${(obj.id)!''}";
@@ -65,7 +69,33 @@
 			if(id != ""){
 				url = "/article/update";
 			}
-			formSubmit(url);
+			//表单提交
+			form.on('submit(form-submit)', function(data){
+				layedit.sync(index);
+				$.ajax({
+					url: url,
+					type: "post",
+					data: data.field,
+					success: function(data){
+						if(data.code == "ok"){
+							parent.layer.msg(data.msg,{icon:1});
+							if(parent.tableIns){
+								parent.tableIns.reload();
+							}
+						}else{
+							parent.layer.msg(data.msg,{icon:0});
+						}
+						//关闭页面
+						closeDialog();
+					},
+					error: function(){
+						parent.layer.msg('服务器异常',{icon:5});
+						//关闭页面
+						closeDialog();
+					}
+				})
+				return false;
+			});
 		});
 	</script>
 </body>

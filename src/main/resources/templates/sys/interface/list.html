@@ -20,22 +20,24 @@
 					</div>
 				</div>
 				<div class="layui-card-body">
-					<div id="" class="layui-btn-container">
+					<div class="">
 						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
 						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
-						<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
 					</div>
 					<table id="table" lay-filter="table_event"></table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script type="text/html" id="statusTpl">
 		<input type='checkbox' name='status' lay-skin='switch' lay-text='启用|禁用' lay-filter='status' {{ d.status == 1 ? 'checked' : '' }} value='{{d.id}}'>
 	</script>
+	<script type="text/html" id="rowbarTpl">
+		<a title="编辑" class="layui-btn layui-btn-xs" lay-event="editModel"><i class="layui-icon layui-icon-edit">编辑</i></a>
+	</script>
+	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
-	var table,tableIns;
+	var table,tableIns,tableId='table';
 	function initTable(table){
 		var params = {
 			 id: "#table",
@@ -49,7 +51,8 @@
 		      	{field: 'createTime', title: '创建时间', templet: function(d){
 		      		return util.toDateString(d.createTime);
 		      	}},
-		      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'}
+		      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'},
+		      	{fixed: 'right', title:'操作', fixed: 'right', toolbar: '#rowbarTpl'}
 		    ]
 		};
 		tableIns = table_layui(table, params);
@@ -60,11 +63,8 @@
 		table = layui.table;
 		//初始化table
 		initTable(table);
-		//监听普通按钮事件
-	    $('.layui-btn').click(function(){
-	  	  	var method = this.id;
-	  	  	active[method] ? active[method].call(this, table) : '';
-	    });
+		//监听按钮事件
+	    initFunction();
 		//监听指定开关
 		switchStatusForUpdate(form, 'status', "/sys/interface/update", "id");
 	});
@@ -75,14 +75,14 @@
 				where:{key: key}
 		  	});
 		},
-		addModel: function(table){
-			openDialog(table, 'table', '/sys/interface/saveOrUpdate');
+		addModel: function(){
+			openDialog('/sys/interface/saveOrUpdate');
 		},
-		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/sys/interface/deleteByIds", "id");
+		deleteModel: function(){
+			confirm_Delete("/sys/interface/deleteByIds", "id");
 		},
-		editModel: function(table){
-			editDialog(table, 'table', '/sys/interface/saveOrUpdate', "id");
+		editModel: function(data){
+			openDialog('/sys/interface/saveOrUpdate?id='+data.id);
 		}
 	}
 	</script>

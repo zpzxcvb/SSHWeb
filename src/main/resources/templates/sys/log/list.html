@@ -31,7 +31,7 @@
 	</div>
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
-	var table,tableIns;
+	var table,tableIns,tableId='table';
 	function initTable(table){
 		var params = {
 			 id: "#table",
@@ -50,18 +50,32 @@
 		  table = layui.table;
 		  //初始化table
 		  initTable(table);
+		  //监听按钮事件
+		  initFunction();
 		  var laydate = layui.laydate;
 		  laydate.render({
 			  elem : '#createTime'
 		  });
-		  //监听普通按钮事件
-		  $('#searchModel').click(function(){
-			  var createTime = $("#createTime").val();
-				tableIns.reload({
-					where:{createTime: createTime}
-			  	});
-		  });
 	});
+	var active = {
+		searchModel : function(table) {
+			var key = $("#key").val();
+			tableIns.reload({
+				where : {
+					key : key
+				}
+			});
+		},
+		addModel : function() {
+			openDialog('/sys/menu/saveOrUpdate');
+		},
+		deleteModel : function() {
+			confirm_Delete("/sys/menu/deleteByIds", "id");
+		},
+		editModel : function(data) {
+			openDialog('/sys/menu/saveOrUpdate?id='+data.id);
+		}
+	}
 	</script>
 </body>
 </html>

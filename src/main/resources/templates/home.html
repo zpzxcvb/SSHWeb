@@ -138,7 +138,7 @@
 			var laydate = layui.laydate;
 			var upload = layui.upload;
 			var carousel = layui.carousel;
-			  //建造实例
+			 /*  //建造实例
 			  carousel.render({
 			    elem: '#test1',
 			    width: '100%', //设置容器宽度
@@ -152,7 +152,7 @@
 				    trigger: 'hover',
 //	 			    arrow: 'always', //始终显示箭头
 				    anim: 'fade' //切换动画方式
-				  });
+				  }); */
 			var uploadInst = upload.render({
 			    elem: '#uploadBtn' //绑定元素
 			    ,url: '/file/upLoad' //上传接口
@@ -166,12 +166,12 @@
 			    }
 			  });
 			//构建一个默认的编辑器
-			var index = layedit.build('LAY_demo1',{
+			/* var index = layedit.build('LAY_demo1',{
 				height: 180,
 				uploadImage: {
 				    url: '/file/upLoad'
 				}
-			});
+			}); */
 			
 			laydate.render({
 				elem : '#createDate',

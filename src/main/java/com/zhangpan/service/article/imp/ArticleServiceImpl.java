@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int deleteByIds(Integer[] ids) {
-        return 0;
+        return articleDao.deleteByIds(ids);
     }
 
     @Override

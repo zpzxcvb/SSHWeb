@@ -14,6 +14,15 @@
 		.layui-tab-title li:first-child .layui-tab-close {
 			display: none;
 		}
+		.layui-tab-item{
+			position:absolute;
+			top: 60px;
+ 			right: 0;
+  			bottom: 0;
+ 			left: 0;
+ 			background-color: #f2f2f2;
+ 			padding: 15px;
+		}
 	</style>
 	
 	<script type="text/javascript">
@@ -25,115 +34,115 @@
 	</script>
 </head>
 <body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <div class="layui-logo">后台</div>
-    <ul class="layui-nav layui-layout-right">
-    	<li class="layui-nav-item">
-    		<a href="javascript:;">
-	        	<i class="layui-icon layui-icon-notice" title="通知"><span class="layui-badge">99</span></i>
-	        </a>
-    	</li>
-    	<li class="layui-nav-item">
-    		<a href="javascript:;">
-	        	<span id="currentTime"/>
-	        </a>
-    	</li>
-      	<li class="layui-nav-item">
-	        <a href="javascript:;">
-	        	您好,<span id="username">${nickName!userName}</span>
-	          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-	        </a>
-	        <ul class="layui-nav-child">
-	          <li><a onclick="userInfo()" href="javascript:;">基本资料</a></dd>
-	          <li><a onclick="safeConfig()" href="javascript:;">安全设置</a></dd>
+	<div class="layui-layout layui-layout-admin">
+	  <!-- 页面头部 -->
+	  <div class="layui-header">
+	    <div class="layui-logo">后台</div>
+	    <ul class="layui-nav layui-layout-right">
+	    	<li class="layui-nav-item">
+	    		<a href="javascript:;">
+		        	<i class="layui-icon layui-icon-notice" title="通知"><span class="layui-badge">99</span></i>
+		        </a>
+	    	</li>
+	    	<li class="layui-nav-item">
+	    		<a href="javascript:;">
+		        	<span id="currentTime"/>
+		        </a>
+	    	</li>
+	      	<li class="layui-nav-item">
+		        <a href="javascript:;">
+		        	您好,<span id="username">${nickName!userName}</span>
+		          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+		        </a>
+		        <ul class="layui-nav-child">
+		          <li><a onclick="userInfo()" href="javascript:;">基本资料</a></dd>
+		          <li><a onclick="safeConfig()" href="javascript:;">安全设置</a></dd>
+		        </ul>
+	      	</li>
+	      	<li class="layui-nav-item"><a href="/logout">注销</a></li>
+	    </ul>
+	  </div>
+	  <!-- 侧边菜单 -->
+	  <div class="layui-side layui-bg-black">
+	     <div class="layui-side-scroll">
+	        <!-- 左侧导航区域 -->
+	        <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
+	        	<li class="layui-nav-item layui-this">
+	        		<a id="0" href="javascript:;">
+					    <i class='layui-icon layui-icon-home'></i>
+						<span>首页</span>
+					</a>
+	        	</li>
+	      		<#if (menuList?? && menuList?size > 0)>
+	      			<#list menuList as menu>
+						<li class="layui-nav-item">
+							<#macro treeMenu menus>
+								<#if (menus?? && menus?size > 0)>
+									<a href="javascript:;">${menus.menuName}</a>
+									<ul class="layui-nav-child">
+										<#list menus.childList as childMenu>
+											<li>
+												<#if (childMenu.url != "")>
+													<a id="${childMenu.id}" href="javascript:;" url="${childMenu.url}">${childMenu.menuName}</a>
+												<#else>
+													<@treeMenu menus = childMenu/>
+												</#if>
+											</li>
+										</#list>
+									</ul>
+								</#if>
+							</#macro>
+							<@treeMenu menus = menu/>
+						</li>
+					</#list>
+	      		</#if>
 	        </ul>
-      	</li>
-      	<li class="layui-nav-item"><a href="/logout">注销</a></li>
-    </ul>
-  </div>
-  
-  <div class="layui-side layui-bg-black">
-     <div class="layui-side-scroll">
-        <!-- 左侧导航区域 -->
-        <ul class="layui-nav layui-nav-tree" lay-filter="nav-tree">
-        	<li class="layui-nav-item layui-this">
-        		<a id="0" href="javascript:;">
-				    <i class='layui-icon layui-icon-home'></i>
-					<span>首页</span>
-				</a>
-        	</li>
-      		<#if (menuList?? && menuList?size > 0)>
-      			<#list menuList as menu>
-					<li class="layui-nav-item">
-						<#macro treeMenu menus>
-							<#if (menus?? && menus?size > 0)>
-								<a href="javascript:;">${menus.menuName}</a>
-								<ul class="layui-nav-child">
-									<#list menus.childList as childMenu>
-										<li>
-											<#if (childMenu.url != "")>
-												<a id="${childMenu.id}" href="javascript:;" url="${childMenu.url}">${childMenu.menuName}</a>
-											<#else>
-												<@treeMenu menus = childMenu/>
-											</#if>
-										</li>
-									</#list>
-								</ul>
-							</#if>
-						</#macro>
-						<@treeMenu menus = menu/>
-					</li>
-				</#list>
-      		</#if>
-        </ul>
-     </div>
-  </div>
-  
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div class="layui-tab layui-tab-brief" lay-filter="tabs" lay-allowClose="true">
-        <ul class="layui-tab-title">
-        </ul>
-        <div class="layui-tab-content"/>
-    </div>
-  </div>
-  
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    <div class="footer-bar">
-    	Copyright ©2018 <a href="#" target="_blank">网站</a>由 zp 提供.All Rights Reserved
-    	<a href="https://www.baidu.com/" target="_blank">百度</a>
-    	<a href="https://github.com/zpzxcvb/webDemo" target="_blank">Git</a>
-    	<a href="mailto:527517062@qq.com">Email</a>
-    </div>
-	<span>
-		<i class="iconfont icon-xiaolian"></i>备案号：京ICP备10000号-1
-		<input id="color" type="color" name="color" /> 
-		<input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0"/>
-	</span>
-  </div>
-  <!-- 左下角按钮 -->
-	<div class="fixed-btn">
-		<ul>
-			<li>
-				<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部">
-					<i class="layui-icon layui-icon-top"></i>
-				</a>
-			</li>
-			<li>
-				<a class="qrcode" href="javascript:;" title="关注我">
-					<i class="layui-icon layui-icon-login-wechat"></i>
-					<div class="wechat">
-						<img alt="关注我" src="/img/me_wechat.jpg" width="250" height="250">
-					</div>
-				</a>
-			</li>
-		</ul>
-		
-		
+	     </div>
+	  </div>
+	  
+	  <!-- 内容主体区域 -->
+	  <div class="layui-body">
+	    <div class="layui-tab layui-tab-brief" lay-filter="tabs" lay-allowClose="true">
+	    	<!-- 页面标签 -->
+		  	<ul class="layui-tab-title">
+		  	</ul>
+	        <div class="layui-tab-content"></div>
+	    </div>
+	  </div>
+	  
+	  <!-- 页面头部 -->
+	  <div class="layui-footer">
+	    <div class="footer-bar">
+	    	Copyright ©2018 <a href="#" target="_blank">网站</a>由 zp 提供.All Rights Reserved
+	    	<a href="https://www.baidu.com/" target="_blank">百度</a>
+	    	<a href="https://github.com/zpzxcvb/webDemo" target="_blank">Git</a>
+	    	<a href="mailto:527517062@qq.com">Email</a>
+	    </div>
+		<span>
+			<i class="iconfont icon-xiaolian"></i>备案号：京ICP备10000号-1
+			<input id="color" type="color" name="color" /> 
+			<input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0;"/>
+		</span>
+	  </div>
+	    <!-- 左下角按钮 -->
+		<div class="fixed-btn">
+			<ul>
+				<li>
+					<a class="go-top" href="javascript:window.scroll(0,0);" title="返回顶部">
+						<i class="layui-icon layui-icon-top"></i>
+					</a>
+				</li>
+				<li>
+					<a class="qrcode" href="javascript:;" title="关注我">
+						<i class="layui-icon layui-icon-login-wechat"></i>
+						<div class="wechat">
+							<img alt="关注我" src="/img/me_wechat.jpg" width="250" height="250">
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
 	</div>
-</div>
 <script type="text/javascript" src="/js/myjs.js"></script>
 <script>
 var table;
@@ -141,7 +150,6 @@ layui.use(['element','table'], function(){
 	var element = layui.element;
 	table = layui.table;
 	var tabId="tabs";
-	$(".layui-nav-tree > li:first").addClass("layui-nav-itemed");
 	//监听左侧菜单addTab
 	element.on('nav(nav-tree)',function(data){
 	    var id = data[0].id;
@@ -170,7 +178,7 @@ layui.use(['element','table'], function(){
 	        //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
 	        element.tabAdd(tabId, {
 	            title: title,
-	            content: '<iframe src="'+url+'" frameborder="1" style="position:absolute; height:100%; width:100%; border:0;"></iframe>',
+	            content: '<iframe src="'+url+'" style="border:0;width:100%;height:100%;"></iframe>',
 	            id: id //规定好的id
 	        })
 	    },
@@ -191,17 +199,10 @@ layui.use(['element','table'], function(){
 	active.tabChange("0"); //切换到指定id的Tab项
 });
 function safeConfig(){
-	dialog('/sys/user/safeConfig');
+	openDialog('/sys/user/safeConfig');
 }
 function userInfo(){
-	dialog('/sys/user/userInfoEdit');
-}
-function dialog(url){
-	layer.open({
-		type: 2,
-	  	area: ['400px', '400px'], //宽高
-	  	content: url
-	});
+	openDialog('/sys/user/userInfoEdit');
 }
 </script>
 </body>

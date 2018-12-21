@@ -24,6 +24,8 @@ public class Article implements Serializable{
     private String fileUrl;
     
     private Date createTime;
+    
+    private Integer userId;
 
     public Integer getId() {
         return id;
@@ -71,6 +73,14 @@ public class Article implements Serializable{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
     
 }

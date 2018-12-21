@@ -54,10 +54,10 @@ public class FileController extends BaseController {
 	@ResponseBody
     public Object upLoad(MultipartFile file) throws IllegalStateException, IOException {
 	    if(file.isEmpty()){
-            return false;
+	        return getResults("-1", "上传文件为空");
         }
-	    String fileType = file.getContentType();   //图片文件类型
-	    long fileSize = file.getSize();   //图片文件大小
+	    String fileType = file.getContentType();   //文件类型
+	    long fileSize = file.getSize();   //文件大小
         String fileName = file.getOriginalFilename();  //图片名字
         
 	    File dir = new File(uploadPath);
@@ -70,10 +70,10 @@ public class FileController extends BaseController {
             file.transferTo(dest);
             //返回上传文件路径
             String downLoadUrl = dest.getAbsolutePath();
-            map.put("url", downLoadUrl);
-            return getResults(Constant.OK, "上传成功", map);
+            map.put("src", downLoadUrl);
+            return getResults("0", "上传成功", map);
         } catch (Exception e) {
-            return getResults(Constant.ERROR, "上传失败");
+            return getResults("-1", "上传失败");
         }
     }
 	

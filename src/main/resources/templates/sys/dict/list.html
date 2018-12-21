@@ -26,16 +26,17 @@
 			  	</div>
 			</div>
 			<div class="layui-card-body">
-				<div id="" class="layui-btn-container">
+				<div class="">
 					<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i>添加</a>
 					<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>批量删除</a>
-					<a id="editModel" class="layui-btn"><i class="layui-icon layui-icon-edit"></i>编辑</a>
 				</div>
 				<table id="table" lay-filter="table_event"></table>
 			</div>
 		</div>
 	</div>
-	
+	<script type="text/html" id="rowbarTpl">
+		<a title="编辑" class="layui-btn layui-btn-xs" lay-event="editModel"><i class="layui-icon layui-icon-edit"></i></a>
+	</script>
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
 	var table,tableIns,dictType,typeId;
@@ -49,7 +50,8 @@
 		      	{field: 'dict_name', title: '字典名称'},
 		      	{field: 'dict_code', title: '字典编码'},
 		      	{field: 'type', title: '字典类型'},
-		      	{field: 'description', title: '描述'}
+		      	{field: 'description', title: '描述'},
+		      	{fixed: 'right', title:'操作', fixed: 'right', toolbar: '#rowbarTpl'}
 		    ]
 		};
 		tableIns = table_layui(table, params);
@@ -68,17 +70,14 @@
 		initDictType();
 		//初始化table
 		initTable(table);
-		//监听普通按钮事件
-		  $('.layui-btn').click(function(){
-		  	  var method = this.id;
-		  	  active[method] ? active[method].call(this, table) : '';
-		  });
+		//监听按钮事件
+		initFunction();
 	});
 	var active = {
-		addType: function(table){
-			openDialog(table, 'table', '/sys/dict/type/goAddDictType');
+		addType: function(){
+			openDialog('/sys/dict/type/goAddDictType');
 		},
-		deleteType: function(table){
+		deleteType: function(){
 			layer.confirm('您确定要删除操作吗?', {icon: 3}, function(index){
 				$.ajax({
 					url: "/sys/dict/type/deleteById",
@@ -96,24 +95,24 @@
 				});
 			});
 		},
-		searchModel: function(table){
+		searchModel: function(){
 			var key = $("#key").val();
 			tableIns.reload({
 				where:{key: key}
 		  	});
 		},
-		addModel: function(table){
+		addModel: function(){
 			if(!dictType){
 				layer.msg("请选择左侧字典类型",{icon:0});
 				return false;
 			}
 			openDialog(table, 'table', '/sys/dict/item/saveOrUpdate?dictType='+dictType);
 		},
-		deleteModel: function(table){
-			confirm_Delete(table, 'table', "/sys/dict/item/deleteByIds", "id");
+		deleteModel: function(){
+			confirm_Delete("/sys/dict/item/deleteByIds", "id");
 		},
-		editModel: function(table){
-			editDialog(table, 'table', '/sys/dict/item/saveOrUpdate', "id");
+		editModel: function(data){
+			openDialog('/sys/dict/item/saveOrUpdate?id='+data.id);
 		}
 	}
 	function zTreeClick(event, treeId, treeNode) {

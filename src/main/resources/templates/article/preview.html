@@ -6,6 +6,18 @@
 
 <script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/js/lib/layui/layui.js"></script>
+<style type="text/css">
+	.content{
+		font-size: 18px;
+		line-height: 36px;
+	}
+	.content p{
+		margin-bottom: 15px;
+	}
+	.file{
+		text-align: center;
+	}
+</style>
 </head>
 <body>
 	<div class="layui-row">
@@ -20,8 +32,12 @@
 					</div>
 				</div>
 				<div class="layui-card-body">
-					<div>
+					<div class="content">
 						<span>${obj.content}</span>
+					</div>
+					<div class="file">
+						<strong>附件：</strong>
+						<a href="${obj.file_url}">${obj.file_url?substring(obj.file_url?lastIndexOf('\\')+1) }</a>
 					</div>
 				</div>
 			</div>

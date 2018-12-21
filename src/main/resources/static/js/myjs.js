@@ -101,7 +101,7 @@ function table_layui(table, params){
 		width: params.width,
 		method: 'post',
 		where: params.param,
-		cellMinWidth: 80,
+		cellMinWidth: 120,
 		even: false,//条纹
 	    page: {//分页
 	    	layout:['prev', 'page', 'next', 'limit', 'skip', 'count', 'refresh']
@@ -121,7 +121,7 @@ function table_layui(table, params){
 	});
 }
 //layer 弹出层
-function openDialog(table, tableId, url, width, height){
+function openDialog(url, width, height){
 	if(!width){
 		width="500px";
 		height="400px";
@@ -129,7 +129,16 @@ function openDialog(table, tableId, url, width, height){
 	layer.open({
 		type: 2,
 	  	area: [width, height], //宽高
-	  	content: url
+	  	content: url,
+	  	btn: ['保存', '取消'],
+//	  	btnAlign: 'c',
+	  	yes:function(index, layero){
+//	  		var iframeWin = window[layero.find('iframe')[0]['name']];
+//	  		iframeWin.mm();//调用子页面方法
+	  		var body = layer.getChildFrame('body', index);
+	  		body.find('form').find('[lay-submit]').click();
+//	  		layer.close(index);
+	  	}
 	});
 }
 //关闭子页面
@@ -139,25 +148,10 @@ function closeDialog(){
 }
 
 /**
- * layer 弹出编辑层
- * id 表示数据行字段
+ * 批量删除询问框
+ * id 表示数据行字段id名
  * */
-function editDialog(table, tableId, url, id){
-	var checkStatus = table.checkStatus(tableId);
-	if(checkStatus.data.length == 1){
-		var id = checkStatus.data[0][id];
-		url = url + "?id="+id
-		openDialog(table, tableId, url);
-	}else{
-		layer.msg("请选择一行记录",{icon:0});
-	}
-}
-
-/**
- * 删除询问框
- * id 表示数据行字段
- * */
-function confirm_Delete(table, tableId, url, id){
+function confirm_Delete(url, id){
 	var checkStatus = table.checkStatus(tableId);
 	if(checkStatus.data.length > 0){
 		var ids=[];
@@ -187,25 +181,32 @@ function confirm_Delete(table, tableId, url, id){
 /**
  * 通用表单提交
  * */
-function formSubmit(url){
-	$("#postBtn").click(function(){
-		var param = $("form").serialize();
+function formSubmit(form,url,submit_lay_filter, layedit){
+	form.on('submit('+submit_lay_filter+')', function(data){
 		$.ajax({
 			url: url,
 			type: "post",
-			data: param,
+			data: data.field,
 			success: function(data){
 				if(data.code == "ok"){
 					parent.layer.msg(data.msg,{icon:1});
-					parent.tableIns.reload();
+					if(parent.tableIns){
+						parent.tableIns.reload();
+					}
 				}else{
 					parent.layer.msg(data.msg,{icon:0});
 				}
 				//关闭页面
 				closeDialog();
+			},
+			error: function(){
+				parent.layer.msg('服务器异常',{icon:5});
+				//关闭页面
+				closeDialog();
 			}
 		})
-	})
+		return false;
+	});
 }
 
 /**
@@ -275,9 +276,9 @@ function fileUpload(upload, domId, fileType){
 	    },
 	    done: function(res, index, upload){
 	    	layer.close(loadIndex);
-		    if(res.code == 'ok'){
-		    	$("#fileName").text(res.data.url);
-		    	$("#fileUrl").val(res.data.url);
+		    if(res.code == '0'){
+		    	$("#fileName").text(res.data.src);
+		    	$("#fileUrl").val(res.data.src);
 		    	layer.msg(res.msg,{icon:1});
 		    }else{
 		    	layer.msg(res.msg,{icon:0});
@@ -287,5 +288,20 @@ function fileUpload(upload, domId, fileType){
 	    	layer.close(loadIndex);
 	    	layer.msg('服务器异常',{icon:5});
 	    }
-	  });
+	 });
+}
+/**
+ * 初始化按钮调用事件
+ * */
+function initFunction(){
+	//监听普通按钮事件
+    $('.layui-btn').click(function(){
+  	  	var method = this.id;
+  	  	active[method] ? active[method].call(this) : '';
+    });
+  	//监听行工具按钮事件
+    table.on('tool(table_event)', function(obj){
+    	var method = obj.event;
+  	  	active[method] ? active[method].call(this, obj.data) : '';
+    });
 }

@@ -36,7 +36,8 @@ pagehelper:
   params: count
   
 logging:
-  path: logs
+#  path: logs
   level: 
     com.zhangpan.dao: debug
     org.mybatis: debug
+  

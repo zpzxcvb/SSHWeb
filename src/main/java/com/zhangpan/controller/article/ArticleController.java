@@ -63,7 +63,9 @@ public class ArticleController extends BaseController {
 	@RequestMapping("/save")
     @ResponseBody
     public Object save(Article model){
+	    Integer userId = (Integer) session.getAttribute("userId");
         model.setCreateTime(new Date());
+        model.setUserId(userId);
         int count = articleService.save(model);
         return getResponseState(count);
     }
@@ -71,6 +73,8 @@ public class ArticleController extends BaseController {
     @RequestMapping("/update")
     @ResponseBody
     public Object update(Article model){
+        Integer userId = (Integer) session.getAttribute("userId");
+        model.setUserId(userId);
         int count = articleService.update(model);
         return getResponseState(count);
     }
@@ -82,6 +86,12 @@ public class ArticleController extends BaseController {
         return getResponseState(count);
     }
     
+    /**
+     * 预览文章
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/preview/{id}")
     public String preview(@PathVariable("id")Integer id, Model model){
         Object obj = articleService.preview(id);
