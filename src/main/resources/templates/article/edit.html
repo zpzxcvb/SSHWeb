@@ -47,9 +47,9 @@
 
 	<script type="text/javascript" src="/js/myjs.js"></script>
 	<script>
-	$(function(){
-		queryOptions("type", "/article/articleTypes", "${(obj.type)!''}");
-	})
+		$(function(){
+			queryOptions("type", "/article/articleTypes", "${(obj.type)!''}");
+		})
 		layui.use(['form', 'upload', 'layedit'], function() {
 			var form = layui.form;
 			upload = layui.upload;
@@ -71,7 +71,10 @@
 			}
 			//表单提交
 			form.on('submit(form-submit)', function(data){
-				layedit.sync(index);
+				var content = layedit.getContent(index);
+				alert(content);
+				data.field.content = content;
+// 				layedit.sync(index);
 				$.ajax({
 					url: url,
 					type: "post",

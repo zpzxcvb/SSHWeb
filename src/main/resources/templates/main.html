@@ -111,7 +111,7 @@
 	  </div>
 	  
 	  <!-- 页面头部 -->
-	  <div class="layui-footer">
+	  <!-- <div class="layui-footer">
 	    <div class="footer-bar">
 	    	Copyright ©2018 <a href="#" target="_blank">网站</a>由 zp 提供.All Rights Reserved
 	    	<a href="https://www.baidu.com/" target="_blank">百度</a>
@@ -123,7 +123,7 @@
 			<input id="color" type="color" name="color" /> 
 			<input id="choose_color" type="text" value="#000000" readonly="readonly" style="border: 0;"/>
 		</span>
-	  </div>
+	  </div> -->
 	    <!-- 左下角按钮 -->
 		<div class="fixed-btn">
 			<ul>
@@ -202,7 +202,8 @@ function safeConfig(){
 	openDialog('/sys/user/safeConfig');
 }
 function userInfo(){
-	openDialog('/sys/user/userInfoEdit');
+	var userId='${userId}';
+	openDialog('/sys/user/userInfoEdit?userId='+userId);
 }
 </script>
 </body>

@@ -37,7 +37,7 @@
 	</update>
 	
 	<!-- 根据参数查询用户信息 -->
-	<select id="findByParams" parameterType="int" resultType="SysUserInfo">
+	<select id="findByParams" parameterType="map" resultType="SysUserInfo">
 		select * from sys_user_info
 		where user_id = #{userId}
 	</select>

@@ -106,7 +106,7 @@
 				layer.msg("请选择左侧字典类型",{icon:0});
 				return false;
 			}
-			openDialog(table, 'table', '/sys/dict/item/saveOrUpdate?dictType='+dictType);
+			openDialog('/sys/dict/item/saveOrUpdate?dictType='+dictType);
 		},
 		deleteModel: function(){
 			confirm_Delete("/sys/dict/item/deleteByIds", "id");

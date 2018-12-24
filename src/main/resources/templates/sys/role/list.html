@@ -24,7 +24,7 @@
 				<div class="layui-card-body">
 					<div class="">
 						<a id="addModel" class="layui-btn"><i class="layui-icon layui-icon-add-1"></i> 添加</a>
-						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a>
+<!-- 						<a id="deleteModel" class="layui-btn layui-btn-danger"><i class="layui-icon layui-icon-delete"></i> 删除</a> -->
 					</div>
 					<table id="table" lay-filter="table_event"></table>
 				</div>
@@ -102,7 +102,17 @@
 			openDialog('/sys/role/saveOrUpdate?id='+data.roleId);
 		},
 		grantMenu: function(data){
-			openDialog('/sys/role/grantMenu?id='+data.roleId);
+			layer.open({
+				type: 2,
+			  	area: ['500px', '400px'], //宽高
+			  	content: '/sys/role/grantMenu?id='+data.roleId,
+			  	btn: ['保存', '取消'],
+			  	btnAlign: 'c',
+			  	yes:function(index, layero){
+			  		var iframeWin = window[layero.find('iframe')[0]['name']];
+			  		iframeWin.saveRolePermission();//调用子页面方法
+			  	}
+			});
 		},
 		loadRolePermission(roleId){
 			//初始化tree(非异步)

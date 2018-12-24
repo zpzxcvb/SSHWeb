@@ -46,7 +46,9 @@ function initTree(param){
 		$.ajax({
 			url: param.url,
 			success: function(data) {
-				$.fn.zTree.init(treeObj, setting, data);
+				if(data[0]!=null){
+					$.fn.zTree.init(treeObj, setting, data);
+				}
 			}
 		})
 	}

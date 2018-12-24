@@ -13,6 +13,12 @@
 			<input type="hidden" name="id" id="id"/>
 			<input type="hidden" name="userId" value="${userId}"/>
 			<div class="layui-form-item">
+				<label class="layui-form-label">账户</label>
+				<div class="layui-input-inline">
+					<input type="text" name="userName" class="layui-input layui-disabled" value="${userName}" readonly="readonly"/>
+				</div>
+			</div>
+			<div class="layui-form-item">
 				<label class="layui-form-label">昵称</label>
 				<div class="layui-input-inline">
 					<input type="text" name="nickName" class="layui-input" placeholder="请输入昵称" autocomplete="off"/>
@@ -50,8 +56,9 @@
 	<script>
 		layui.use(['form'], function() {
 			var form = layui.form;
+			console.log("${(userInfo)!''}");
 			//修改表单时赋值
-			loadFormValue(form, 'userInfo', '/sys/user/userInfoByUserId');
+			form.val("userInfo", JSON.parse("${(userInfo)!''}"));
 			//表单验证
 			form.verify({
 				aaa:function(value, item){
