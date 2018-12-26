@@ -29,14 +29,14 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.ImageHelper;
 import net.sourceforge.tess4j.util.LoadLibs;
+import redis.clients.jedis.Jedis;
 
 public class Test{
     private static final Logger log = LoggerFactory.getLogger(Test.class);
 
     public static void main(String[] args) throws Exception {
         log.info("----------------------");
-        long id=100;
-        System.out.println(DictTypeEnum.CITY.getValue());
+        
         //二值化
 //        BufferedImage BinaryImage = ImageHelper.convertImageToBinary(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(BinaryImage, "jpg", new File("H:/photo/", "test2.jpg"));

@@ -39,7 +39,7 @@ public class TestDB {
 		String password=p.getProperty("jdbc.password");
 		Class.forName(driver);
 		Connection con=DriverManager.getConnection(url,user,password);
-		log.info(con);
+		System.out.println(con);
 //		excuteQuery(con);
 	}
 }
