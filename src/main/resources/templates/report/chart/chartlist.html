@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-
+	<a class="layui-btn" onclick="mm()"><i class="layui-icon layui-icon-print"></i>打印</a>
 	<div class="layui-row layui-col-space15">
 		<div class="layui-col-md6">
 			<div class="layui-card">
@@ -49,6 +49,9 @@
 	</div>
 <script src="/js/chart.js"></script>
 <script type="text/javascript">
+function mm(){
+	window.print();
+}
 	$(function(){
 		line();
 		pie();

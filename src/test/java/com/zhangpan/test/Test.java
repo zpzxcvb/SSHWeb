@@ -36,7 +36,6 @@ public class Test{
 
     public static void main(String[] args) throws Exception {
         log.info("----------------------");
-        
         //二值化
 //        BufferedImage BinaryImage = ImageHelper.convertImageToBinary(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(BinaryImage, "jpg", new File("H:/photo/", "test2.jpg"));

@@ -105,7 +105,7 @@ public class MailUtil {
 		final String username="zpzxcvb@126.com";
 		final String password="527517062";
 		String tos="527517062@qq.com";
-		String ccAddress="123456789@qq.com";
+		String ccAddress="17691125766@163.com";
 		String bccAddress="3412003909@qq.com";
 		MailSenderInfo mailInfo = new MailSenderInfo();
 		mailInfo.setProps(props);
@@ -113,15 +113,15 @@ public class MailUtil {
 		mailInfo.setUserName(username);
 		mailInfo.setPassword(password);
 		mailInfo.setFromAddress(username);
-		mailInfo.setToAddress(tos);
-		mailInfo.setCcAddress(ccAddress);
-		mailInfo.setBccAddress(bccAddress);
+		mailInfo.setToAddress(tos);//收件人
+//		mailInfo.setCcAddress(ccAddress);//抄送
+//		mailInfo.setBccAddress(bccAddress);//密送
 		mailInfo.setSubject("测试");
 		mailInfo.setContent("<h1>hello world！</h1>");
 		List<DataSource> attachments = new ArrayList<>();
         DataSource dataSource1 = new FileDataSource("F:/create.xlsx");
-        attachments.add(dataSource1);
-        mailInfo.setAttachments(attachments);
+//        attachments.add(dataSource1);
+        mailInfo.setAttachments(attachments);//附件
 		boolean bool=sendEmail(mailInfo);
 		if(bool) {
 			System.out.println("Sent message successfully....");

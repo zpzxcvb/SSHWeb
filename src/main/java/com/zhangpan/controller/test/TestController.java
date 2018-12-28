@@ -6,12 +6,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zhangpan.controller.BaseController;
+import com.zhangpan.mail.EmailTool;
 
-@RestController("demo")
+@RestController
 public class TestController extends BaseController {
     
     @Autowired
     private StringRedisTemplate template;
+    
+    @Autowired
+    private EmailTool email;
+    
+    @RequestMapping("/test")
+    public Object test() {
+//        email.sendSimpleMail();
+        return "发送成功";
+    }
 	
 	@RequestMapping("/setValue")
     public Object setValue() {

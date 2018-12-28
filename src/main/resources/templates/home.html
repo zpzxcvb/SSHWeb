@@ -88,19 +88,34 @@
 		<div class="">
 		<form class="layui-form" action="">
 			<div class="layui-form-item">
-				<label class="layui-form-label">文件</label>
-				<div class="layui-input-block">
-					<a id="uploadBtn" class="layui-btn"><i
-						class="layui-icon layui-icon-upload"></i> 上传</a> <a id="textBtn"
-						class="layui-btn">文本</a> <a id="testBtn" class="layui-btn">test</a>
+				<div class="layui-inline">
+					<label class="layui-form-label">选择</label>
+					<div class="layui-input-inline">
+						<select lay-search>
+							<option>北京</option>
+							<option>上海</option>
+							<option>西安</option>
+							<option>广州</option>
+							<option>深圳</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">日期</label>
+					<div class="layui-input-inline">
+						<input id="createDate" class="layui-input" type="text" />
+					</div>
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">菜单链接</label>
-				<div class="layui-input-inline">
-					<input type="text" name="url" class="layui-input"
-						placeholder="请输入菜单连接地址" value="${(menu.url)!''}" />
-
+				<label class="layui-form-label">文件</label>
+				<div class="layui-input-block">
+					<a id="uploadBtn" class="layui-btn"><i class="layui-icon layui-icon-upload"></i> 上传</a> 
+					<a id="textBtn" class="layui-btn">文本</a>
+					<a id="testLoading" class="layui-btn">testLoading</a>
+					<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+					  <div class="layui-progress-bar" lay-percent="0%"></div>
+					</div>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -109,35 +124,18 @@
 					<textarea class="layui-textarea" id="LAY_demo1"></textarea>
 				</div>
 			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">选择</label>
-				<div class="layui-input-block">
-					<select lay-search>
-						<option>北京</option>
-						<option>上海</option>
-						<option>西安</option>
-						<option>广州</option>
-						<option>深圳</option>
-					</select>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">日期</label>
-				<div class="layui-input-block">
-					<input id="createDate" class="layui-input" type="text" />
-				</div>
-			</div>
 		</form>
 	</div>
 		</div>
 	</div>
 	
 	<script>
-		layui.use([ 'laydate', 'form', 'layedit', 'upload', 'carousel' ], function() {
+		layui.use([ 'laydate', 'form', 'layedit', 'upload', 'carousel' ,'element'], function() {
 			var layedit = layui.layedit;
 			var laydate = layui.laydate;
 			var upload = layui.upload;
 			var carousel = layui.carousel;
+			var element = layui.element;
 			 /*  //建造实例
 			  carousel.render({
 			    elem: '#test1',
@@ -166,12 +164,12 @@
 			    }
 			  });
 			//构建一个默认的编辑器
-			/* var index = layedit.build('LAY_demo1',{
+			var index = layedit.build('LAY_demo1',{
 				height: 180,
 				uploadImage: {
 				    url: '/file/upLoad'
 				}
-			}); */
+			});
 			
 			laydate.render({
 				elem : '#createDate',
@@ -185,13 +183,34 @@
 					console.log(date);
 				}
 			});
-			$('#textBtn').click(function(){
-				alert(layedit.getContent(index));
+			$('.layui-btn').on('click', function(){
+			    var method = this.id;
+		  	  	active[method] ? active[method].call(this) : '';
 			  });
-			$('#testBtn').click(function(){
-				alert("111");
-			  });
+			var active = {
+					textBtn : function() {
+						layedit.sync(index);
+						var content = $('#LAY_demo1').val();
+// 						alert(layedit.getContent(index));
+						alert(content);
+					},
+					testLoading : function(othis) {
+						//模拟loading
+						var n = 0, timer = setInterval(function() {
+							n = n + Math.random() * 10 | 0;
+							if (n > 100) {
+								n = 100;
+								clearInterval(timer);
+								othis.removeClass(DISABLED);
+							}
+							element.progress('demo', n + '%');
+						}, 300 + Math.random() * 1000);
+
+					}
+				};
 		});
+		
+		
 	</script>
 </body>
 </html>

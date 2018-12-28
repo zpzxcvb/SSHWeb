@@ -14,6 +14,13 @@ spring:
     suffix: .html
   profiles:
     active: dev
+  mail:
+    host: smtp.126.com
+    username: zpzxcvb@126.com
+    password: 527517062
+    properties:
+      smtp: 
+        auth: true
 #文件上传
   http:
     multipart:
