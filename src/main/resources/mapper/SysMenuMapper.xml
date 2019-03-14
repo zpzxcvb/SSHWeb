@@ -21,9 +21,7 @@
 	</select>
 
 	<select id="findPage" parameterType="map" resultType="SysMenu">
-		select a.*,
-			(select menu_name from sys_menu where id=a.pid) as parent_name 
-		from sys_menu a
+		select * from sys_menu
 		<where>
 			id != 1
 			<if test="pid != null">
@@ -41,7 +39,7 @@
 	</select>
 
 	<select id="menuList" parameterType="int" resultType="map">
-		select id,pid,menu_name as name from sys_menu
+		select id,pid,menu_name as name from sys_menu order by pid,order_no
 	</select>
 	
 	<select id="hasChild" parameterType="int" resultType="int">

@@ -38,7 +38,11 @@
 	
 	<!-- 根据参数查询用户信息 -->
 	<select id="findByParams" parameterType="map" resultType="SysUserInfo">
-		select * from sys_user_info
-		where user_id = #{userId}
+		select a.user_name,b.* from
+		sys_user a 
+		left join 
+		sys_user_info b 
+		on a.user_id=b.user_id
+		where a.user_id = #{userId}
 	</select>
 </mapper>

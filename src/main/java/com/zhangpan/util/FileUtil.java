@@ -1,5 +1,6 @@
 package com.zhangpan.util;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,29 +28,35 @@ public class FileUtil {
      * @param filePath
      * @param filename
      * @return
+     * @throws UnsupportedEncodingException 
      */
-    public static void downLoad(HttpServletResponse response, String filePath, String filename){
+    public static void downLoad(HttpServletResponse response, String filePath, String filename) throws UnsupportedEncodingException{
         File file = new File(filePath, filename);
         if(file.exists()){
-            response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+        	response.setCharacterEncoding("utf-8");
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "utf-8"));
             
             FileInputStream fis = null; //文件输入流
             OutputStream os = null; //输出流
+            BufferedInputStream bis = null;
             try {
                 os = response.getOutputStream();
-                fis = new FileInputStream(file); 
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
                 
                 byte[] buffer = new byte[1024];
                 int count = 0;
-                while((count = fis.read(buffer)) != -1){
+                while((count = bis.read(buffer)) != -1){
                     os.write(buffer);
+                    os.flush();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 try {
                     fis.close();
+                    bis.close();
                     os.close();
                 } catch (IOException e) {
                     e.printStackTrace();

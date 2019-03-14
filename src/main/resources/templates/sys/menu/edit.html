@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div>
-		<form class="layui-form layui-form-pane">
+		<form class="layui-form">
 			<input id="id" type="hidden" name="id" value="${(menu.id)!''}"/>
 			<div class="layui-form-item">
 				<label class="layui-form-label">父级目录</label>
@@ -29,10 +29,10 @@
 					<input type="text" name="menuName" class="layui-input" placeholder="请输入菜单名称" value="${(menu.menuName)!''}"/>
 				</div>
 			</div>
-			<div class="layui-form-item">
+			<div id="div_url" class="layui-form-item">
 				<label class="layui-form-label">菜单链接</label>
 				<div class="layui-input-inline">
-					<input type="text" id="url" name="url" readonly class="layui-input" placeholder="请输入菜单连接地址" value="${(menu.url)!''}"/>
+					<input type="text" id="url" name="url" class="layui-input" placeholder="请输入菜单连接地址" value="${(menu.url)!''}"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -80,9 +80,9 @@
 			$("#menu_div").hide();
 			//根目录禁用url连接
 			if(treeNode.id == 1){
-				$("#url").attr("readonly", true);
+				$("#div_url").hide();
 			}else{
-				$("#url").attr("readonly", false);
+				$("#div_url").show();
 			}
 		}
 	</script>

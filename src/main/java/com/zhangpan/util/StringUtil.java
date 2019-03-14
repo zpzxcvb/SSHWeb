@@ -16,12 +16,21 @@ import java.util.regex.Pattern;
  */
 public class StringUtil {
 	/**
-	 * 判断字符串是否为空白,包括null和""，"  "
+	 * 判断字符串为空
 	 * @param str
 	 * @return
 	 */
 	public static boolean isEmpty(String str){
-		return str==null || "".equals(str.trim());
+		return str==null || "".equals(str);
+	}
+	
+	/**
+	 * 判断字符串不为空
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNotEmpty(String str){
+		return !isEmpty(str);
 	}
 	
 	/**

@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
 	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.excheck.js"></script>
 </head>
-<body>
+<body style="padding: 15px">
 	<div class="layui-row layui-col-space10">
 		<div class="layui-col-md2">
 			<div class="layui-card">
@@ -58,8 +58,7 @@
 			    	{type: 'checkbox', fixed: 'left'},
 			      	{type: 'numbers', title: '序号', fixed: 'left'},
 			      	{field: 'menuName', title: '菜单名称'},
-			      	{field: 'orderNo', title: '排序'},
-			      	{field: 'parentName', title: '父级'},
+			      	{field: 'orderNo', title: '排序', width: 60},
 			      	{field: 'url', title: '链接地址'},
 			      	{field: 'description', title: '描述'},
 			      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'},

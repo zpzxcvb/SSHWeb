@@ -1,7 +1,7 @@
 package com.zhangpan.util;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+//import org.apache.cxf.endpoint.Client;
+//import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 
 /**
  * @描述：接口工具类
@@ -19,13 +19,13 @@ public class WebServiceUtil {
     public static String invoke(String url, String methodName, Object... params) {
 		String result = "";
 		try {
-			JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-			
-	        Client client = dcf.createClient(url);
-	        
-	        Object[] objects = client.invoke(methodName, params);
-	         
-            result = objects[0].toString();
+//			JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+//			
+//	        Client client = dcf.createClient(url);
+//	        
+//	        Object[] objects = client.invoke(methodName, params);
+//	         
+//            result = objects[0].toString();
             
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 # Server settings 
 server:
-  port: 80
+  port: 8081
   context-path: /
 
 # DATASOURCE 
@@ -21,21 +21,23 @@ spring:
     properties:
       smtp: 
         auth: true
+        
 #文件上传
-  http:
+  servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
 #redis
-  redis:
-    database: 0
-    host: localhost
-    port: 6379
-    password: 12345
-    pool:
-      max-active: 8
-      max-idle: 8
-      max-wait: -1
+#  redis:
+#    database: 0
+#    host: localhost
+#    port: 6379
+#    password: 12345
+#    pool:
+#      max-active: 8
+#      max-idle: 8
+#      max-wait: -1
+      
 # MyBatis
 mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml

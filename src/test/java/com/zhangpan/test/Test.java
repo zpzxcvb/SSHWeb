@@ -29,13 +29,17 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.ImageHelper;
 import net.sourceforge.tess4j.util.LoadLibs;
-import redis.clients.jedis.Jedis;
 
 public class Test{
     private static final Logger log = LoggerFactory.getLogger(Test.class);
 
     public static void main(String[] args) throws Exception {
-        log.info("----------------------");
+    	String encoding = System.getProperty("file.encoding");
+    	System.out.println("file.encoding:" + encoding);
+    	System.out.println("sun.jnu.encoding:" + System.getProperty("sun.jnu.encoding"));
+    	String a="你好";
+    	System.out.println(new String(a.getBytes("utf-8")));
+        log.info("------------{}----------",1);
         //二值化
 //        BufferedImage BinaryImage = ImageHelper.convertImageToBinary(ImageIO.read(new File("H:/photo/idCard.jpg")));
 //        ImageIO.write(BinaryImage, "jpg", new File("H:/photo/", "test2.jpg"));
@@ -55,6 +59,7 @@ public class Test{
         String encodedPassword = hash.toHex();
         System.out.println(encodedPassword);
         System.out.println(salt2);*/
+        System.out.println("hello");
     }
 
 }

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,15 @@ import freemarker.template.Template;
  */
 public class WordUtils {
     
-    public static String createWord1(Map dataMap, String templateName, String filePath, String fileName) {
+    /**
+     * freemaker 方式
+     * @param dataMap
+     * @param templateName
+     * @param filePath
+     * @param fileName
+     * @return
+     */
+    public static String createWordForFreemaker(Map dataMap, String templateName, String filePath, String fileName) {
         String fileOnlyName = null;
         try {
             // 创建配置实例
@@ -50,6 +59,7 @@ public class WordUtils {
         }
         return fileOnlyName;
     }
+    
 
     /**
      * @param args
@@ -57,15 +67,47 @@ public class WordUtils {
     public static void main(String[] args) {
         // 创建数据
         Map<String,Object> dataMap = new HashMap<String, Object>();
-        dataMap.put("name", "张三");
-        dataMap.put("y", "2018");
-        dataMap.put("m", "08");
-        dataMap.put("d", "15");
-        dataMap.put("a", "电脑");
-        dataMap.put("b", "华硕电脑");
-        dataMap.put("c", "1800");
+        dataMap.put("title", "demo新厂年度");
+        dataMap.put("content", "sdfsfdsfsdfdfsdfdsfdsfdsfdsfs");
+        dataMap.put("address", "西安雁塔区");
+        dataMap.put("date", "2018nian");
+        dataMap.put("userName", "张三");
+        dataMap.put("phone", "17691125766");
+        List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
+        for (int i = 1; i <= 10; i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("sname", "张三" + i);
+            map.put("sex", "男" + i);
+            map.put("sage", (i * 2));
+            newsList.add(map);
+        }
+        dataMap.put("list", newsList);
 //        dataMap.put("img", ImageUtil.imgToCode("E:/temp/b.jpg"));
-        createWord1(dataMap, "test.xml", "E:/temp", "demo.doc");
+        createWordForFreemaker(dataMap, "test.xml", "C:\\Users\\SV924LB\\Works", "demo.doc");
     }
 
+}
+class Student{
+	private String sname;
+	private String sage;
+	private String sex;
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSage() {
+		return sage;
+	}
+	public void setSage(String sage) {
+		this.sage = sage;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	
 }

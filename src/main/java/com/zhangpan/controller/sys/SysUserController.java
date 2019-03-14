@@ -37,11 +37,19 @@ public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserRoleService userRoleService;
 	
+	/**
+	 * 列表页
+	 * @return
+	 */
 	@RequestMapping("/list")
     public String list(){
         return "/sys/user/list";
     }
 	
+	/**
+	 * 分页数据
+	 * @return
+	 */
 	@RequestMapping("/pageList")
 	@ResponseBody
 	public Object pageList(){
@@ -58,11 +66,20 @@ public class SysUserController extends BaseController {
 		return "sys/user/sysUser";
 	}
 	
+	/**
+	 * 添加页面
+	 * @return
+	 */
 	@RequestMapping("/goAdd")
     public String goAdd(){
         return "/sys/user/add";
     }
 	
+    /**
+     * 保存用户信息
+     * @param model
+     * @return
+     */
     @RequestMapping("/saveUser")
     @ResponseBody
     public Object saveUser(SysUser model){
@@ -77,6 +94,11 @@ public class SysUserController extends BaseController {
         return getResponseState(count);
     }
     
+    /**
+     * 修改用户状态(启用/禁用)
+     * @param model
+     * @return
+     */
     @RequestMapping("/changeUserStatus")
     @ResponseBody
     public Object changeUserStatus(SysUser model){
@@ -90,6 +112,11 @@ public class SysUserController extends BaseController {
         return "/sys/user/safeConfig";
     }
     
+    /**
+     * 修改密码
+     * @param model
+     * @return
+     */
     @RequestMapping("/password")
     @ResponseBody
     public Object password(SysUser model){
@@ -144,6 +171,9 @@ public class SysUserController extends BaseController {
     
     @RequestMapping("/userInfoEdit")
     public String userInfoEdit(Model model){
+    	if(paramMap.get("userId") == null) {
+    		paramMap.put("userId", session.getAttribute("userId"));
+    	}
         SysUserInfo userInfo = userInfoService.findByParams(paramMap);
         if(userInfo != null) {
             model.addAttribute("userInfo", JSON.toJSONString(userInfo));

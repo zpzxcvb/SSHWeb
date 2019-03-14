@@ -263,32 +263,86 @@ function switchStatusForUpdate(form, switchFilter, url, id) {
 
 /**
  * 文件上传
+ * 
+ * domId 上传文件的元素id
+ * fileListId 文件列表的tbody的id
+ * fileType 允许上传文件的类型
  * */
-function fileUpload(upload, domId, fileType){
+function fileUpload(upload, domId, fileListId, fileType){
+	var fileList = $("#"+fileListId);//文件列表table对象
+	var files;
 	var loadIndex;
 	var uploadInst = upload.render({
 	    elem: '#'+domId, //绑定元素
 	    url: '/file/upLoad', //上传接口
 	    accept: 'file',
+	    multiple: true,
+	    auto: false,
+	    bindAction: '#uploadBtn',
 //	    acceptMime:'image/*',//过滤文件类型
 	    exts: fileType,//文件类型  txt|jpg|pdf
-	    before: function(input){
+	    choose: function(obj){   
+	        files = obj.pushFile(); //将每次选择的文件追加到文件队列
+	        //读取本地文件
+	        obj.preview(function(index, file, result){
+//        	console.log(index);
+//        	console.log(file);
+//        	console.log(result);
+	          var tr = $([
+	        	  '<tr id="upload-'+ index +'">',
+		            '<td>'+ file.name +'</td>',
+		            '<td>'+ (file.size/1024).toFixed() +'kb</td>',
+		            '<td>等待上传</td>',
+		            '<td>',
+		              '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>',
+		              '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>',
+		            '</td>',
+		          '</tr>'].join(''));
+	          
+	          //单个重传
+	          tr.find('.demo-reload').on('click', function(){
+	            obj.upload(index, file);
+	          });
+	          
+	          //删除
+	          tr.find('.demo-delete').on('click', function(){
+	            delete files[index]; //删除对应的文件
+	            tr.remove();
+	            uploadInst.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+	          });
+	          
+	          fileList.append(tr);
+	        });
+	    },
+	    before: function(obj){
+	    	console.log(files);
 	        console.log('文件上传中');
 	        loadIndex = layer.load(1);
 	    },
 	    done: function(res, index, upload){
 	    	layer.close(loadIndex);
 		    if(res.code == '0'){
-		    	$("#fileName").text(res.data.src);
-		    	$("#fileUrl").val(res.data.src);
 		    	layer.msg(res.msg,{icon:1});
+		    	var tr = fileList.find('tr#upload-'+ index);
+		        var tds = tr.children();
+		        tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+		        tds.eq(3).html(''); //清空操作
+		        return delete files[index]; //删除文件队列已经上传成功的文件
 		    }else{
 		    	layer.msg(res.msg,{icon:0});
+		    	var tr = fileList.find('tr#upload-'+ index);
+		        var tds = tr.children();
+		        tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+		        tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
 		    }
 	    },
-	    error: function(e){
+	    error: function(index, upload){
 	    	layer.close(loadIndex);
 	    	layer.msg('服务器异常',{icon:5});
+	    	var tr = fileList.find('tr#upload-'+ index);
+	        var tds = tr.children();
+	        tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+	        tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
 	    }
 	 });
 }

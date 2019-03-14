@@ -1,6 +1,7 @@
 package com.zhangpan.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -130,10 +131,12 @@ public class ExcelUtils {
             int rowNum=sheet.getPhysicalNumberOfRows();
             for (int j = 0; j < rowNum; j++) {
                 Row row=sheet.getRow(j);
-                int cellNum=row.getLastCellNum();
-                for (int k = 0; k < cellNum; k++) {
-                    Cell cell=row.getCell(k);
-                    System.out.println(getCellValueByType(cell));
+                if(row != null) {
+                	int cellNum=row.getLastCellNum();
+                    for (int k = 0; k < cellNum; k++) {
+                        Cell cell=row.getCell(k);
+                        System.out.println(getCellValueByType(cell));
+                    }
                 }
             }
         }
@@ -189,10 +192,33 @@ public class ExcelUtils {
             e.printStackTrace();
         }
     }*/
+	
+	/**
+	 * 删除行
+	 * @param sheet
+	 * @param rowIndex 
+	 */
+	public static void removeRow(Sheet sheet, int rowIndex) {
+		int lastRowNum=sheet.getLastRowNum();
+		sheet.shiftRows(rowIndex, lastRowNum, -1);
+	}
+	
 	public static void main(String[] args) throws Exception {
-        String createFilePath="f:\\create.xlsx";
+		long begin=System.currentTimeMillis();
+        String createFilePath="C:\\Users\\SV924LB\\Desktop\\test.xlsx";
+//        readExcel(createFilePath);
+        FileInputStream is = new FileInputStream(createFilePath);
+        Workbook workbook = WorkbookFactory.create(is);
+        Sheet sheet = workbook.getSheetAt(0);
+        Row row = sheet.getRow(0);
+//        sheet.removeRow(row);
+        removeRow(sheet, 3);
+        FileOutputStream os = new FileOutputStream(createFilePath);
+        workbook.write(os);
+        is.close();
+        os.close();
         readExcel(createFilePath);
-        
+        /*
         Map<String,Object> headMap=new HashMap<String,Object>();
         headMap.put("name", "姓名");
         headMap.put("age", "年龄");
@@ -210,8 +236,9 @@ public class ExcelUtils {
             list.add(map);
         }
         FileOutputStream out = new FileOutputStream(createFilePath);
-        long begin=System.currentTimeMillis();
+        
         export07Excel(null, list, out);
         System.out.println("生成成功，共用时"+(System.currentTimeMillis()-begin)+"ms");
+        */
     }
 }

@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="/js/lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="/js/lib/zTree/jquery.ztree.core.js"></script>
 </head>
-<body>
+<body style="padding: 15px">
 	<div class="layui-row layui-col-space10">
 		<div class="layui-col-md9">
 			<div class="layui-card">
@@ -53,14 +53,11 @@
 		var params = {
 			 id: "#table",
 			 url: "/sys/user/pageList",
-			 width: 900,
 			 columns: [
 		    	{type: 'checkbox', fixed: 'left'},
 		      	{type: 'numbers', title: '序号', fixed: 'left'},
 		      	{field: 'user_name', title: '用户名'},
 		      	{field: 'role_name', title: '所属角色'},
-		      	{field: 'create_time', title: '创建时间', width: 170},
-		      	{field: 'update_time', title: '更新时间', width: 170},
 		      	{field: 'status', title: '状态', width: 100, fixed: 'right', sort: true, templet: '#statusTpl'},
 		      	{fixed: 'right', title:'操作', fixed: 'right', toolbar: '#rowbarTpl'}
 		    ]

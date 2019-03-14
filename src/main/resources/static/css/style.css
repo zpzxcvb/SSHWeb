@@ -4,6 +4,9 @@ body {
 a {
 	text-decoration: none!important;
 }
+.layui-card-body{
+	overflow: auto;
+}
 .home {
 	background: url('/img/home.jpg') no-repeat fixed;
 	background-size: cover;
@@ -29,6 +32,7 @@ a {
 	right: 40px;
 	bottom: 50px;
 	text-align: center;
+	z-index: 999;
 }
 .fixed-btn a{
 	display: block;
@@ -47,32 +51,4 @@ a {
 }
 .qrcode:hover .wechat{
 	display: block;
-}
-.file-tree,.file-content{
-	border: 1px solid #d5dce5;
-	height: 550px;
-	overflow: auto;
-}
-.file-tree{
-	width: 20%;
-	float: left;
-}
-.file-content{
-	width: 70%;
-	margin-left: 10px;
-	float: left;
-}
-.file-code{
-	background-color: #eee;
-}
-.file-code ol{
-}
-.file-code> li{
-	padding: 0 3px 0 10px;
-	border-left: 3px solid #6CE26C;
-	white-space:nowrap;
-	width: 100%;
-}
-.file-code > .alt{
-	background-color: #f8f8f8;
 }

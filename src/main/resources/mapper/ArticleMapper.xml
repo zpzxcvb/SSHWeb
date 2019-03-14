@@ -11,8 +11,16 @@
 	from article a
 	left join sys_dict_item
 	on type = dict_code
-	where 1=1
-	and dict_type = #{articleType}
+	<where>
+		and dict_type = #{articleType}
+		<if test="type !=null and type != ''">
+			and a.type = #{type}
+		</if>
+		<if test="title !=null and title != ''">
+			<bind name="pattern" value="'%' + title + '%'" />
+			and title like #{pattern}
+		</if>
+	</where>
 	order by create_time desc
   </select>
   

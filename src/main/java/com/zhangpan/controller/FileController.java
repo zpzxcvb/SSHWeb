@@ -24,8 +24,8 @@ public class FileController extends BaseController {
     
     private static final Logger log = Logger.getLogger(FileController.class);
     
-    @Value("${uploadPath}")
-    private String uploadPath;
+    @Value("${upLoadPath}")
+    private String upLoadPath;
 	
 	@Autowired
 	private FileScanService fileScanService;
@@ -60,16 +60,14 @@ public class FileController extends BaseController {
 	    long fileSize = file.getSize();   //文件大小
         String fileName = file.getOriginalFilename();  //图片名字
         
-	    File dir = new File(uploadPath);
-	    //判断文件目录是否存在
-	    if(!dir.exists()){
+	    File dir = new File(upLoadPath);
+	    if(!dir.exists()){//判断文件目录是否存在
 	        dir.mkdir();
         }
-        File dest = new File(uploadPath, fileName);
+        File dest = new File(upLoadPath, fileName);
         try {
             file.transferTo(dest);
-            //返回上传文件路径
-            String downLoadUrl = dest.getAbsolutePath();
+            String downLoadUrl = dest.getAbsolutePath();//返回上传文件路径
             map.put("src", downLoadUrl);
             return getResults("0", "上传成功", map);
         } catch (Exception e) {

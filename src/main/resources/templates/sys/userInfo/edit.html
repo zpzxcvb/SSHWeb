@@ -15,7 +15,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">账户</label>
 				<div class="layui-input-inline">
-					<input type="text" name="userName" class="layui-input layui-disabled" value="${userName}" readonly="readonly"/>
+					<input type="text" name="userName" class="layui-input layui-disabled" value="" readonly="readonly"/>
 				</div>
 			</div>
 			<div class="layui-form-item">
@@ -56,9 +56,9 @@
 	<script>
 		layui.use(['form'], function() {
 			var form = layui.form;
-			console.log("${(userInfo)!''}");
+			var userInfo = '${userInfo}';
 			//修改表单时赋值
-			form.val("userInfo", JSON.parse("${(userInfo)!''}"));
+			form.val("userInfo", JSON.parse(userInfo));
 			//表单验证
 			form.verify({
 				aaa:function(value, item){

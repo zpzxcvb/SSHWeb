@@ -144,7 +144,7 @@ public class DbUtil {
 //            params.add(3);
             update(updatesql, params);*/
             String username="";
-            String sql="select * from student ";
+            String sql="select * from stu ";
             List<Map<String, Object>> result = findList(sql, null);
             for (Map<String, Object> m : result) {  
                 System.out.println(m);  
