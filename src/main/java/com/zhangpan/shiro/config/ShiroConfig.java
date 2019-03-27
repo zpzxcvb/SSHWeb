@@ -53,8 +53,10 @@ public class ShiroConfig {
         map.put("/register","anon");
         map.put("/login","anon");
         map.put("/logout", "logout");
+        map.put("/api/**", "anon");
         
-        map.put("/ey/**", "anon");
+        map.put("/swagger-ui.html", "anon");
+        map.put("/webjars/**", "anon");
         
         map.put("/**","authc");
         

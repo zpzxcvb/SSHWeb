@@ -1,12 +1,21 @@
 package com.zhangpan.controller.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.mail.EmailTool;
+import com.zhangpan.model.SysUser;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class TestController extends BaseController {
@@ -18,9 +27,17 @@ public class TestController extends BaseController {
     private EmailTool email;
     
     @RequestMapping("/test")
+    @ResponseBody
     public Object test() {
 //        email.sendSimpleMail();
-        return "发送成功";
+    	List list = new ArrayList();
+    	for (int i = 0; i < 5; i++) {
+    		SysUser user = new SysUser();
+    		user.setUserName("张三"+i);
+    		user.setPassword("123"+i);
+    		list.add(user);
+		}
+        return list;
     }
 	
 	@RequestMapping("/setValue")
