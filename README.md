@@ -1,1 +1,1 @@
-spring boot + mybatis + layui dev
+spring boot + mybatis + layui
