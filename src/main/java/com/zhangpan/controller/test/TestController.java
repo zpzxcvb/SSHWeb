@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.zhangpan.config.Config;
 import com.zhangpan.controller.BaseController;
 import com.zhangpan.mail.EmailTool;
 import com.zhangpan.model.SysUser;
@@ -26,9 +28,16 @@ public class TestController extends BaseController {
     @Autowired
     private EmailTool email;
     
+    @Value("${name}")
+	private String name;
+	
+	@Autowired
+	Config config;
+    
     @RequestMapping("/test")
-    @ResponseBody
     public Object test() {
+    	System.out.println(name);
+		System.out.println(config.getName());
 //        email.sendSimpleMail();
     	List list = new ArrayList();
     	for (int i = 0; i < 5; i++) {

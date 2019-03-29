@@ -1,4 +1,4 @@
-package com.zhangpan.shiro.config;
+package com.zhangpan.config.shiro;
 
 import java.util.List;
 import java.util.Map;

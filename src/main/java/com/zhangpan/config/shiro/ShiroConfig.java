@@ -1,4 +1,4 @@
-package com.zhangpan.shiro.config;
+package com.zhangpan.config.shiro;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,25 +42,32 @@ public class ShiroConfig {
         filters.put("logout", this.getLogoutFilter());
         shiroFilterFactoryBean.setFilters(filters);*/
         
-        // 拦截器
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("/js/**","anon");
-        map.put("/css/**","anon");
-        map.put("/img/**","anon");
-        map.put("/docs/**","anon");
-        map.put("/file/**","anon");
+        //配置访问权限
+        Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
+        //静态资源放行
+        filterChainDefinitionMap.put("/js/**","anon");
+        filterChainDefinitionMap.put("/css/**","anon");
+        filterChainDefinitionMap.put("/img/**","anon");
+        filterChainDefinitionMap.put("/docs/**","anon");
+        filterChainDefinitionMap.put("/file/**","anon");
         
-        map.put("/register","anon");
-        map.put("/login","anon");
-        map.put("/logout", "logout");
-        map.put("/api/**", "anon");
+        //login放行
+        filterChainDefinitionMap.put("/register","anon");
+        filterChainDefinitionMap.put("/login","anon");
+        filterChainDefinitionMap.put("/logout", "logout");
         
-        map.put("/swagger-ui.html", "anon");
-        map.put("/webjars/**", "anon");
+        //swagger放行
+        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/configuration/ui", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/configuration/security", "anon");
+        filterChainDefinitionMap.put("/swagger-resources", "anon");
+        filterChainDefinitionMap.put("/v2/api-docs", "anon");
+        filterChainDefinitionMap.put("/webjars/springfox-swagger-ui/**", "anon");
+        filterChainDefinitionMap.put("/api/**", "anon");
         
-        map.put("/**","authc");
+        filterChainDefinitionMap.put("/**","authc");
         
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
     

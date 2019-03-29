@@ -119,7 +119,7 @@ public class MailUtil {
 		mailInfo.setSubject("测试");
 		mailInfo.setContent("<h1>hello world！</h1>");
 		List<DataSource> attachments = new ArrayList<>();
-        DataSource dataSource1 = new FileDataSource("F:/create.xlsx");
+//        DataSource dataSource1 = new FileDataSource("F:/create.xlsx");
 //        attachments.add(dataSource1);
         mailInfo.setAttachments(attachments);//附件
 		boolean bool=sendEmail(mailInfo);

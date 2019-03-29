@@ -1,15 +1,19 @@
 package com.zhangpan.util;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,27 +41,27 @@ public class FileUtil {
             response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(filename, "utf-8"));
             
-            FileInputStream fis = null; //文件输入流
             OutputStream os = null; //输出流
             BufferedInputStream bis = null;
             try {
                 os = response.getOutputStream();
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
+                bis = new BufferedInputStream(new FileInputStream(file));
                 
                 byte[] buffer = new byte[1024];
-                int count = 0;
-                while((count = bis.read(buffer)) != -1){
-                    os.write(buffer);
-                    os.flush();
+                int size = 0;
+                while((size = bis.read(buffer)) != -1){
+                    os.write(buffer, 0, size);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {
                 try {
-                    fis.close();
-                    bis.close();
-                    os.close();
+                    if(bis != null) {
+                    	bis.close();
+    				}
+                    if(os != null) {
+                    	os.close();
+    				}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -138,16 +142,84 @@ public class FileUtil {
 	    }
 	}
 	
+	public static void copyFile_NIO(String copyFile, String outFile) throws Exception {
+		FileInputStream fin = new FileInputStream(copyFile);
+		FileOutputStream fout = new FileOutputStream(outFile);
+		FileChannel fcin = fin.getChannel();
+		FileChannel fcout = fout.getChannel();
+		ByteBuffer buffer = ByteBuffer.allocate(1024);
+		
+		while (true) {
+			buffer.clear();
+			int r = fcin.read(buffer);
+			if (r == -1) {
+				break;
+			}
+			buffer.flip();
+			fcout.write(buffer);
+		}
+		
+		fcin.close();
+		fcout.close();
+		fin.close();
+		fout.close();
+	}
+	
+	/**
+	 * 字节流复制文件
+	 * @param copyFile 复制文件路径
+	 * @param outFile 生成文件路径
+	 */
+	public static void copyFile_IO(String copyFile, String outFile){
+		BufferedInputStream bin = null;
+		BufferedOutputStream bout = null;
+		try {
+			bin =new BufferedInputStream(new FileInputStream(copyFile));//默认8M的缓存
+			bout = new BufferedOutputStream(new FileOutputStream(outFile));
+			byte[] buffer = new byte[1024];
+			int size = 0;
+			//先从硬盘读出8M内容到缓存中。然后从缓存中读取1024字节写入文件，自然要比从硬盘中快得多。每8M与硬盘交互一次
+	        while((size = bin.read(buffer)) != -1){
+	        	bout.write(buffer, 0, size);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(bin != null) {
+					bin.close();
+				}
+				if(bout != null) {
+					bout.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
-	    String filePath="E:/test.csv";
 //	    deleteFile(filePath);
 		/*String filePath=System.getProperty("user.dir");
 		List<TreeNode> list=scanFiles(filePath);
 		for(TreeNode node : list){
 			System.out.println(JSON.toJSONString(node));
 		}*/
-		List list=readFile(filePath);
-		System.out.println(list);
+//		List list=readFile(filePath);
+//		System.out.println(list);
+	    String copyFile="C:/zp/a.txt",
+	    	outFile1="C:/zp/a1.txt",
+	    	outFile2="C:/zp/a2.txt";
+	    long start = System.currentTimeMillis();
+	    copyFile_NIO(copyFile, outFile1);
+	    long end1 = System.currentTimeMillis();
+	    copyFile_IO(copyFile, outFile2);
+	    long end2 = System.currentTimeMillis();
+	    System.out.println("copyFile_IO copy lasts: " + (end1 - start));
+		System.out.println("copyFile_IO_buffer copy lasts: " + (end2 - end1));
+		
 	}
 
 }

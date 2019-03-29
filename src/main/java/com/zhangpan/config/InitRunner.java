@@ -33,7 +33,7 @@ public class InitRunner implements CommandLineRunner {
     private SysDictItemService dictItemService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info(">>>>>>>>>>>>>>>服务启动执行，初始化字典表数据<<<<<<<<<<<<<");
         Map<String, List<SysDictItem>> sysDicts = new HashMap<>();
         List<SysDictType> types = dictTypeService.findList(null);

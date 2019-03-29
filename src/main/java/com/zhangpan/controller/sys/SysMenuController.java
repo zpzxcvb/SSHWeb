@@ -82,8 +82,20 @@ public class SysMenuController extends BaseController {
 	@RequestMapping("/deleteByIds")
     @ResponseBody
     public Object deleteByIds(@RequestParam(value = "ids[]")Integer[] ids){
-        int count = sysMenuService.deleteByIds(ids);
-        return getResponseState(count);
+		boolean bool = true;
+		for(int id : ids) {
+			int hasChild = sysMenuService.hasChild(id);
+			if(hasChild > 0) {
+				bool = false;
+				break;
+			}
+		}
+		if(bool) {
+			int count = sysMenuService.deleteByIds(ids);
+			return getResponseState(count);
+		} else {
+			return getResults("-1", "删除失败，请检查所选项是否包含子目录。");
+		}
     }
 	
 	/**
