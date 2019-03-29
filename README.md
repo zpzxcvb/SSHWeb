@@ -1,4 +1,4 @@
-spring boot + mybatis + layui
+ spring boot + mybatis + layui
 内含Swagger2，API首页地址：http://localhost:8081/swagger-ui.html
 
 ### 代码高亮
